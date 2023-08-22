@@ -20,7 +20,7 @@ import { RepositoriesModule } from './repositories/repositories.module';
           extra: {
             connectionLimit: 100,
             ssl:
-              process.env.POSTGRES_SSL === 'true'
+              process.env.TYPEORM_SSL === 'true'
                 ? {
                     rejectUnauthorized: false,
                   }
