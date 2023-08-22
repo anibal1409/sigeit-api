@@ -15,10 +15,17 @@ import { RepositoriesModule } from './repositories/repositories.module';
         Object.assign(await getConnectionOptions(), {
           autoLoadEntities: true,
           charset: 'utf8mb4',
+          timezone: 'Z',
+          ssl: process.env.TYPEORM_SSL === 'true',
           extra: {
             connectionLimit: 100,
+            ssl:
+              process.env.POSTGRES_SSL === 'true'
+                ? {
+                    rejectUnauthorized: false,
+                  }
+                : null,
           },
-          timezone: 'Z',
         }),
     }),
     ConfigModule.forRoot({
