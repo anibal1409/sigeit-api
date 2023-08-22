@@ -1,3 +1,3 @@
 import { IdEntity } from '../../base';
 
-export class Career extends IdEntity {}
+export class Day extends IdEntity {}
