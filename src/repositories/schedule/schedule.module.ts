@@ -1,8 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ScheduleService } from './schedule.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { Schedule } from './entities';
 import { ScheduleController } from './schedule.controller';
+import { ScheduleService } from './schedule.service';
 
 @Module({
+  imports: [
+    TypeOrmModule.forFeature([Schedule]),
+  ],
   controllers: [ScheduleController],
   providers: [ScheduleService],
 })
