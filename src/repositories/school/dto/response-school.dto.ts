@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
   IsOptional,
@@ -7,20 +8,20 @@ import {
 import {
   ApiProperty,
   ApiPropertyOptional,
-  OmitType,
-  PartialType,
 } from '@nestjs/swagger';
 
 import { School } from '../entities';
 
-export class CreateSchoolDto extends PartialType(
-  OmitType(School, ['updatedAt', 'createdAt', 'status', 'deleted'])
-)  {
+export class ResponseSchoolDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @Type(() => Number)
+  id: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  name!: string;
+  name: string;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -30,10 +31,18 @@ export class CreateSchoolDto extends PartialType(
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  logo!: string;
+  logo?: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
   abbreviation: string;
+
+  constructor(data: School) {
+    this.id = data.id;
+    this.name = data.name;
+    this.description = data.description;
+    this.abbreviation = data.abbreviation;
+    this.logo = data.logo;
+  }
 }

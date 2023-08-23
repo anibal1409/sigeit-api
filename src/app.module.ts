@@ -10,6 +10,10 @@ import { RepositoriesModule } from './repositories/repositories.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env', '.env.prod', '.env.local'],
+    }),
     TypeOrmModule.forRootAsync({
       useFactory: async () =>
         Object.assign(await getConnectionOptions(), {
@@ -27,10 +31,6 @@ import { RepositoriesModule } from './repositories/repositories.module';
                 : null,
           },
         }),
-    }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: ['.env.prod', '.env.local'],
     }),
     RepositoriesModule,
   ],

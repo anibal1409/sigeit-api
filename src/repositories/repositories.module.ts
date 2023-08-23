@@ -10,6 +10,7 @@ import { SectionModule } from './section/section.module';
 import { SubjectModule } from './subject/subject.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { UserModule } from './user/user.module';
+import { ClassroomModule } from './classroom/classroom.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserModule } from './user/user.module';
     TeacherModule,
     SectionModule,
     ScheduleModule,
+    ClassroomModule,
   ],
 })
 export class RepositoriesModule {}
