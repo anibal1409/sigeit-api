@@ -2,18 +2,14 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
-  IsOptional,
   IsString,
 } from 'class-validator';
 
-import {
-  ApiProperty,
-  ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
-import { School } from '../entities';
+import { Day } from '../entities';
 
-export class ResponseSchoolDto {
+export class ResponseDayDto {
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
@@ -23,16 +19,6 @@ export class ResponseSchoolDto {
   @IsNotEmpty()
   @IsString()
   name: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  description?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  logo?: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -44,12 +30,10 @@ export class ResponseSchoolDto {
   @IsBoolean()
   status!: boolean;
 
-  constructor(data: School) {
+  constructor(data: Day) {
     this.id = data.id;
     this.name = data.name;
-    this.description = data.description;
     this.abbreviation = data.abbreviation;
-    this.logo = data.logo;
     this.status = data.status;
   }
 }

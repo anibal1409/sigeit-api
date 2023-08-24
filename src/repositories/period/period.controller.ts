@@ -1,34 +1,78 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PeriodService } from './period.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import {
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+
+import { ResponsePeriodDto } from './dto';
 import { CreatePeriodDto } from './dto/create-period.dto';
 import { UpdatePeriodDto } from './dto/update-period.dto';
+import { PeriodService } from './period.service';
 
+@ApiTags('period')
 @Controller('period')
 export class PeriodController {
   constructor(private readonly periodService: PeriodService) {}
 
   @Post()
+  @ApiResponse({
+    type: ResponsePeriodDto,
+  })
   create(@Body() createPeriodDto: CreatePeriodDto) {
     return this.periodService.create(createPeriodDto);
   }
 
   @Get()
+  @ApiResponse({
+    type: ResponsePeriodDto,
+    isArray: true,
+  })
   findAll() {
     return this.periodService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @ApiResponse({
+    type: ResponsePeriodDto,
+  })
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.periodService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePeriodDto: UpdatePeriodDto) {
+  @ApiResponse({
+    type: ResponsePeriodDto,
+  })
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePeriodDto: UpdatePeriodDto,
+  ) {
     return this.periodService.update(+id, updatePeriodDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  @ApiResponse({
+    type: ResponsePeriodDto,
+  })
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.periodService.remove(+id);
   }
+
+  @Get('active')
+  @ApiResponse({
+    type: ResponsePeriodDto,
+  })
+  findActive() {
+    return this.periodService.findActive();
+  }
+
 }

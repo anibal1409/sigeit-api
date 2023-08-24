@@ -9,20 +9,21 @@ import {
 import {
   ApiProperty,
   ApiPropertyOptional,
-  OmitType,
-  PartialType,
 } from '@nestjs/swagger';
 
+import { Department } from '../../departament';
 import { Career } from '../entities';
 
-export class CreateCareerDto extends PartialType(
-  OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])
-) {
+export class ResponseCareerDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @Type(() => Number)
+  id: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  name!: string;
+  name: string;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -42,10 +43,26 @@ export class CreateCareerDto extends PartialType(
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
-  departmentId!: number;
+  departamentId: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => Department)
+  departament: Department;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
+
+  constructor(data: Career) {
+    this.id = data.id;
+    this.name = data.name;
+    this.description = data.description;
+    this.abbreviation = data.abbreviation;
+    this.logo = data.logo;
+    this.departamentId = data.department.id;
+    this.departament = data.department;
+    this.status = data.status;
+  }
 }

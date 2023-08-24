@@ -9,7 +9,7 @@ import { IdEntity } from '../../base';
 import { School } from '../../school/entities';
 
 @Entity()
-export class Departament extends IdEntity {
+export class Department extends IdEntity {
 
   @Column({ nullable: false, unique: true })
   name: string;

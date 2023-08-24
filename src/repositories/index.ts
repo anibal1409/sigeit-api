@@ -1,5 +1,6 @@
 export * from './base';
 export * from './career';
+export * from './classroom';
 export * from './day';
 export * from './departament';
 export * from './period';

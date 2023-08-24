@@ -1,26 +1,102 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCareerDto } from './dto/create-career.dto';
-import { UpdateCareerDto } from './dto/update-career.dto';
+import {
+  Not,
+  Repository,
+} from 'typeorm';
+
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { CrudRepository } from '../../common';
+import {
+  CreateCareerDto,
+  UpdateCareerDto,
+} from './dto';
+import { ResponseCareerDto } from './dto/response-career.dto';
+import { Career } from './entities';
 
 @Injectable()
-export class CareerService {
-  create(createCareerDto: CreateCareerDto) {
-    return 'This action adds a new career';
+export class CareerService implements CrudRepository<Career> {
+
+  constructor(
+    @InjectRepository(Career)
+    private repository: Repository<Career>,
+  ) { }
+
+  async findValid(id: number): Promise<Career> {
+    const item = await this.repository.findOne({
+      where: {
+        id,
+        deleted: false,
+      },
+      relations: [],
+    });
+    if (!item) {
+      throw new NotFoundException('Career not found');
+    }
+    return item;
+  }
+
+  findByName(name: string, id?: number): Promise<Career> {
+    return this.repository.findOne({
+      where: {
+        id: Not(id || 0),
+        name,
+        deleted: false,
+      },
+    });
+  }
+
+  async create(createDto: CreateCareerDto): Promise<ResponseCareerDto> {
+    if (this.findByName(createDto.name)) {
+      throw new BadRequestException('Career already exists.');
+    }
+
+    const item = await this.repository.save(createDto);
+    return await this.findOne(item.id);
   }
 
   findAll() {
-    return `This action returns all career`;
+    return this.repository.find({
+      where: {
+        deleted: false,
+      },
+      order: {
+        name: 'ASC',
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} career`;
+  async findOne(id: number): Promise<ResponseCareerDto> {
+    const item = await this.findValid(id);
+    return new ResponseCareerDto(item);
   }
 
-  update(id: number, updateCareerDto: UpdateCareerDto) {
-    return `This action updates a #${id} career`;
+  async update(
+    id: number,
+    updateDto: UpdateCareerDto,
+  ): Promise<ResponseCareerDto> {
+    await this.findByName(updateDto.name, id);
+    const item = await this.repository.save({
+      id,
+      name: updateDto.name,
+      description: updateDto?.description,
+      abbreviation: updateDto?.abbreviation,
+      logo: updateDto?.logo,
+      department: {
+        id: updateDto.departmentId,
+      },
+    });
+
+    return this.findOne(item.id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} career`;
+  async remove(id: number): Promise<ResponseCareerDto> {
+    const item = await this.findValid(id);
+    item.deleted = true;
+    return new ResponseCareerDto(await this.repository.save(item));
   }
 }

@@ -10,16 +10,17 @@ import {
 import {
   ApiProperty,
   ApiPropertyOptional,
-  OmitType,
-  PartialType,
 } from '@nestjs/swagger';
 
 import { Period } from '../entities';
 import { StagePeriod } from '../enum';
 
-export class CreatePeriodDto extends PartialType(
-  OmitType(Period, ['updatedAt', 'createdAt', 'deleted'])
-) {
+export class ResponsePeriodDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @Type(() => Number)
+  id: number;
+
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -69,4 +70,18 @@ export class CreatePeriodDto extends PartialType(
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
+
+  constructor(data: Period) {
+    this.id = data.id;
+    this.name = data.name;
+    this.description = data.description;
+    this.status = data.status;
+    this.duration = data.duration;
+    this.start = data.start;
+    this.end = data.end;
+    this.start_time = data.start_time;
+    this.end_time = data.end_time;
+    this.interval = data.interval;
+    this.stage = data.stage;
+  }
 }

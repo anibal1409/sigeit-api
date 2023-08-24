@@ -1,2 +1,2 @@
-export * from './use-case';
 export * from './crud-repository';
+export * from './use-case';

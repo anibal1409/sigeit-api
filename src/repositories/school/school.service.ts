@@ -25,17 +25,17 @@ export class SchoolService implements CrudRepository<School> {
   ) {}
 
   async findValid(id: number): Promise<School> {
-    const school = await this.repository.findOne({
+    const item = await this.repository.findOne({
       where: {
         id,
         deleted: false,
       },
       relations: [],
     });
-    if (!school) {
+    if (!item) {
       throw new NotFoundException('School not found');
     }
-    return school;
+    return item;
   }
 
   findByName(name: string, id?: number): Promise<School> {
@@ -53,8 +53,8 @@ export class SchoolService implements CrudRepository<School> {
       throw new BadRequestException('School already exists.');
     }
 
-    const school = await this.repository.save(createSchoolDto);
-    return await this.findOne(school.id);
+    const item = await this.repository.save(createSchoolDto);
+    return await this.findOne(item.id);
   }
 
   findAll() {
@@ -69,28 +69,29 @@ export class SchoolService implements CrudRepository<School> {
   }
 
   async findOne(id: number): Promise<ResponseSchoolDto> {
-    const school = await this.findValid(id);
-    return new ResponseSchoolDto(school);
+    const item = await this.findValid(id);
+    return new ResponseSchoolDto(item);
   }
 
-  async update(id: number, updateSchoolDto: UpdateSchoolDto): Promise<ResponseSchoolDto> {
-    await this.findByName(updateSchoolDto.name, id);
-    const school = await this.findValid(id);
-    school.name = updateSchoolDto.name;
-    school.description =
-      updateSchoolDto?.description || school.description;
-    school.abbreviation = updateSchoolDto?.abbreviation || school.abbreviation;
-    school.logo = updateSchoolDto?.logo || school.logo;
-    return new ResponseSchoolDto(
-      await this.repository.save(school)
-    );
+  async update(
+    id: number,
+    updateDto: UpdateSchoolDto,
+  ): Promise<ResponseSchoolDto> {
+    await this.findByName(updateDto.name, id);
+    const item = await this.repository.save({
+      id,
+      name: updateDto.name,
+      description: updateDto?.description,
+      abbreviation: updateDto.abbreviation,
+      logo: updateDto?.logo,
+    });
+
+    return this.findOne(item.id);
   }
 
   async remove(id: number): Promise<ResponseSchoolDto> {
-    const school = await this.findValid(id);
-    school.deleted = true;
-    return new ResponseSchoolDto(
-      await this.repository.save(school)
-    );
+    const item = await this.findValid(id);
+    item.deleted = true;
+    return new ResponseSchoolDto(await this.repository.save(item));
   }
 }

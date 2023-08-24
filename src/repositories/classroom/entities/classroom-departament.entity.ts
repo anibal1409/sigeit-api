@@ -1,17 +1,23 @@
 import {
-  Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+import { Department } from '../../departament';
+import { Classroom } from './classroom.entity';
 
 @Entity()
 export class ClassroomDepartment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
-  classroomId: number;
+  @ManyToOne(() => Classroom, (classroom) => classroom.id)
+  @JoinColumn()
+  classroom!: Classroom;
 
-  @Column({ nullable: false })
-  departamentId: number;
+  @ManyToOne(() => Department, (departament) => departament.id)
+  @JoinColumn()
+  departament!: Department;
 }

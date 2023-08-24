@@ -6,24 +6,24 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Departament } from '../../departament/entities';
+import { Department } from '../../departament/entities';
 
 @Entity()
 export class Career extends IdEntity {
 
   @Column({ nullable: false, unique: true })
-  name: string;
+  name!: string;
 
   @Column({ nullable: true })
-  description!: string;
+  description?: string;
 
   @Column({ nullable: true })
-  logo!: string;
+  logo?: string;
 
   @Column({ nullable: false, unique: true })
-  abbreviation: string;
+  abbreviation!: string;
 
-  @ManyToOne(() => Departament, (departament) => departament.id)
+  @ManyToOne(() => Department, (departament) => departament.id)
   @JoinColumn()
-  departament!: Departament;
+  department?: Department;
 }

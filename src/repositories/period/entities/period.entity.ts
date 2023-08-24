@@ -4,35 +4,36 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
+import { StagePeriod } from '../enum';
 
 @Entity()
 export class Period extends IdEntity {
 
   @Column({ nullable: false, unique: true })
-  name: string;
+  name!: string;
 
   @Column({ nullable: true })
-  description!: string;
+  description?: string;
 
   @Column({ nullable: false })
-  start: Date;
+  start!: Date;
 
   @Column({ nullable: false })
-  end: Date;
+  end!: Date;
 
   @Column({ nullable: false })
-  start_time: string;
+  start_time!: string;
 
   @Column({ nullable: false })
-  end_time: string;
+  end_time!: string;
 
   @Column({ nullable: false })
-  interval: number;
+  interval!: number;
 
   @Column({ nullable: false })
-  duration: number;
+  duration!: number;
 
   @Column({ nullable: false })
-  stage: string;
+  stage!: StagePeriod;
 
 }

@@ -1,2 +1,3 @@
-export * from './create-departament.dto';
-export * from './update-departament.dto';
+export * from './create-department.dto';
+export * from './response-depatment.dto';
+export * from './update-department.dto';
