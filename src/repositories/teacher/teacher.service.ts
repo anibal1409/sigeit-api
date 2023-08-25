@@ -51,7 +51,7 @@ export class TeacherService implements CrudRepository<Teacher> {
   }
 
   async create(createDto: CreateTeacherDto): Promise<ResponseTeacherDto> {
-    if (this.findByIdDocument(createDto.name)) {
+    if (this.findByIdDocument(createDto.id_document)) {
       throw new BadRequestException('Teacher already exists.');
     }
 
@@ -93,7 +93,9 @@ export class TeacherService implements CrudRepository<Teacher> {
     id: number,
     updateDto: UpdateTeacherDto,
   ): Promise<ResponseTeacherDto> {
-    await this.findByIdDocument(updateDto.name, id);
+    if (await this.findByIdDocument(updateDto.id_document, id)) {
+      throw new BadRequestException('Teacher already exists.');
+    }
     const item = await this.repository.save({
       id,
       id_document: updateDto.id_document,

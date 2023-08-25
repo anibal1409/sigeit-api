@@ -77,7 +77,9 @@ export class SchoolService implements CrudRepository<School> {
     id: number,
     updateDto: UpdateSchoolDto,
   ): Promise<ResponseSchoolDto> {
-    await this.findByName(updateDto.name, id);
+    if (await this.findByName(updateDto.name, id)) {
+      throw new BadRequestException('School already exists.');
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,

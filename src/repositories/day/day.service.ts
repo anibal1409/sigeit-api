@@ -77,7 +77,9 @@ export class DayService implements CrudRepository<Day> {
   }
 
   async update(id: number, updateDto: UpdateDayDto): Promise<ResponseDayDto> {
-    await this.findByName(updateDto.name, id);
+    if (await this.findByName(updateDto.name, id)) {
+      throw new BadRequestException('Day already exists.');
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,

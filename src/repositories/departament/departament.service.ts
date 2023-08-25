@@ -79,7 +79,9 @@ export class DepartamentService implements CrudRepository<Department> {
     id: number,
     updateDto: UpdateDepartmentDto,
   ): Promise<ResponseDepartmentDto> {
-    await this.findByName(updateDto.name, id);
+    if (await this.findByName(updateDto.name, id)) {
+      throw new BadRequestException('Department already exists.');
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,

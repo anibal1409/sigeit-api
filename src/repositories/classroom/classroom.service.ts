@@ -132,7 +132,9 @@ export class ClassroomService implements CrudRepository<Classroom> {
     id: number,
     updateDto: UpdateClassroomDto,
   ): Promise<ResponseClassroomDto> {
-    await this.findByName(updateDto.name, id);
+    if (await this.findByName(updateDto.name, id)) {
+      throw new BadRequestException('Classroom already exists.');
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,

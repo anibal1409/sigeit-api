@@ -79,7 +79,9 @@ export class CareerService implements CrudRepository<Career> {
     id: number,
     updateDto: UpdateCareerDto,
   ): Promise<ResponseCareerDto> {
-    await this.findByName(updateDto.name, id);
+    if (await this.findByName(updateDto.name, id)) {
+      throw new BadRequestException('Career already exists.');
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,

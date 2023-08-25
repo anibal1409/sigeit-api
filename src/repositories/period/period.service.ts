@@ -95,7 +95,9 @@ export class PeriodService implements CrudRepository<Period> {
     id: number,
     updateDto: UpdatePeriodDto,
   ): Promise<ResponsePeriodDto> {
-    await this.findByName(updateDto.name, id);
+    if (await this.findByName(updateDto.name, id)) {
+      throw new BadRequestException('Period already exists.');
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,

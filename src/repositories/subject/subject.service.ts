@@ -133,6 +133,9 @@ export class SubjectService implements CrudRepository<Subject> {
         career: {
           id: careerId,
         },
+        subject: {
+          semester: query?.semester || Not(0),
+        },
       },
       order: {
         subject: {
@@ -144,9 +147,7 @@ export class SubjectService implements CrudRepository<Subject> {
     const subjects = subjectCareer.map((item) => {
       return new ResponseSubjectDto(item.subject);
     });
-    return subjects.filter((item) => {
-      return item.semester === query?.semester || !query?.semester;
-    });
+    return subjects;
   }
 
   async findOne(id: number): Promise<ResponseSubjectDto> {
@@ -158,7 +159,9 @@ export class SubjectService implements CrudRepository<Subject> {
     id: number,
     updateDto: UpdateSubjectDto,
   ): Promise<ResponseSubjectDto> {
-    await this.findByName(updateDto.name, id);
+    if (await this.findByName(updateDto.name, id)) {
+      throw new BadRequestException('Subject already exists.');
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,
