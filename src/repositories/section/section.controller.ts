@@ -14,6 +14,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { GetSubjectDepartmentDto } from '../subject';
 import { ResponseSectionDto } from './dto';
 import { CreateSectionDto } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
@@ -40,7 +41,7 @@ export class SectionController {
   findAll(
     @Param('departmentId', ParseIntPipe) departmentId: number,
     @Param('periodId', ParseIntPipe) periodId: number,
-    @Query() data: ResponseSectionDto,
+    @Query() data: GetSubjectDepartmentDto,
   ) {
     return this.sectionService.findAllPeriod(+departmentId, +periodId, data);
   }

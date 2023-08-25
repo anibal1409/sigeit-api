@@ -8,6 +8,7 @@ import {
 import { IdEntity } from '../../base';
 import { Classroom } from '../../classroom';
 import { Day } from '../../day';
+import { Period } from '../../period';
 import { Section } from '../../section';
 
 @Entity()
@@ -17,7 +18,7 @@ export class Schedule extends IdEntity {
   start: string;
 
   @Column({ nullable: true })
-  end: number;
+  end: string;
 
   @ManyToOne(() => Classroom, (classroom) => classroom.id)
   @JoinColumn()
@@ -30,4 +31,8 @@ export class Schedule extends IdEntity {
   @ManyToOne(() => Section, (section) => section.id)
   @JoinColumn()
   section: Section;
+
+  @ManyToOne(() => Period, (period) => period.id)
+  @JoinColumn()
+  period: Period;
 }
