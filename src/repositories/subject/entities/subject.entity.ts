@@ -14,30 +14,30 @@ import { SubjectCarrer } from './subject-career.entity';
 @Entity()
 export class Subject extends IdEntity {
 
-  @Column({ nullable: false })
-  code: string;
+  @Column({ nullable: false, unique: true })
+  code!: string;
 
   @Column({ nullable: false })
-  name: string;
+  name!: string;
 
   @Column({ nullable: false })
-  credits: number;
+  credits!: number;
 
   @Column({ nullable: true })
-  description!: string;
+  description?: string;
 
   @Column({ nullable: false })
-  hours: number;
+  hours!: number;
 
   @Column({ nullable: false })
-  semester: number;
+  semester!: number;
 
   @Column({ nullable: false })
-  type_curriculum: number;
+  type_curriculum!: number;
 
-  @ManyToOne(() => Department, (departament) => departament.id)
+  @ManyToOne(() => Department, (department) => department.id)
   @JoinColumn()
-  departament!: Department;
+  department!: Department;
 
   @ManyToMany((type) => SubjectCarrer)
   @JoinTable({
@@ -52,6 +52,6 @@ export class Subject extends IdEntity {
       //    referencedColumnName: "id"
     // }
   })
-  carrers: SubjectCarrer[];
+  subjectCareer!: SubjectCarrer[];
 
 }
