@@ -20,7 +20,7 @@ export class Classroom extends IdEntity {
   @Column({ nullable: false })
   type: string;
 
-  @ManyToMany((type) => ClassroomDepartment)
+  @ManyToMany(() => ClassroomDepartment)
   @JoinTable({
     name: 'classroom_departament', // pivot table name
       // Custom column name

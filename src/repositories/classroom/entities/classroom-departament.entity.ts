@@ -17,7 +17,7 @@ export class ClassroomDepartment {
   @JoinColumn()
   classroom!: Classroom;
 
-  @ManyToOne(() => Department, (departament) => departament.id)
+  @ManyToOne(() => Department, (department) => department.id)
   @JoinColumn()
-  departament!: Department;
+  department!: Department;
 }

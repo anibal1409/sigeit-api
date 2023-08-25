@@ -10,6 +10,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Day } from '../entities';
 
 export class ResponseDayDto {
+
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
