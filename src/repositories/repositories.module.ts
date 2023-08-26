@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { CareerModule } from './career/career.module';
+import { ClassroomModule } from './classroom/classroom.module';
 import { DayModule } from './day/day.module';
 import { DepartamentModule } from './departament/departament.module';
 import { PeriodModule } from './period/period.module';
@@ -10,7 +11,6 @@ import { SectionModule } from './section/section.module';
 import { SubjectModule } from './subject/subject.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { UserModule } from './user/user.module';
-import { ClassroomModule } from './classroom/classroom.module';
 
 @Module({
   imports: [
@@ -26,5 +26,6 @@ import { ClassroomModule } from './classroom/classroom.module';
     ScheduleModule,
     ClassroomModule,
   ],
+  exports: [UserModule],
 })
 export class RepositoriesModule {}

@@ -15,7 +15,7 @@ export abstract class IdEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ nullable: true, default: false })
+  @Column({ nullable: true, default: true })
   status?: boolean;
 
   @Column({ nullable: true, default: false })

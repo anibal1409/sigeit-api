@@ -1,6 +1,10 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { recovery, welcome } from './templates/templates';
+
+import {
+  recovery,
+  welcome,
+} from './templates/templates';
 
 @Injectable()
 export class MailService {
@@ -39,7 +43,7 @@ export class MailService {
         html: welcome(email_, user_, password_, 'http://localhost:4200/login'),
       });
     } catch (error) {
-      console.log(error);
+      console.log(3333, error);
       return false;
     }
 

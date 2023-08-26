@@ -6,8 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { RepositoriesModule } from './repositories/repositories.module';
 import { AuthModule } from './auth/auth.module';
+import { RepositoriesModule } from './repositories/repositories.module';
 
 @Module({
   imports: [
