@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       secretOrKey: JWT_CONST.secret,
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request): null | string => {
-          const data = request?.cookies['auth-cookie'];
+          const data = request?.cookies['sigeit-cookie'];
           if (!data) {
             return null;
           }

@@ -1,15 +1,15 @@
+import { Observable } from 'rxjs';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  BadRequestException,
   ExecutionContext,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
-import { Observable } from 'rxjs';
+
 import { IS_PUBLIC_KEY } from '../login';
 
 /**
@@ -42,7 +42,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       } else {
         console.log(info);
         this._throwUnauthorized(
-          'Algo ha ocurrido. Por favor, inicie sesión nuevamente.'
+          'Algo ha ocurrido. Por favor, inicie sesión nuevamente.',
         );
       }
     }

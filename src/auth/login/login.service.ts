@@ -50,7 +50,7 @@ export class LoginService {
       (await this.jwtAuthService.decode(_token)).exp + '000',
     );
 
-    res.cookie('auth-cookie', secretData, { httpOnly: true });
+    res.cookie('sigeit-cookie', secretData, { httpOnly: true });
 
     return {
       email,

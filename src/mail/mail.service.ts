@@ -20,7 +20,7 @@ export class MailService {
     try {
       await this.mailerService.sendMail({
         to: email_,
-        subject: 'SM-SOC - Solicitud de cambio de contraseña',
+        subject: 'SIGEIT - Solicitud de cambio de contraseña',
         html: recovery(url_),
       });
     } catch (error) {
@@ -39,7 +39,7 @@ export class MailService {
     try {
       await this.mailerService.sendMail({
         to: email_,
-        subject: 'SM-SOC - Bienvenido a SOFTWARE DE MARKETING SOCIAL',
+        subject: 'SIGEIT - Bienvenido a SOFTWARE DE MARKETING SOCIAL',
         html: welcome(email_, user_, password_, 'http://localhost:4200/login'),
       });
     } catch (error) {

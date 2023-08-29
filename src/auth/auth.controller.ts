@@ -113,7 +113,7 @@ export class AuthController {
     @Req() req: Request,
     @Body() body: ChangePasswordDto
   ): Promise<ChangePasswordResponseDto> {
-    const token = req.cookies['auth-cookie'].token;
+    const token = req.cookies['sigeit-cookie'].token;
 
     return await this.changePasswordService.changePassword(
       token,

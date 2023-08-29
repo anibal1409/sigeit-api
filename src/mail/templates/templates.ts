@@ -18,7 +18,7 @@ export const recovery = (_url: string): string => `
       text-align: center;
       word-break: break-word;
     ">
-    <h1 style="">SM-SOC</h1>
+    <h1 style="">SIGEIT</h1>
   </div>
   <div style="
       font-family: Roboto-Regular, Helvetica, Arial, sans-serif;
@@ -66,7 +66,7 @@ export const welcome = (
       text-align: center;
       word-break: break-word;
     ">
-    <div style="font-size: 24px">Bienvenido a <strong>SM-SOC </strong></div>
+    <div style="font-size: 24px">Bienvenido a <strong>SIGEIT UDO MONAGAS </strong></div>
   </div>
   <div style="
       font-family: Roboto-Regular, Helvetica, Arial, sans-serif;
@@ -76,7 +76,7 @@ export const welcome = (
       padding-top: 20px;
       text-align: center;
     ">
-    Te damos la bienvenida a SOFTWARE DE MARKETING SOCIAL. Tus datos de acceso al
+    Te damos la bienvenida a SISTEMA PARA LA GESTION DE ITINERARIOS. Tus datos de acceso al
     sistema son los siguiente:
     <div style="
         padding-top: 20px;
