@@ -310,9 +310,9 @@
         ]
       }
     },
-    "/departament": {
+    "/department": {
       "post": {
-        "operationId": "DepartamentController_create",
+        "operationId": "DepartmentController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -337,11 +337,11 @@
           }
         },
         "tags": [
-          "departament"
+          "department"
         ]
       },
       "get": {
-        "operationId": "DepartamentController_findAll",
+        "operationId": "DepartmentController_findAll",
         "parameters": [],
         "responses": {
           "default": {
@@ -359,13 +359,13 @@
           }
         },
         "tags": [
-          "departament"
+          "department"
         ]
       }
     },
-    "/departament/{id}": {
+    "/department/{id}": {
       "get": {
-        "operationId": "DepartamentController_findOne",
+        "operationId": "DepartmentController_findOne",
         "parameters": [
           {
             "name": "id",
@@ -389,11 +389,11 @@
           }
         },
         "tags": [
-          "departament"
+          "department"
         ]
       },
       "patch": {
-        "operationId": "DepartamentController_update",
+        "operationId": "DepartmentController_update",
         "parameters": [
           {
             "name": "id",
@@ -427,11 +427,11 @@
           }
         },
         "tags": [
-          "departament"
+          "department"
         ]
       },
       "delete": {
-        "operationId": "DepartamentController_remove",
+        "operationId": "DepartmentController_remove",
         "parameters": [
           {
             "name": "id",
@@ -455,7 +455,7 @@
           }
         },
         "tags": [
-          "departament"
+          "department"
         ]
       }
     },
@@ -1528,7 +1528,7 @@
         "operationId": "ScheduleController_findAll",
         "parameters": [
           {
-            "name": "periodId",
+            "name": "id",
             "required": true,
             "in": "path",
             "schema": {
@@ -2071,10 +2071,10 @@
           "abbreviation": {
             "type": "string"
           },
-          "departamentId": {
+          "departmentId": {
             "type": "number"
           },
-          "departament": {
+          "department": {
             "$ref": "#/components/schemas/Department"
           },
           "status": {
@@ -2085,8 +2085,8 @@
           "id",
           "name",
           "abbreviation",
-          "departamentId",
-          "departament",
+          "departmentId",
+          "department",
           "status"
         ]
       },
@@ -2187,6 +2187,10 @@
           }
         }
       },
+      "School": {
+        "type": "object",
+        "properties": {}
+      },
       "CreateDepartmentDto": {
         "type": "object",
         "properties": {
@@ -2202,8 +2206,8 @@
           "abbreviation": {
             "type": "string"
           },
-          "schoolId": {
-            "type": "number"
+          "school": {
+            "$ref": "#/components/schemas/School"
           },
           "status": {
             "type": "boolean"
@@ -2212,13 +2216,9 @@
         "required": [
           "name",
           "abbreviation",
-          "schoolId",
+          "school",
           "status"
         ]
-      },
-      "School": {
-        "type": "object",
-        "properties": {}
       },
       "ResponseDepartmentDto": {
         "type": "object",
@@ -2272,8 +2272,8 @@
           "abbreviation": {
             "type": "string"
           },
-          "schoolId": {
-            "type": "number"
+          "school": {
+            "$ref": "#/components/schemas/School"
           },
           "status": {
             "type": "boolean"
@@ -2662,10 +2662,10 @@
           "type_curriculum": {
             "type": "number"
           },
-          "departamentId": {
+          "departmentId": {
             "type": "number"
           },
-          "departament": {
+          "department": {
             "$ref": "#/components/schemas/Department"
           },
           "status": {
@@ -2692,8 +2692,8 @@
           "hours",
           "semester",
           "type_curriculum",
-          "departamentId",
-          "departament",
+          "departmentId",
+          "department",
           "status",
           "careerIds",
           "careers"
@@ -3107,13 +3107,13 @@
           "type": {
             "type": "string"
           },
-          "departamentIds": {
+          "departmentIds": {
             "type": "array",
             "items": {
               "type": "number"
             }
           },
-          "departaments": {
+          "departments": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Department"
@@ -3127,8 +3127,8 @@
           "id",
           "name",
           "type",
-          "departamentIds",
-          "departaments",
+          "departmentIds",
+          "departments",
           "status"
         ]
       },

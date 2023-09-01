@@ -11,7 +11,7 @@ import {
   ApiPropertyOptional,
 } from '@nestjs/swagger';
 
-import { Department } from '../../departament';
+import { Department } from '../../department';
 import { Classroom } from '../entities';
 
 export class ResponseClassroomDto {
@@ -39,12 +39,12 @@ export class ResponseClassroomDto {
   @ApiProperty({ type: [Number] })
   @IsNotEmpty()
   @Type(() => Number)
-  departamentIds: Array<number>;
+  departmentIds: Array<number>;
 
   @ApiProperty({ type: [Department] })
   @IsOptional()
   @Type(() => Department)
-  departaments: Array<Department>;
+  departments: Array<Department>;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -56,8 +56,8 @@ export class ResponseClassroomDto {
     this.name = data.name;
     this.description = data.description;
     this.status = data.status;
-    this.departamentIds = data.departments.map((item) => item.department.id);
-    this.departaments = data.departments.map((item) => item.department);
+    this.departmentIds = data.departments.map((item) => item.department.id);
+    this.departments = data.departments.map((item) => item.department);
     this.type = data.type;
   }
 }

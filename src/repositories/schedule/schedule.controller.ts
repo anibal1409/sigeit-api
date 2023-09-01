@@ -9,6 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+// eslint-disable-next-line prettier/prettier
 import {
   ApiResponse,
   ApiTags,
@@ -39,10 +40,10 @@ export class ScheduleController {
     isArray: true,
   })
   findAll(
-    @Param('periodId', ParseIntPipe) periodId: number,
+    @Param('id', ParseIntPipe) id: number,
     @Query() data: GetSectionsDto,
   ) {
-    return this.scheduleService.findAllPeriod(periodId, data);
+    return this.scheduleService.findAllPeriod(id, data);
   }
 
   @Get(':id')

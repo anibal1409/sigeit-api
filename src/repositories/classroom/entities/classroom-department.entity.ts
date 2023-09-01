@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { Department } from '../../departament';
+import { Department } from '../../department';
 import { Classroom } from './classroom.entity';
 
 @Entity()

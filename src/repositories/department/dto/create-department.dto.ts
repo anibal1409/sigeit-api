@@ -13,6 +13,7 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
+import { School } from '../../school';
 import { Department } from '../entities';
 
 export class CreateDepartmentDto extends PartialType(
@@ -41,8 +42,8 @@ export class CreateDepartmentDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  schoolId!: number;
+  @Type(() => School)
+  school!: School;
 
   @ApiProperty()
   @IsNotEmpty()

@@ -8,7 +8,7 @@ import {
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Department } from '../../departament';
+import { Department } from '../../department';
 import { School } from '../../school';
 import { Teacher } from '../../teacher';
 import { User } from '../entities';

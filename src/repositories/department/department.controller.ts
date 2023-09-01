@@ -13,22 +13,22 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { DepartamentService } from './departament.service';
+import { DepartmentService } from './department.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { ResponseDepartmentDto } from './dto/response-depatment.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 
-@ApiTags('departament')
-@Controller('departament')
-export class DepartamentController {
-  constructor(private readonly departamentService: DepartamentService) {}
+@ApiTags('department')
+@Controller('department')
+export class DepartmentController {
+  constructor(private readonly departmentService: DepartmentService) {}
 
   @Post()
   @ApiResponse({
     type: ResponseDepartmentDto,
   })
-  create(@Body() createDepartamentDto: CreateDepartmentDto) {
-    return this.departamentService.create(createDepartamentDto);
+  create(@Body() createDepartmentDto: CreateDepartmentDto) {
+    return this.departmentService.create(createDepartmentDto);
   }
 
   @Get()
@@ -37,7 +37,7 @@ export class DepartamentController {
     isArray: true,
   })
   findAll() {
-    return this.departamentService.findAll();
+    return this.departmentService.findAll();
   }
 
   @Get(':id')
@@ -45,7 +45,7 @@ export class DepartamentController {
     type: ResponseDepartmentDto,
   })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.departamentService.findOne(+id);
+    return this.departmentService.findOne(+id);
   }
 
   @Patch(':id')
@@ -54,9 +54,9 @@ export class DepartamentController {
   })
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateDepartamentDto: UpdateDepartmentDto,
+    @Body() updateDepartmentDto: UpdateDepartmentDto,
   ) {
-    return this.departamentService.update(+id, updateDepartamentDto);
+    return this.departmentService.update(+id, updateDepartmentDto);
   }
 
   @Delete(':id')
@@ -64,6 +64,6 @@ export class DepartamentController {
     type: ResponseDepartmentDto,
   })
   remove(@Param('id', ParseIntPipe) id: number) {
-    return this.departamentService.remove(+id);
+    return this.departmentService.remove(+id);
   }
 }

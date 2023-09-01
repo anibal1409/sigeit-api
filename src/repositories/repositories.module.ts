@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { CareerModule } from './career/career.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { DayModule } from './day/day.module';
-import { DepartamentModule } from './departament/departament.module';
+import { DepartmentModule } from './department';
 import { PeriodModule } from './period/period.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { SchoolModule } from './school/school.module';
@@ -16,7 +16,7 @@ import { UserModule } from './user/user.module';
   imports: [
     CareerModule,
     SchoolModule,
-    DepartamentModule,
+    DepartmentModule,
     UserModule,
     DayModule,
     PeriodModule,

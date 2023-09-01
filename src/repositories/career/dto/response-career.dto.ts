@@ -11,7 +11,7 @@ import {
   ApiPropertyOptional,
 } from '@nestjs/swagger';
 
-import { Department } from '../../departament';
+import { Department } from '../../department';
 import { Career } from '../entities';
 
 export class ResponseCareerDto {
@@ -43,12 +43,12 @@ export class ResponseCareerDto {
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
-  departamentId: number;
+  departmentId: number;
 
   @ApiProperty()
   @IsOptional()
   @Type(() => Department)
-  departament: Department;
+  department: Department;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -61,8 +61,8 @@ export class ResponseCareerDto {
     this.description = data.description;
     this.abbreviation = data.abbreviation;
     this.logo = data.logo;
-    this.departamentId = data.department.id;
-    this.departament = data.department;
+    this.departmentId = data.department.id;
+    this.department = data.department;
     this.status = data.status;
   }
 }

@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Department } from '../../departament/entities';
+import { Department } from '../../department/entities';
 import { SubjectCarrer } from './subject-career.entity';
 
 @Entity()

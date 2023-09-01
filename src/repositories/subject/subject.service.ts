@@ -111,12 +111,12 @@ export class SubjectService implements CrudRepository<Subject> {
     });
   }
 
-  findAllDepartment(departamentId: number, query?: GetSubjectDepartmentDto) {
+  findAllDepartment(departmentId: number, query?: GetSubjectDepartmentDto) {
     return this.repository.find({
       where: {
         deleted: false,
         department: {
-          id: departamentId,
+          id: departmentId,
         },
         semester: query?.semester || Not(0),
       },

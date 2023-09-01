@@ -19,7 +19,7 @@ import { ResponseDepartmentDto } from './dto/response-depatment.dto';
 import { Department } from './entities';
 
 @Injectable()
-export class DepartamentService implements CrudRepository<Department> {
+export class DepartmentService implements CrudRepository<Department> {
 
   constructor(
     @InjectRepository(Department)
@@ -32,7 +32,7 @@ export class DepartamentService implements CrudRepository<Department> {
         id,
         deleted: false,
       },
-      relations: [],
+      relations: ['school'],
     });
     if (!item) {
       throw new NotFoundException('Department not found');
@@ -51,12 +51,15 @@ export class DepartamentService implements CrudRepository<Department> {
   }
 
   async create(createDto: CreateDepartmentDto): Promise<ResponseDepartmentDto> {
-    if (this.findByName(createDto.name)) {
+    if (await this.findByName(createDto.name)) {
       throw new BadRequestException('Department already exists.');
     }
+    console.log(createDto);
+    
 
     const item = await this.repository.save(createDto);
-    return await this.findOne(item.id);
+    console.log(item);
+    return this.findOne(item.id);
   }
 
   findAll() {
@@ -64,7 +67,11 @@ export class DepartamentService implements CrudRepository<Department> {
       where: {
         deleted: false,
       },
+      relations: ['school'],
       order: {
+        school: {
+          name: 'ASC',
+        },
         name: 'ASC',
       },
     });
@@ -88,9 +95,7 @@ export class DepartamentService implements CrudRepository<Department> {
       description: updateDto?.description,
       abbreviation: updateDto.abbreviation,
       logo: updateDto?.logo,
-      school: {
-        id: updateDto?.schoolId,
-      },
+      school: updateDto?.school,
     });
 
     return this.findOne(item.id);

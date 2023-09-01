@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+// eslint-disable-next-line prettier/prettier
 import {
   ApiResponse,
   ApiTags,
@@ -28,6 +29,7 @@ export class SchoolController {
     type: ResponseSchoolDto,
   })
   create(@Body() createSchoolDto: CreateSchoolDto) {
+    console.log('createSchoolDto', createSchoolDto);
     return this.schoolService.create(createSchoolDto);
   }
 
@@ -63,7 +65,7 @@ export class SchoolController {
   @ApiResponse({
     type: ResponseSchoolDto,
   })
-  remove(@Param('id', ParseIntPipe) id: number,) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.schoolService.remove(+id);
   }
 }

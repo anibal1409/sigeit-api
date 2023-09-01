@@ -1,4 +1,5 @@
 import { Type } from 'class-transformer';
+// eslint-disable-next-line prettier/prettier
 import {
   IsBoolean,
   IsNotEmpty,
@@ -6,13 +7,14 @@ import {
   IsString,
 } from 'class-validator';
 
+// eslint-disable-next-line prettier/prettier
 import {
   ApiProperty,
   ApiPropertyOptional,
 } from '@nestjs/swagger';
 
 import { Career } from '../../career';
-import { Department } from '../../departament';
+import { Department } from '../../department';
 import { Subject } from '../entities';
 
 export class ResponseSubjectDto {
@@ -59,12 +61,12 @@ export class ResponseSubjectDto {
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
-  departamentId: number;
+  departmentId: number;
 
   @ApiProperty()
   @IsOptional()
   @Type(() => Department)
-  departament: Department;
+  department: Department;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -85,8 +87,8 @@ export class ResponseSubjectDto {
     this.id = data.id;
     this.name = data.name;
     this.description = data.description;
-    this.departamentId = data.department.id;
-    this.departament = data.department;
+    this.departmentId = data.department.id;
+    this.department = data.department;
     this.status = data.status;
     this.careerIds = data.subjectCareer.map((item) => item.career.id);
     this.code = data.code;

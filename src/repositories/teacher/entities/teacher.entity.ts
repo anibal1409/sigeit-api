@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Department } from '../../departament/entities';
+import { Department } from '../../department/entities';
 
 @Entity()
 export class Teacher extends IdEntity {
@@ -23,7 +23,7 @@ export class Teacher extends IdEntity {
   @Column({ nullable: true })
   email?: string;
 
-  @ManyToOne(() => Department, (departament) => departament.id)
+  @ManyToOne(() => Department, (department) => department.id)
   @JoinColumn()
   department!: Department;
 }

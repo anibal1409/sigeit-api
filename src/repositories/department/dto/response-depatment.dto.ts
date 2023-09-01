@@ -1,4 +1,5 @@
 import { Type } from 'class-transformer';
+// eslint-disable-next-line prettier/prettier
 import {
   IsBoolean,
   IsNotEmpty,
@@ -6,6 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
+// eslint-disable-next-line prettier/prettier
 import {
   ApiProperty,
   ApiPropertyOptional,
@@ -49,13 +51,14 @@ export class ResponseDepartmentDto {
   @IsOptional()
   @Type(() => School)
   school: School;
-  
+
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
 
   constructor(data: Department) {
+    console.log(data);
     this.id = data.id;
     this.name = data.name;
     this.description = data.description;

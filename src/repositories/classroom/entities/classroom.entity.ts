@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { ClassroomDepartment } from './classroom-departament.entity';
+import { ClassroomDepartment } from './classroom-department.entity';
 
 @Entity()
 export class Classroom extends IdEntity {
@@ -22,7 +22,7 @@ export class Classroom extends IdEntity {
 
   @ManyToMany(() => ClassroomDepartment)
   @JoinTable({
-    name: 'classroom_departament', // pivot table name
+    name: 'classrooms_department', // pivot table name
       // Custom column name
       // joinColumn: {
       //    name: "userId",

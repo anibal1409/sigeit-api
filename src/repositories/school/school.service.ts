@@ -1,3 +1,4 @@
+// eslint-disable-next-line prettier/prettier
 import {
   Not,
   Repository,
@@ -18,11 +19,10 @@ import { School } from './entities';
 
 @Injectable()
 export class SchoolService implements CrudRepository<School> {
-
   constructor(
     @InjectRepository(School)
     private repository: Repository<School>,
-  ) {}
+  ) { }
 
   async findValid(id: number): Promise<School> {
     const item = await this.repository.findOne({
@@ -49,12 +49,13 @@ export class SchoolService implements CrudRepository<School> {
   }
 
   async create(createSchoolDto: CreateSchoolDto): Promise<ResponseSchoolDto> {
-    if (this.findByName(createSchoolDto.name)) {
+    const school = await this.findByName(createSchoolDto.name);
+    if (school) {
       throw new BadRequestException('School already exists.');
     }
 
     const item = await this.repository.save(createSchoolDto);
-    return await this.findOne(item.id);
+    return this.findOne(item.id);
   }
 
   findAll() {
