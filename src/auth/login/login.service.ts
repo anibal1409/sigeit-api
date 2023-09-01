@@ -42,9 +42,8 @@ export class LoginService {
       token: _token,
     };
 
-    const { email, id, role, name } = await this.userService.findOneByEmail(
-      user.email,
-    );
+    const { email, id, role, name, school, department, teacher } =
+      await this.userService.findOneByEmail(user.email);
 
     const _expiredTime = parseInt(
       (await this.jwtAuthService.decode(_token)).exp + '000',
@@ -58,6 +57,9 @@ export class LoginService {
       role,
       name,
       loginStamp: _expiredTime,
+      school,
+      department,
+      teacher,
     };
   }
 

@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CrudRepository } from '../../common/use-case';
 import {
   CreateDepartmentDto,
+  GetDepartmentsDto,
   UpdateDepartmentDto,
 } from './dto';
 import { ResponseDepartmentDto } from './dto/response-depatment.dto';
@@ -54,18 +55,18 @@ export class DepartmentService implements CrudRepository<Department> {
     if (await this.findByName(createDto.name)) {
       throw new BadRequestException('Department already exists.');
     }
-    console.log(createDto);
-    
 
     const item = await this.repository.save(createDto);
-    console.log(item);
     return this.findOne(item.id);
   }
 
-  findAll() {
+  findAll(data: GetDepartmentsDto) {
     return this.repository.find({
       where: {
         deleted: false,
+        school: {
+          id: data?.schoolId || Not(0),
+        },
       },
       relations: ['school'],
       order: {

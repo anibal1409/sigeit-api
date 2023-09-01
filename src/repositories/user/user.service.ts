@@ -48,6 +48,7 @@ export class UserService implements CrudRepository<User> {
       where: {
         email,
       },
+      relations: ['school', 'department', 'teacher'],
     });
   }
 

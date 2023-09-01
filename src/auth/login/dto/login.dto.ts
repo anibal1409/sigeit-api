@@ -1,6 +1,16 @@
+import { Type } from 'class-transformer';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { Department } from '../../../repositories/department/entities';
+import { School } from '../../../repositories/school/entities';
+import { Teacher } from '../../../repositories/teacher/entities';
 
 export class UserLoginDto {
   email: string;
@@ -44,4 +54,19 @@ export class LoginUserResponseDto {
   @IsNotEmpty()
   @IsNumber()
   loginStamp: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => School)
+  school: School;
+
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => Department)
+  department: Department;
+
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => Teacher)
+  teacher: Teacher;
 }

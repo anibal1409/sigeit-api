@@ -7,16 +7,21 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
+// eslint-disable-next-line prettier/prettier
 import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
 import { DepartmentService } from './department.service';
-import { CreateDepartmentDto } from './dto/create-department.dto';
-import { ResponseDepartmentDto } from './dto/response-depatment.dto';
-import { UpdateDepartmentDto } from './dto/update-department.dto';
+import {
+  CreateDepartmentDto,
+  GetDepartmentsDto,
+  ResponseDepartmentDto,
+  UpdateDepartmentDto,
+} from './dto';
 
 @ApiTags('department')
 @Controller('department')
@@ -36,8 +41,8 @@ export class DepartmentController {
     type: ResponseDepartmentDto,
     isArray: true,
   })
-  findAll() {
-    return this.departmentService.findAll();
+  findAll(@Query() data: GetDepartmentsDto) {
+    return this.departmentService.findAll(data);
   }
 
   @Get(':id')

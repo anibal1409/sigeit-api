@@ -3,9 +3,10 @@ import { IsOptional } from 'class-validator';
 
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class GetSubjectDepartmentDto {
+export class GetDepartmentsDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
-  semester?: number;
+  schoolId?: number;
 }
+

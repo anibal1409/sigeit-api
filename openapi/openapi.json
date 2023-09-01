@@ -342,7 +342,16 @@
       },
       "get": {
         "operationId": "DepartmentController_findAll",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": "",
@@ -991,6 +1000,14 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
@@ -1021,6 +1038,14 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
             "schema": {
               "type": "number"
             }
@@ -1374,6 +1399,14 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
@@ -1531,6 +1564,38 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "periodId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
             "schema": {
               "type": "number"
             }
