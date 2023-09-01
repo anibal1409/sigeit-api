@@ -51,7 +51,7 @@ export class CareerService implements CrudRepository<Career> {
   }
 
   async create(createDto: CreateCareerDto): Promise<ResponseCareerDto> {
-    if (this.findByName(createDto.name)) {
+    if (await this.findByName(createDto.name)) {
       throw new BadRequestException('Career already exists.');
     }
 

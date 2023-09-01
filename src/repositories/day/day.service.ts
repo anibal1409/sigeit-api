@@ -51,7 +51,7 @@ export class DayService implements CrudRepository<Day> {
   }
 
   async create(createDto: CreateDayDto): Promise<ResponseDayDto> {
-    if (this.findByName(createDto.name)) {
+    if (await this.findByName(createDto.name)) {
       throw new BadRequestException('Day already exists.');
     }
 

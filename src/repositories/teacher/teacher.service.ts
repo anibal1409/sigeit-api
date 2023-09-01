@@ -51,7 +51,7 @@ export class TeacherService implements CrudRepository<Teacher> {
   }
 
   async create(createDto: CreateTeacherDto): Promise<ResponseTeacherDto> {
-    if (this.findByIdDocument(createDto.id_document)) {
+    if (await this.findByIdDocument(createDto.id_document)) {
       throw new BadRequestException('Teacher already exists.');
     }
 

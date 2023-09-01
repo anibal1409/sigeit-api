@@ -87,7 +87,7 @@ export class SubjectService implements CrudRepository<Subject> {
   }
 
   async create(createDto: CreateSubjectDto): Promise<ResponseSubjectDto> {
-    if (this.findByCode(createDto.code)) {
+    if (await this.findByCode(createDto.code)) {
       throw new BadRequestException('Code subject already exists.');
     }
 
@@ -159,7 +159,7 @@ export class SubjectService implements CrudRepository<Subject> {
     id: number,
     updateDto: UpdateSubjectDto,
   ): Promise<ResponseSubjectDto> {
-    if (await this.findByName(updateDto.name, id)) {
+    if (await this.findByCode(updateDto.code, id)) {
       throw new BadRequestException('Subject already exists.');
     }
     const item = await this.repository.save({

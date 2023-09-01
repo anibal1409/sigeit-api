@@ -56,7 +56,7 @@ export class ClassroomService implements CrudRepository<Classroom> {
   }
 
   async create(createDto: CreateClassroomDto): Promise<ResponseClassroomDto> {
-    if (this.findByName(createDto.name)) {
+    if (await this.findByName(createDto.name)) {
       throw new BadRequestException('Classroom already exists.');
     }
 

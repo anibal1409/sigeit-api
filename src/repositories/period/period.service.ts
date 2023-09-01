@@ -67,7 +67,7 @@ export class PeriodService implements CrudRepository<Period> {
   }
 
   async create(createDto: CreatePeriodDto): Promise<ResponsePeriodDto> {
-    if (this.findByName(createDto.name)) {
+    if (await this.findByName(createDto.name)) {
       throw new BadRequestException('Period already exists.');
     }
 
