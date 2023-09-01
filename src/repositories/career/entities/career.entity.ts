@@ -2,11 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
 import { Department } from '../../department/entities';
+import { Subject } from '../../subject';
 
 @Entity()
 export class Career extends IdEntity {
@@ -26,4 +28,7 @@ export class Career extends IdEntity {
   @ManyToOne(() => Department, (department) => department.id)
   @JoinColumn()
   department?: Department;
+
+  @ManyToMany((type) => Subject, (subject) => subject.careers)
+  subjects: Subject[];
 }

@@ -36,12 +36,12 @@ export class ResponseClassroomDto {
   @IsString()
   type: string;
 
-  @ApiProperty({ type: [Number] })
+  @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
-  departmentIds: Array<number>;
+  departmentIds: number[];
 
-  @ApiProperty({ type: [Department] })
+  @ApiProperty()
   @IsOptional()
   @Type(() => Department)
   departments: Array<Department>;
@@ -56,8 +56,7 @@ export class ResponseClassroomDto {
     this.name = data.name;
     this.description = data.description;
     this.status = data.status;
-    this.departmentIds = data.departments.map((item) => item.department.id);
-    this.departments = data.departments.map((item) => item.department);
+    this.departments = data.departments;
     this.type = data.type;
   }
 }

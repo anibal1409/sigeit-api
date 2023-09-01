@@ -38,7 +38,7 @@ export class SubjectService implements CrudRepository<Subject> {
         id,
         deleted: false,
       },
-      relations: [],
+      relations: ['department', 'careers'],
     });
     if (!item) {
       throw new NotFoundException('Subject not found');

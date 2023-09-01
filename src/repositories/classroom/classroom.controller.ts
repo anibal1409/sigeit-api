@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiResponse,
@@ -14,6 +15,7 @@ import {
 } from '@nestjs/swagger';
 
 import { ClassroomService } from './classroom.service';
+import { GetClassroomsDto } from './dto';
 import { CreateClassroomDto } from './dto/create-classroom.dto';
 import { ResponseClassroomDto } from './dto/response-classroom.dto';
 import { UpdateClassroomDto } from './dto/update-classroom.dto';
@@ -36,17 +38,8 @@ export class ClassroomController {
     type: ResponseClassroomDto,
     isArray: true,
   })
-  findAll() {
-    return this.classroomService.findAll();
-  }
-
-  @Get('/department/:id')
-  @ApiResponse({
-    type: ResponseClassroomDto,
-    isArray: true,
-  })
-  findAllDepartment(@Param('id', ParseIntPipe) id: number) {
-    return this.classroomService.findAllDepartment(id);
+  findAll(@Query() data: GetClassroomsDto) {
+    return this.classroomService.findAll(data);
   }
 
   @Get(':id')

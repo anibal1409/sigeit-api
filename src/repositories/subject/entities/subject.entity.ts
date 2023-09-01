@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
+import { Career } from '../../career';
 import { Department } from '../../department/entities';
-import { SubjectCarrer } from './subject-career.entity';
 
 @Entity()
 export class Subject extends IdEntity {
@@ -39,19 +39,8 @@ export class Subject extends IdEntity {
   @JoinColumn()
   department!: Department;
 
-  @ManyToMany((type) => SubjectCarrer)
-  @JoinTable({
-    name: 'subject_career', // pivot table name
-      // Custom column name
-      // joinColumn: {
-      //    name: "userId",
-      //    referencedColumnName: "id"
-      // },
-      // inverseJoinColumn: {
-      //    name: "tweetId",
-      //    referencedColumnName: "id"
-    // }
-  })
-  subjectCareer!: SubjectCarrer[];
+  @ManyToMany((type) => Career)
+  @JoinTable()
+  careers: Career[];
 
 }

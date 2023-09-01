@@ -12,6 +12,10 @@ import {
 } from '@nestjs/swagger';
 
 import { Career } from '../../career';
+import { Classroom } from '../../classroom';
+import { Day } from '../../day';
+import { Period } from '../../period';
+import { Section } from '../../section';
 
 export class CreateScheduleDto extends PartialType(
   OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])
@@ -29,23 +33,23 @@ export class CreateScheduleDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  classroomId: number;
+  @Type(() => Classroom)
+  classroom: Classroom;
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  dayId: number;
+  @Type(() => Day)
+  day: Day;
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  sectionId: number;
+  @Type(() => Section)
+  section: Section;
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  periodId: number;
+  @Type(() => Period)
+  period: Period;
 
   @ApiProperty()
   @IsNotEmpty()

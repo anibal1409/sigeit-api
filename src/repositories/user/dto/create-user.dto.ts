@@ -13,6 +13,9 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
+import { Department } from '../../department';
+import { School } from '../../school';
+import { Teacher } from '../../teacher';
 import { User } from '../entities';
 import { Roles } from '../enums';
 
@@ -32,8 +35,8 @@ export class CreateUserDto extends PartialType(
 
   @ApiProperty()
   @IsOptional()
-  @Type(() => Number)
-  teacherId?: number;
+  @Type(() => Teacher)
+  teacher?: Teacher;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -42,11 +45,11 @@ export class CreateUserDto extends PartialType(
 
   @ApiProperty()
   @IsOptional()
-  @Type(() => Number)
-  schoolId: number;
+  @Type(() => School)
+  school?: School;
 
   @ApiProperty()
   @IsOptional()
-  @Type(() => Number)
-  departmentId: number;
+  @Type(() => Department)
+  department?: Department;
 }

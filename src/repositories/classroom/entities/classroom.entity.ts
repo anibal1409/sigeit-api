@@ -6,7 +6,7 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { ClassroomDepartment } from './classroom-department.entity';
+import { Department } from '../../department';
 
 @Entity()
 export class Classroom extends IdEntity {
@@ -20,18 +20,7 @@ export class Classroom extends IdEntity {
   @Column({ nullable: false })
   type: string;
 
-  @ManyToMany(() => ClassroomDepartment)
-  @JoinTable({
-    name: 'classrooms_department', // pivot table name
-      // Custom column name
-      // joinColumn: {
-      //    name: "userId",
-      //    referencedColumnName: "id"
-      // },
-      // inverseJoinColumn: {
-      //    name: "tweetId",
-      //    referencedColumnName: "id"
-    // }
-  })
-  departments: ClassroomDepartment[];
+  @ManyToMany((type) => Department)
+  @JoinTable()
+  departments: Department[];
 }

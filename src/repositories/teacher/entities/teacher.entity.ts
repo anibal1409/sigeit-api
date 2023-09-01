@@ -25,5 +25,5 @@ export class Teacher extends IdEntity {
 
   @ManyToOne(() => Department, (department) => department.id)
   @JoinColumn()
-  department!: Department;
+  department?: Department;
 }

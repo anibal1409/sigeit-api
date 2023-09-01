@@ -33,7 +33,7 @@ export class SectionService implements CrudRepository<Section> {
         id,
         deleted: false,
       },
-      relations: [],
+      relations: ['teacher', 'period', 'subject'],
     });
     if (!item) {
       throw new NotFoundException('Section not found');

@@ -13,13 +13,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CrudRepository } from '../../common';
 import {
   CreateClassroomDto,
+  GetClassroomsDto,
   UpdateClassroomDto,
 } from './dto';
 import { ResponseClassroomDto } from './dto/response-classroom.dto';
-import {
-  Classroom,
-  ClassroomDepartment,
-} from './entities';
+// eslint-disable-next-line prettier/prettier
+import { Classroom } from './entities';
 
 @Injectable()
 export class ClassroomService implements CrudRepository<Classroom> {
@@ -27,9 +26,7 @@ export class ClassroomService implements CrudRepository<Classroom> {
   constructor(
     @InjectRepository(Classroom)
     private repository: Repository<Classroom>,
-    @InjectRepository(ClassroomDepartment)
-    private repository2: Repository<ClassroomDepartment>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<Classroom> {
     const item = await this.repository.findOne({
@@ -61,65 +58,22 @@ export class ClassroomService implements CrudRepository<Classroom> {
     }
 
     const item = await this.repository.save(createDto);
-    await this.createClassroomDepartments(item.id, item.departmentIds);
+
     return await this.findOne(item.id);
   }
 
-  private async createClassroomDepartments(
-    classroomId: number,
-    departmentIds: number[],
-  ) {
-    return this.repository2.save(
-      departmentIds.map((id) => ({
-        classroom: {
-          id: classroomId,
-        },
-        department: {
-          id,
-        },
-      })));
-  }
-
-  private deleteClassroomDepartments(classroomId: number) {
-    return this.repository2.delete({
-      classroom: {
-        id: classroomId,
-      },
-    });
-  }
-
-  findAll() {
+  findAll(data: GetClassroomsDto) {
     return this.repository.find({
       where: {
         deleted: false,
-        status: true,
+        departments: {
+          id: data.departmentId,
+        },
       },
       relations: ['departments'],
       order: {
         name: 'ASC',
       },
-    });
-  }
-
-  findAllDepartment(id: number) {
-    return this.repository2.find({
-      where: {
-        department: {
-          id,
-        },
-      },
-      relations: ['departments'],
-    });
-  }
-
-  findOneDepartments(id: number) {
-    return this.repository2.find({
-      where: {
-        classroom: {
-          id,
-        },
-      },
-      relations: ['departments'],
     });
   }
 
@@ -141,9 +95,8 @@ export class ClassroomService implements CrudRepository<Classroom> {
       description: updateDto?.description,
       status: updateDto?.status,
       type: updateDto?.type,
+      departments: updateDto?.departments,
     });
-    await this.deleteClassroomDepartments(id);
-    await this.createClassroomDepartments(id, updateDto.departmentIds);
 
     return this.findOne(item.id);
   }
@@ -154,4 +107,3 @@ export class ClassroomService implements CrudRepository<Classroom> {
     return new ResponseClassroomDto(await this.repository.save(item));
   }
 }
-

@@ -15,6 +15,7 @@ import {
 } from '@nestjs/swagger';
 
 import { Career } from '../../career';
+import { Department } from '../../department';
 
 export class CreateTeacherDto extends PartialType(
   OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])
@@ -42,8 +43,8 @@ export class CreateTeacherDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  departmentId: number;
+  @Type(() => Department)
+  department: Department;
 
   @ApiProperty()
   @IsNotEmpty()

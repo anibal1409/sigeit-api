@@ -33,7 +33,7 @@ export class ScheduleService implements CrudRepository<Schedule> {
         id,
         deleted: false,
       },
-      relations: [],
+      relations: ['day', 'period', 'classroom', 'section', 'section.subject'],
     });
     if (!item) {
       throw new NotFoundException('Schedule not found');

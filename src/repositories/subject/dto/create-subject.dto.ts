@@ -13,6 +13,8 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
+import { Career } from '../../career';
+import { Department } from '../../department';
 import { Subject } from '../entities';
 
 export class CreateSubjectDto extends PartialType(
@@ -56,17 +58,17 @@ export class CreateSubjectDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  departmentId: number;
+  @Type(() => Department)
+  department: Department;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
 
-  @ApiProperty({type: [Number]})
+  @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  careerIds: number[];
+  @Type(() => Career)
+  careers: Career[];
 
 }
