@@ -67,52 +67,39 @@ export class UserService implements CrudRepository<User> {
   }
 
   async create(creatrDto: CreateUserDto): Promise<UserRespondeDto> {
-    try {
-      const UserEmail = await this.findOneByEmail(creatrDto.email);
-      if (UserEmail) {
-        if (UserEmail.deleted) {
-          throw new BadRequestException(
-            'The user with this email was previously deleted.',
-          );
-        }
-  
-        throw new BadRequestException('E-mail in use');
+    const UserEmail = await this.findOneByEmail(creatrDto.email);
+    if (UserEmail) {
+      if (UserEmail.deleted) {
+        throw new BadRequestException(
+          'The user with this email was previously deleted.',
+        );
       }
-      const passwordDefault = (
-        await hashPassword(Date.now().toString())
-      ).substring(0, 10);
-      console.log(passwordDefault);
-      const user = this.usersRepository.create({
-        email: creatrDto.email,
-        password: await hashPassword(passwordDefault),
-        name: creatrDto.name,
-        role: creatrDto.role,
-        teacher: {
-          id: creatrDto.teacherId,
-        },
-        school: {
-          id: creatrDto.schoolId,
-        },
-        department: {
-          id: creatrDto.departmentId,
-        },
-      });
-  
-      console.log(user);
-      
-      const _userRes = await this.usersRepository.save(user);
-      console.log(2222);
-      
-      await this.mailService.sendWelcome(
-        creatrDto.email,
-        creatrDto.name,
-        passwordDefault,
-      );
-  
-      return new UserRespondeDto(_userRes);
-    } catch (error) {
-      console.log(error);
+
+      throw new BadRequestException('E-mail in use');
     }
+    const passwordDefault = (
+      await hashPassword(Date.now().toString())
+    ).substring(0, 10);
+
+    const user = this.usersRepository.create({
+      email: creatrDto.email,
+      password: await hashPassword(passwordDefault),
+      name: creatrDto.name,
+      role: creatrDto.role,
+      teacher: creatrDto.teacher,
+      school: creatrDto.school,
+      department: creatrDto.department,
+    });
+
+    const _userRes = await this.usersRepository.save(user);
+
+    await this.mailService.sendWelcome(
+      creatrDto.email,
+      creatrDto.name,
+      passwordDefault,
+    );
+
+    return new UserRespondeDto(_userRes);
   }
 
   async update(
@@ -129,15 +116,9 @@ export class UserService implements CrudRepository<User> {
         name: updateUserDto?.name,
         status: updateUserDto?.status,
         role: updateUserDto?.role,
-        teacher: {
-          id: updateUserDto?.teacherId,
-        },
-        school: {
-          id: updateUserDto?.schoolId,
-        },
-        department: {
-          id: updateUserDto?.departmentId,
-        },
+        teacher: updateUserDto.teacher,
+        school: updateUserDto.school,
+        department: updateUserDto.department,
       }),
     );
   }

@@ -1,3 +1,4 @@
+// eslint-disable-next-line prettier/prettier
 import {
   Column,
   Entity,
@@ -6,10 +7,10 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Classroom } from '../../classroom';
-import { Day } from '../../day';
-import { Period } from '../../period';
-import { Section } from '../../section';
+import { Classroom } from '../../classroom/entities';
+import { Day } from '../../day/entities';
+import { Period } from '../../period/entities';
+import { Section } from '../../section/entities';
 
 @Entity()
 export class Schedule extends IdEntity {

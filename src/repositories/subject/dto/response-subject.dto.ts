@@ -90,12 +90,12 @@ export class ResponseSubjectDto {
     this.departmentId = data.department.id;
     this.department = data.department;
     this.status = data.status;
-    this.careerIds = data.subjectCareer.map((item) => item.career.id);
+    this.careerIds = data.careers.map((item) => item.id);
     this.code = data.code;
     this.credits = data.credits;
     this.hours = data.hours;
     this.semester = data.semester;
     this.type_curriculum = data.type_curriculum;
-    this.careers = data.subjectCareer.map((item) => item.career);
+    this.careers = data.careers;
   }
 }

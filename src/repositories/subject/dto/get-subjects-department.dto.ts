@@ -8,4 +8,14 @@ export class GetSubjectDepartmentDto {
   @IsOptional()
   @Type(() => Number)
   semester?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  careerId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  departmentId?: number;
 }

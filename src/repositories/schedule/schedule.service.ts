@@ -1,3 +1,4 @@
+// eslint-disable-next-line prettier/prettier
 import {
   Not,
   Repository,
@@ -77,10 +78,10 @@ export class ScheduleService implements CrudRepository<Schedule> {
       await this.findBySchedule(
         createDto.start,
         createDto.end,
-        createDto.classroomId,
-        createDto.sectionId,
-        createDto.dayId,
-        createDto.periodId,
+        createDto.classroom.id,
+        createDto.section.id,
+        createDto.day.id,
+        createDto.period.id,
       )
     ) {
       throw new BadRequestException('Schedule already exists.');
@@ -127,10 +128,10 @@ export class ScheduleService implements CrudRepository<Schedule> {
       await this.findBySchedule(
         updateDto.start,
         updateDto.end,
-        updateDto.classroomId,
-        updateDto.sectionId,
-        updateDto.dayId,
-        updateDto.periodId,
+        updateDto.classroom.id,
+        updateDto.section.id,
+        updateDto.day.id,
+        updateDto.period.id,
         id,
       )
     ) {
@@ -139,20 +140,12 @@ export class ScheduleService implements CrudRepository<Schedule> {
     const item = await this.repository.save({
       id,
       status: updateDto.status,
-      period: {
-        id: updateDto.periodId,
-      },
+      period: updateDto.period,
       start: updateDto.start,
       end: updateDto.end,
-      classroom: {
-        id: updateDto.classroomId,
-      },
-      section: {
-        id: updateDto.sectionId,
-      },
-      day: {
-        id: updateDto.dayId,
-      },
+      classroom: updateDto.classroom,
+      section: updateDto.section,
+      day: updateDto.day,
     });
 
     return this.findOne(item.id);

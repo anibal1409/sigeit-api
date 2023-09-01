@@ -38,32 +38,8 @@ export class SubjectController {
     type: ResponseSubjectDto,
     isArray: true,
   })
-  findAll() {
-    return this.subjectService.findAll();
-  }
-
-  @Get('/department/:id')
-  @ApiResponse({
-    type: ResponseSubjectDto,
-    isArray: true,
-  })
-  findAllDepartment(
-    @Param('id', ParseIntPipe) id: number,
-    @Query() data: GetSubjectDepartmentDto,
-  ) {
-    return this.subjectService.findAllDepartment(id, data);
-  }
-
-  @Get('/career/:id')
-  @ApiResponse({
-    type: ResponseSubjectDto,
-    isArray: true,
-  })
-  findAllCareer(
-    @Param('id', ParseIntPipe) id: number,
-    @Query() data: GetSubjectDepartmentDto,
-  ) {
-    return this.subjectService.findAllCareer(id, data);
+  findAll(@Query() data: GetSubjectDepartmentDto) {
+    return this.subjectService.findAll(data);
   }
 
   @Get(':id')

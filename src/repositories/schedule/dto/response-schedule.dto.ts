@@ -8,10 +8,10 @@ import {
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Classroom } from '../../classroom';
-import { Day } from '../../day';
-import { Period } from '../../period';
-import { Section } from '../../section';
+import { Classroom } from '../../classroom/entities';
+import { Day } from '../../day/entities';
+import { Period } from '../../period/entities';
+import { Section } from '../../section/entities';
 import { Schedule } from '../entities';
 
 export class ResponseScheduleDto {

@@ -66,8 +66,8 @@ export class SectionService implements CrudRepository<Section> {
     if (
       await this.findByName(
         createDto.name,
-        createDto.subjectId,
-        createDto.periodId,
+        createDto.subject.id,
+        createDto.period.id,
       )
     ) {
       throw new BadRequestException('Section already exists.');
@@ -122,8 +122,8 @@ export class SectionService implements CrudRepository<Section> {
     if (
       await this.findByName(
         updateDto.name,
-        updateDto.subjectId,
-        updateDto.periodId,
+        updateDto.subject.id,
+        updateDto.period.id,
         id,
       )
     ) {
@@ -134,15 +134,9 @@ export class SectionService implements CrudRepository<Section> {
       name: updateDto.name,
       status: updateDto.status,
       capacity: updateDto.capacity,
-      subject: {
-        id: updateDto.subjectId,
-      },
-      period: {
-        id: updateDto.periodId,
-      },
-      teacher: {
-        id: updateDto.teacherId,
-      },
+      subject: updateDto.subject,
+      period: updateDto.period,
+      teacher: updateDto.teacher,
     });
 
     return this.findOne(item.id);

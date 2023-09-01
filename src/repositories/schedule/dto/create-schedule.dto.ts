@@ -11,11 +11,11 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
-import { Career } from '../../career';
-import { Classroom } from '../../classroom';
-import { Day } from '../../day';
-import { Period } from '../../period';
-import { Section } from '../../section';
+import { Career } from '../../career/entities';
+import { Classroom } from '../../classroom/entities';
+import { Day } from '../../day/entities';
+import { Period } from '../../period/entities';
+import { Section } from '../../section/entities';
 
 export class CreateScheduleDto extends PartialType(
   OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])

@@ -103,9 +103,7 @@ export class TeacherService implements CrudRepository<Teacher> {
       last_name: updateDto.last_name,
       status: updateDto.status,
       email: updateDto.email,
-      department: {
-        id: updateDto.departmentId,
-      },
+      department: updateDto.department,
     });
 
     return this.findOne(item.id);
