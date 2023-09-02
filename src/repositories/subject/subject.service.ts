@@ -117,6 +117,7 @@ export class SubjectService implements CrudRepository<Subject> {
       hours: updateDto.hours,
       type_curriculum: updateDto.type_curriculum,
       status: updateDto.status,
+      careers: updateDto.careers,
     });
 
     return this.findOne(item.id);

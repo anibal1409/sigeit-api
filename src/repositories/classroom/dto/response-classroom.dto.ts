@@ -44,7 +44,7 @@ export class ResponseClassroomDto {
   @ApiProperty()
   @IsOptional()
   @Type(() => Department)
-  departments: Array<Department>;
+  departments: Department[];
 
   @ApiProperty()
   @IsNotEmpty()

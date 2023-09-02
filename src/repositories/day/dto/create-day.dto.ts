@@ -10,7 +10,7 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
-import { Career } from '../../career';
+import { Career } from '../../career/entities';
 
 export class CreateDayDto extends PartialType(
   OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])

@@ -14,13 +14,12 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
-import { Career } from '../../career';
-import { Department } from '../../department';
+import { IdCreateEntity } from '../../base';
+import { Career } from '../../career/entities';
 
 export class CreateTeacherDto extends PartialType(
-  OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(Career, ['updatedAt', 'createdAt', 'deleted', 'department']),
 ) {
-
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -41,10 +40,10 @@ export class CreateTeacherDto extends PartialType(
   @IsEmail()
   email?: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Department)
-  department: Department;
+  @Type(() => IdCreateEntity)
+  department: IdCreateEntity;
 
   @ApiProperty()
   @IsNotEmpty()

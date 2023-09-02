@@ -11,15 +11,19 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
-import { Period } from '../../period';
-import { Subject } from '../../subject/entities';
-import { Teacher } from '../../teacher';
+import { IdCreateEntity } from '../../base';
 import { Section } from '../entities';
 
 export class CreateSectionDto extends PartialType(
-  OmitType(Section, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(Section, [
+    'updatedAt',
+    'createdAt',
+    'deleted',
+    'subject',
+    'teacher',
+    'period',
+  ]),
 ) {
-
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
@@ -30,20 +34,20 @@ export class CreateSectionDto extends PartialType(
   @IsString()
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Subject)
-  subject: Subject;
+  @Type(() => IdCreateEntity)
+  subject: IdCreateEntity;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Period)
-  period: Period;
+  @Type(() => IdCreateEntity)
+  period: IdCreateEntity;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Teacher)
-  teacher: Teacher;
+  @Type(() => IdCreateEntity)
+  teacher: IdCreateEntity;
 
   @ApiProperty()
   @IsNotEmpty()

@@ -13,11 +13,11 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
-import { Department } from '../../department';
+import { IdCreateEntity } from '../../base';
 import { Classroom } from '../entities';
 
 export class CreateClassroomDto extends PartialType(
-  OmitType(Classroom, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(Classroom, ['updatedAt', 'createdAt', 'deleted', 'departments'])
 ) {
 
   @ApiProperty()
@@ -35,10 +35,10 @@ export class CreateClassroomDto extends PartialType(
   @IsString()
   type: string;
 
-  @ApiProperty({ type: [Number] })
+  @ApiProperty({ type: [IdCreateEntity] })
   @IsNotEmpty()
-  @Type(() => Department)
-  departments: Department[];
+  @Type(() => IdCreateEntity)
+  departments: IdCreateEntity[];
 
   @ApiProperty()
   @IsNotEmpty()

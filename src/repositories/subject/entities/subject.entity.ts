@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Career } from '../../career';
+import { Career } from '../../career/entities';
 import { Department } from '../../department/entities';
 
 @Entity()
@@ -39,8 +39,8 @@ export class Subject extends IdEntity {
   @JoinColumn()
   department!: Department;
 
-  @ManyToMany((type) => Career)
+  @ManyToMany(() => Career, (carrer) => carrer.subjects)
   @JoinTable()
-  careers: Career[];
+  careers: Career[]
 
 }

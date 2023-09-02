@@ -15,8 +15,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { GetSectionsDto } from '../section';
-import { ResponseScheduleDto } from './dto';
+import {
+  GetSchedulesDto,
+  ResponseScheduleDto,
+} from './dto';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { ScheduleService } from './schedule.service';
@@ -41,7 +43,7 @@ export class ScheduleController {
   })
   findAll(
     @Param('id', ParseIntPipe) id: number,
-    @Query() data: GetSectionsDto,
+    @Query() data: GetSchedulesDto,
   ) {
     return this.scheduleService.findAllPeriod(id, data);
   }

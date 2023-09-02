@@ -1,0 +1,3028 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: getHello
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: string
+  /career:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCareerDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+      tags:
+        - career
+    get:
+      operationId: findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Career"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseCareerDto"
+      tags:
+        - career
+  "/career/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+      tags:
+        - career
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCareerDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+      tags:
+        - career
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseCareerDto"
+      tags:
+        - career
+  /school:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSchoolDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+      tags:
+        - school
+    get:
+      operationId: findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/School"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseSchoolDto"
+      tags:
+        - school
+  "/school/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+      tags:
+        - school
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSchoolDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+      tags:
+        - school
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSchoolDto"
+      tags:
+        - school
+  /department:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDepartmentDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+      tags:
+        - department
+    get:
+      operationId: findAll
+      parameters:
+        - name: schoolId
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Department"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseDepartmentDto"
+      tags:
+        - department
+  "/department/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+      tags:
+        - department
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDepartmentDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+      tags:
+        - department
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDepartmentDto"
+      tags:
+        - department
+  /user:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+      tags:
+        - user
+    get:
+      operationId: findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserRespondeDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserRespondeDto"
+      tags:
+        - user
+  "/user/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+      tags:
+        - user
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+      tags:
+        - user
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRespondeDto"
+      tags:
+        - user
+  /day:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDayDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+      tags:
+        - day
+    get:
+      operationId: findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Day"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseDayDto"
+      tags:
+        - day
+  "/day/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+      tags:
+        - day
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDayDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+      tags:
+        - day
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDayDto"
+      tags:
+        - day
+  /period:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePeriodDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+      tags:
+        - period
+    get:
+      operationId: findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Period"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponsePeriodDto"
+      tags:
+        - period
+  "/period/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+      tags:
+        - period
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePeriodDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+      tags:
+        - period
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+      tags:
+        - period
+  /period/active:
+    get:
+      operationId: findActive
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Period"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponsePeriodDto"
+      tags:
+        - period
+  /subject:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSubjectDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+      tags:
+        - subject
+    get:
+      operationId: findAll
+      parameters:
+        - name: semester
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: careerId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: departmentId
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Subject"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseSubjectDto"
+      tags:
+        - subject
+  "/subject/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+      tags:
+        - subject
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSubjectDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+      tags:
+        - subject
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSubjectDto"
+      tags:
+        - subject
+  /teacher:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTeacherDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+      tags:
+        - teacher
+    get:
+      operationId: findAll
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Teacher"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseTeacherDto"
+      tags:
+        - teacher
+  "/teacher/department/{id}":
+    get:
+      operationId: findAllDepartment
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Teacher"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseTeacherDto"
+      tags:
+        - teacher
+  "/teacher/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+      tags:
+        - teacher
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTeacherDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+      tags:
+        - teacher
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseTeacherDto"
+      tags:
+        - teacher
+  /section:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSectionDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+      tags:
+        - section
+  "/section/department/{departmentId}/period/{periodId}":
+    get:
+      operationId: findAll
+      parameters:
+        - name: departmentId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: periodId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: subjectId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: teacherId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: semester
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Section"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseSectionDto"
+      tags:
+        - section
+  "/section/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+      tags:
+        - section
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSectionDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+      tags:
+        - section
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseSectionDto"
+      tags:
+        - section
+  /schedule:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateScheduleDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+      tags:
+        - schedule
+  "/schedule/period/{id}":
+    get:
+      operationId: findAll
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: sectionId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: subjectId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: periodId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: teacherId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: semester
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: dayId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: classroomId
+          required: false
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Schedule"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseScheduleDto"
+      tags:
+        - schedule
+  "/schedule/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+      tags:
+        - schedule
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateScheduleDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+      tags:
+        - schedule
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseScheduleDto"
+      tags:
+        - schedule
+  /classroom:
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateClassroomDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+      tags:
+        - classroom
+    get:
+      operationId: findAll
+      parameters:
+        - name: classroomId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: departmentId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Classroom"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseClassroomDto"
+      tags:
+        - classroom
+  "/classroom/{id}":
+    get:
+      operationId: findOne
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+      tags:
+        - classroom
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateClassroomDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+      tags:
+        - classroom
+    delete:
+      operationId: remove
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseClassroomDto"
+      tags:
+        - classroom
+  /auth/login:
+    post:
+      operationId: login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginUserResponseDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginUserResponseDto"
+      tags:
+        - auth
+  /auth/logout:
+    get:
+      operationId: logout
+      parameters: []
+      responses:
+        "200":
+          description: ""
+        default:
+          description: ""
+      tags:
+        - auth
+  /auth/recovery-password:
+    post:
+      operationId: generateRecovery
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecoveryPasswordDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecoveryPasswordResponseDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecoveryPasswordDto"
+      tags:
+        - auth
+  "/auth/recovery-password/{recovery_token}":
+    get:
+      operationId: getRecoveryById
+      parameters:
+        - name: recovery_token
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecoveryPasswordResponseDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecoveryPasswordResponseDto"
+      tags:
+        - auth
+    post:
+      operationId: postRecoveryById
+      parameters:
+        - name: recovery_token
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordDto"
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecoveryPasswordResponseDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecoveryPasswordResponseDto"
+      tags:
+        - auth
+  /auth/change-password:
+    put:
+      operationId: changePassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordDto"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangePasswordResponseDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChangePasswordResponseDto"
+      tags:
+        - auth
+info:
+  title: SIGEIT-API
+  description: The SIGEIT-API description
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    School:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - name
+        - description
+        - logo
+        - abbreviation
+        - id
+        - createdAt
+        - updatedAt
+    Classroom:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        departments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Department"
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - name
+        - description
+        - type
+        - departments
+        - id
+        - createdAt
+        - updatedAt
+    Department:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        school:
+          $ref: "#/components/schemas/School"
+        classrooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/Classroom"
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - name
+        - description
+        - logo
+        - abbreviation
+        - school
+        - classrooms
+        - id
+        - createdAt
+        - updatedAt
+    Career:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        department:
+          $ref: "#/components/schemas/Department"
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - name
+        - abbreviation
+        - subjects
+        - id
+        - createdAt
+        - updatedAt
+    Subject:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        credits:
+          type: number
+        description:
+          type: string
+        hours:
+          type: number
+        semester:
+          type: number
+        type_curriculum:
+          type: number
+        department:
+          $ref: "#/components/schemas/Department"
+        careers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Career"
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - code
+        - name
+        - credits
+        - hours
+        - semester
+        - type_curriculum
+        - department
+        - careers
+        - id
+        - createdAt
+        - updatedAt
+    CreateCareerDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        department:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+      required:
+        - name
+        - abbreviation
+        - department
+        - status
+    ResponseCareerDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        departmentId:
+          type: number
+        department:
+          $ref: "#/components/schemas/Department"
+        status:
+          type: boolean
+      required:
+        - id
+        - name
+        - abbreviation
+        - departmentId
+        - department
+        - status
+    UpdateCareerDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        department:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+    CreateSchoolDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        status:
+          type: boolean
+        id:
+          type: number
+      required:
+        - name
+        - abbreviation
+        - status
+    ResponseSchoolDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        status:
+          type: boolean
+      required:
+        - id
+        - name
+        - abbreviation
+        - status
+    UpdateSchoolDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        status:
+          type: boolean
+        id:
+          type: number
+    CreateDepartmentDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        school:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        classrooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/Classroom"
+      required:
+        - name
+        - abbreviation
+        - school
+        - status
+    ResponseDepartmentDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        schoolId:
+          type: number
+        school:
+          $ref: "#/components/schemas/School"
+        status:
+          type: boolean
+      required:
+        - id
+        - name
+        - abbreviation
+        - schoolId
+        - school
+        - status
+    UpdateDepartmentDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        school:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        classrooms:
+          type: array
+          items:
+            $ref: "#/components/schemas/Classroom"
+    CreateUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          enum:
+            - admin
+            - director
+            - head-department
+            - planner
+            - teacher
+        role:
+          type: string
+          enum:
+            - admin
+            - director
+            - head-department
+            - planner
+            - teacher
+        teacher:
+          type: objec
+        status:
+          type: boolean
+        school:
+          type: objec
+        department:
+          type: objec
+        id:
+          type: number
+        name:
+          type: string
+      required:
+        - email
+        - role
+        - status
+    Teacher:
+      type: object
+      properties:
+        id_document:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        department:
+          $ref: "#/components/schemas/Department"
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - id_document
+        - first_name
+        - last_name
+        - id
+        - createdAt
+        - updatedAt
+    UserRespondeDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        status:
+          type: boolean
+        teacherId:
+          type: number
+        teacher:
+          $ref: "#/components/schemas/Teacher"
+        schoolId:
+          type: number
+        school:
+          $ref: "#/components/schemas/School"
+        departmentId:
+          type: number
+        department:
+          $ref: "#/components/schemas/Department"
+      required:
+        - id
+        - name
+        - email
+        - role
+        - status
+        - teacherId
+        - teacher
+        - schoolId
+        - school
+        - departmentId
+        - department
+    UpdateUserDto:
+      type: object
+      properties:
+        email:
+          enum:
+            - admin
+            - director
+            - head-department
+            - planner
+            - teacher
+          type: string
+        role:
+          enum:
+            - admin
+            - director
+            - head-department
+            - planner
+            - teacher
+          type: string
+        teacher:
+          type: objec
+        status:
+          type: boolean
+        school:
+          type: objec
+        department:
+          type: objec
+        id:
+          type: number
+        name:
+          type: string
+    CreateDayDto:
+      type: object
+      properties:
+        name:
+          type: string
+        abbreviation:
+          type: string
+        status:
+          type: boolean
+        id:
+          type: number
+        description:
+          type: string
+        logo:
+          type: string
+        department:
+          $ref: "#/components/schemas/Department"
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+      required:
+        - name
+        - abbreviation
+        - status
+    ResponseDayDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        abbreviation:
+          type: string
+        status:
+          type: boolean
+      required:
+        - id
+        - name
+        - abbreviation
+        - status
+    Day:
+      type: object
+      properties:
+        name:
+          type: string
+        abbreviation:
+          type: string
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - name
+        - abbreviation
+        - id
+        - createdAt
+        - updatedAt
+    UpdateDayDto:
+      type: object
+      properties:
+        name:
+          type: string
+        abbreviation:
+          type: string
+        status:
+          type: boolean
+        id:
+          type: number
+        description:
+          type: string
+        logo:
+          type: string
+        department:
+          $ref: "#/components/schemas/Department"
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+    CreatePeriodDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+        stage:
+          enum:
+            - Por Planificar
+            - Finalizado
+          type: string
+        interval:
+          type: number
+        duration:
+          type: number
+        status:
+          type: boolean
+        id:
+          type: number
+      required:
+        - name
+        - start
+        - end
+        - start_time
+        - end_time
+        - stage
+        - interval
+        - duration
+        - status
+    ResponsePeriodDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+        stage:
+          enum:
+            - Por Planificar
+            - Finalizado
+          type: string
+        interval:
+          type: number
+        duration:
+          type: number
+        status:
+          type: boolean
+      required:
+        - id
+        - name
+        - start
+        - end
+        - start_time
+        - end_time
+        - stage
+        - interval
+        - duration
+        - status
+    Period:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+        interval:
+          type: number
+        duration:
+          type: number
+        stage:
+          enum:
+            - Por Planificar
+            - Finalizado
+          type: string
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - name
+        - start
+        - end
+        - start_time
+        - end_time
+        - interval
+        - duration
+        - stage
+        - id
+        - createdAt
+        - updatedAt
+    UpdatePeriodDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        start:
+          format: date-time
+          type: string
+        end:
+          format: date-time
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+        stage:
+          enum:
+            - Por Planificar
+            - Finalizado
+          type: string
+        interval:
+          type: number
+        duration:
+          type: number
+        status:
+          type: boolean
+        id:
+          type: number
+    CreateSubjectDto:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        credits:
+          type: number
+        description:
+          type: string
+        hours:
+          type: number
+        semester:
+          type: number
+        type_curriculum:
+          type: number
+        department:
+          type: object
+        careers:
+          type: array
+          items:
+            type: object
+        id:
+          type: number
+        status:
+          type: boolean
+      required:
+        - name
+        - code
+        - credits
+        - hours
+        - semester
+        - type_curriculum
+        - department
+        - careers
+    ResponseSubjectDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        code:
+          type: string
+        credits:
+          type: number
+        description:
+          type: string
+        hours:
+          type: number
+        semester:
+          type: number
+        type_curriculum:
+          type: number
+        departmentId:
+          type: number
+        department:
+          $ref: "#/components/schemas/Department"
+        status:
+          type: boolean
+        careerIds:
+          type: array
+          items:
+            type: number
+        careers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Career"
+      required:
+        - id
+        - name
+        - code
+        - credits
+        - hours
+        - semester
+        - type_curriculum
+        - departmentId
+        - department
+        - status
+        - careerIds
+        - careers
+    UpdateSubjectDto:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        credits:
+          type: number
+        description:
+          type: string
+        hours:
+          type: number
+        semester:
+          type: number
+        type_curriculum:
+          type: number
+        department:
+          type: object
+        careers:
+          type: array
+          items:
+            type: object
+        id:
+          type: number
+        status:
+          type: boolean
+    CreateTeacherDto:
+      type: object
+      properties:
+        id_document:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        department:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+      required:
+        - id_document
+        - first_name
+        - department
+        - status
+    ResponseTeacherDto:
+      type: object
+      properties:
+        id:
+          type: number
+        id_document:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        departmentId:
+          type: number
+        department:
+          $ref: "#/components/schemas/Department"
+        status:
+          type: boolean
+      required:
+        - id
+        - id_document
+        - first_name
+        - departmentId
+        - department
+        - status
+    UpdateTeacherDto:
+      type: object
+      properties:
+        id_document:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        department:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+    CreateSectionDto:
+      type: object
+      properties:
+        capacity:
+          type: number
+        name:
+          type: string
+        subject:
+          type: objec
+        period:
+          type: objec
+        teacher:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+      required:
+        - capacity
+        - name
+        - subject
+        - period
+        - teacher
+        - status
+    ResponseSectionDto:
+      type: object
+      properties:
+        id:
+          type: number
+        capacity:
+          type: number
+        name:
+          type: string
+        subjectId:
+          type: number
+        subject:
+          $ref: "#/components/schemas/Subject"
+        periodId:
+          type: number
+        period:
+          $ref: "#/components/schemas/Period"
+        teacherId:
+          type: number
+        teacher:
+          $ref: "#/components/schemas/Teacher"
+        status:
+          type: boolean
+      required:
+        - id
+        - capacity
+        - name
+        - subjectId
+        - subject
+        - periodId
+        - period
+        - teacherId
+        - teacher
+        - status
+    Section:
+      type: object
+      properties:
+        name:
+          type: string
+        capacity:
+          type: number
+        subject:
+          $ref: "#/components/schemas/Subject"
+        period:
+          $ref: "#/components/schemas/Period"
+        teacher:
+          $ref: "#/components/schemas/Teacher"
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - name
+        - capacity
+        - subject
+        - period
+        - teacher
+        - id
+        - createdAt
+        - updatedAt
+    UpdateSectionDto:
+      type: object
+      properties:
+        capacity:
+          type: number
+        name:
+          type: string
+        subject:
+          type: objec
+        period:
+          type: objec
+        teacher:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+    CreateScheduleDto:
+      type: object
+      properties:
+        start:
+          type: string
+        end:
+          type: string
+        classroom:
+          type: objec
+        day:
+          type: objec
+        section:
+          type: objec
+        period:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        department:
+          $ref: "#/components/schemas/Department"
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+      required:
+        - start
+        - end
+        - classroom
+        - day
+        - section
+        - period
+        - status
+    ResponseScheduleDto:
+      type: object
+      properties:
+        id:
+          type: number
+        start:
+          type: string
+        end:
+          type: string
+        classroomId:
+          type: number
+        classroom:
+          $ref: "#/components/schemas/Classroom"
+        dayId:
+          type: number
+        day:
+          $ref: "#/components/schemas/Day"
+        sectionId:
+          type: number
+        section:
+          $ref: "#/components/schemas/Section"
+        periodId:
+          type: number
+        period:
+          $ref: "#/components/schemas/Period"
+        status:
+          type: boolean
+      required:
+        - id
+        - start
+        - end
+        - classroomId
+        - classroom
+        - dayId
+        - day
+        - sectionId
+        - section
+        - periodId
+        - period
+        - status
+    Schedule:
+      type: object
+      properties:
+        start:
+          type: string
+        end:
+          type: string
+        classroom:
+          $ref: "#/components/schemas/Classroom"
+        day:
+          $ref: "#/components/schemas/Day"
+        section:
+          $ref: "#/components/schemas/Section"
+        period:
+          $ref: "#/components/schemas/Period"
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        status:
+          type: boolean
+        deleted:
+          type: boolean
+      required:
+        - start
+        - end
+        - classroom
+        - day
+        - section
+        - period
+        - id
+        - createdAt
+        - updatedAt
+    UpdateScheduleDto:
+      type: object
+      properties:
+        start:
+          type: string
+        end:
+          type: string
+        classroom:
+          type: objec
+        day:
+          type: objec
+        section:
+          type: objec
+        period:
+          type: objec
+        status:
+          type: boolean
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        abbreviation:
+          type: string
+        department:
+          $ref: "#/components/schemas/Department"
+        subjects:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subject"
+    CreateClassroomDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        departments:
+          type: array
+          items:
+            type: object
+        status:
+          type: boolean
+        id:
+          type: number
+      required:
+        - name
+        - type
+        - departments
+        - status
+    ResponseClassroomDto:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        departmentIds:
+          type: array
+          items:
+            type: number
+        departments:
+          type: array
+          items:
+            $ref: "#/components/schemas/Department"
+        status:
+          type: boolean
+      required:
+        - id
+        - name
+        - type
+        - departmentIds
+        - departments
+        - status
+    UpdateClassroomDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        departments:
+          type: array
+          items:
+            type: object
+        status:
+          type: boolean
+        id:
+          type: number
+    LoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    LoginUserResponseDto:
+      type: object
+      properties:
+        email:
+          type: string
+        id:
+          type: number
+        name:
+          type: string
+        role:
+          type: string
+        loginStamp:
+          type: number
+        school:
+          $ref: "#/components/schemas/School"
+        department:
+          $ref: "#/components/schemas/Department"
+        teacher:
+          $ref: "#/components/schemas/Teacher"
+      required:
+        - email
+        - id
+        - name
+        - role
+        - loginStamp
+        - school
+        - department
+        - teacher
+    RecoveryPasswordDto:
+      type: object
+      properties:
+        email:
+          type: string
+      required:
+        - email
+    RecoveryPasswordResponseDto:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+    ChangePasswordDto:
+      type: object
+      properties:
+        newPassword:
+          type: string
+      required:
+        - newPassword
+    ChangePasswordResponseDto:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message

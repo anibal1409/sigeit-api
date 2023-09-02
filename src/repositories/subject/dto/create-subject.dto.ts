@@ -1,6 +1,5 @@
 import { Type } from 'class-transformer';
 import {
-  IsBoolean,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -13,14 +12,18 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
-import { Career } from '../../career';
-import { Department } from '../../department';
+import { IdCreateEntity } from '../../base';
 import { Subject } from '../entities';
 
 export class CreateSubjectDto extends PartialType(
-  OmitType(Subject, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(Subject, [
+    'updatedAt',
+    'createdAt',
+    'deleted',
+    'careers',
+    'department',
+  ]),
 ) {
-
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -56,19 +59,13 @@ export class CreateSubjectDto extends PartialType(
   @Type(() => Number)
   type_curriculum!: number;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Department)
-  department: Department;
+  @Type(() => IdCreateEntity)
+  department: IdCreateEntity;
 
-  @ApiProperty()
+  @ApiProperty({ type: [IdCreateEntity] })
   @IsNotEmpty()
-  @IsBoolean()
-  status!: boolean;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @Type(() => Career)
-  careers: Career[];
-
+  @Type(() => IdCreateEntity)
+  careers: IdCreateEntity[];
 }

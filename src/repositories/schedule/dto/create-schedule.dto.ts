@@ -11,11 +11,8 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
+import { IdCreateEntity } from '../../base';
 import { Career } from '../../career/entities';
-import { Classroom } from '../../classroom/entities';
-import { Day } from '../../day/entities';
-import { Period } from '../../period/entities';
-import { Section } from '../../section/entities';
 
 export class CreateScheduleDto extends PartialType(
   OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])
@@ -31,25 +28,25 @@ export class CreateScheduleDto extends PartialType(
   @IsString()
   end: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Classroom)
-  classroom: Classroom;
+  @Type(() => IdCreateEntity)
+  classroom: IdCreateEntity;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Day)
-  day: Day;
+  @Type(() => IdCreateEntity)
+  day: IdCreateEntity;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Section)
-  section: Section;
+  @Type(() => IdCreateEntity)
+  section: IdCreateEntity;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
-  @Type(() => Period)
-  period: Period;
+  @Type(() => IdCreateEntity)
+  period: IdCreateEntity;
 
   @ApiProperty()
   @IsNotEmpty()

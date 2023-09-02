@@ -13,8 +13,8 @@ import {
   ApiPropertyOptional,
 } from '@nestjs/swagger';
 
-import { Career } from '../../career';
-import { Department } from '../../department';
+import { Career } from '../../career/entities';
+import { Department } from '../../department/entities';
 import { Subject } from '../entities';
 
 export class ResponseSubjectDto {
@@ -73,12 +73,12 @@ export class ResponseSubjectDto {
   @IsBoolean()
   status!: boolean;
 
-  @ApiProperty({type: [Number]})
+  @ApiProperty({ type: [Number] })
   @IsNotEmpty()
   @Type(() => Number)
   careerIds: number[];
 
-  @ApiProperty({type: [Career]})
+  @ApiProperty()
   @IsNotEmpty()
   @Type(() => Career)
   careers: Career[];

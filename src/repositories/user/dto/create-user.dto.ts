@@ -13,16 +13,21 @@ import {
   PartialType,
 } from '@nestjs/swagger';
 
-import { Department } from '../../department';
-import { School } from '../../school';
-import { Teacher } from '../../teacher';
+import { IdCreateEntity } from '../../base';
 import { User } from '../entities';
 import { Roles } from '../enums';
 
 export class CreateUserDto extends PartialType(
-  OmitType(User, ['password', 'updatedAt', 'createdAt', 'deleted']),
+  OmitType(User, [
+    'password',
+    'updatedAt',
+    'createdAt',
+    'deleted',
+    'teacher',
+    'school',
+    'department',
+  ]),
 ) {
-
   @ApiProperty()
   @IsEmail()
   @Type(() => String)
@@ -33,23 +38,23 @@ export class CreateUserDto extends PartialType(
   @IsString()
   role!: Roles;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsOptional()
-  @Type(() => Teacher)
-  teacher?: Teacher;
+  @Type(() => IdCreateEntity)
+  teacher?: IdCreateEntity;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsOptional()
-  @Type(() => School)
-  school?: School;
+  @Type(() => IdCreateEntity)
+  school?: IdCreateEntity;
 
-  @ApiProperty()
+  @ApiProperty({ type: IdCreateEntity })
   @IsOptional()
-  @Type(() => Department)
-  department?: Department;
+  @Type(() => IdCreateEntity)
+  department?: IdCreateEntity;
 }

@@ -12,11 +12,6 @@ export class GetSectionsDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
-  periodId?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Type(() => Number)
   teacherId?: number;
 
   @ApiPropertyOptional()

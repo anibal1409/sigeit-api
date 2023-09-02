@@ -7,7 +7,14 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -27,6 +34,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -46,6 +63,19 @@
         "operationId": "CareerController_findAll",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Career"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -79,6 +109,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -117,6 +157,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -145,6 +195,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -176,6 +236,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -195,6 +265,19 @@
         "operationId": "SchoolController_findAll",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/School"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -228,6 +311,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -266,6 +359,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -294,6 +397,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -325,6 +438,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -353,6 +476,19 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Department"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -386,6 +522,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -424,6 +570,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -452,6 +608,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -483,6 +649,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -502,6 +678,19 @@
         "operationId": "UserController_findAll",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserRespondeDto"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -535,6 +724,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -573,6 +772,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -601,6 +810,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -632,6 +851,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -651,6 +880,19 @@
         "operationId": "DayController_findAll",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Day"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -684,6 +926,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -722,6 +974,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -750,6 +1012,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -781,6 +1053,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -800,6 +1082,19 @@
         "operationId": "PeriodController_findAll",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Period"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -833,6 +1128,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -871,6 +1176,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -899,6 +1214,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -920,6 +1245,16 @@
         "operationId": "PeriodController_findActive",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Period"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -951,6 +1286,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -995,6 +1340,19 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subject"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1028,6 +1386,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1066,6 +1434,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1094,6 +1472,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1125,6 +1513,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1144,6 +1542,19 @@
         "operationId": "TeacherController_findAll",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1177,6 +1588,19 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1210,6 +1634,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1248,6 +1682,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1276,6 +1720,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1307,6 +1761,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1344,23 +1808,23 @@
             }
           },
           {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
             "name": "semester",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "careerId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "departmentId",
             "required": false,
             "in": "query",
             "schema": {
@@ -1369,6 +1833,19 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Section"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1402,6 +1879,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1440,6 +1927,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1468,6 +1965,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1499,6 +2006,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1523,6 +2040,14 @@
             "name": "id",
             "required": true,
             "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": false,
+            "in": "query",
             "schema": {
               "type": "number"
             }
@@ -1558,9 +2083,38 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Schedule"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1594,6 +2148,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1632,6 +2196,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1660,6 +2234,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1691,6 +2275,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1735,6 +2329,19 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Classroom"
+                  }
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1768,6 +2375,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1806,6 +2423,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1834,6 +2461,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1865,6 +2502,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginUserResponseDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1886,6 +2533,9 @@
         "operationId": "AuthController_logout",
         "parameters": [],
         "responses": {
+          "200": {
+            "description": ""
+          },
           "default": {
             "description": ""
           }
@@ -1910,6 +2560,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1940,6 +2600,16 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -1978,6 +2648,16 @@
           }
         },
         "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -2009,6 +2689,16 @@
           }
         },
         "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponseDto"
+                }
+              }
+            }
+          },
           "default": {
             "description": "",
             "content": {
@@ -2035,10 +2725,24 @@
   "tags": [],
   "servers": [],
   "components": {
+    "securitySchemes": {
+      "cookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "connect.sid"
+      }
+    },
     "schemas": {
-      "Department": {
+      "IdCreateEntity": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id"
+        ]
       },
       "CreateCareerDto": {
         "type": "object",
@@ -2056,10 +2760,13 @@
             "type": "string"
           },
           "department": {
-            "$ref": "#/components/schemas/Department"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         },
         "required": [
@@ -2067,6 +2774,149 @@
           "abbreviation",
           "department",
           "status"
+        ]
+      },
+      "School": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "logo",
+          "abbreviation",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Classroom": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "departments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Department"
+            }
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "type",
+          "departments",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Department": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "classrooms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Classroom"
+            }
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "logo",
+          "abbreviation",
+          "school",
+          "classrooms",
+          "id",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "ResponseCareerDto": {
@@ -2106,7 +2956,7 @@
           "status"
         ]
       },
-      "UpdateCareerDto": {
+      "Career": {
         "type": "object",
         "properties": {
           "name": {
@@ -2124,8 +2974,127 @@
           "department": {
             "$ref": "#/components/schemas/Department"
           },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
           "status": {
             "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "abbreviation",
+          "subjects",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Subject": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "credits": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "hours": {
+            "type": "number"
+          },
+          "semester": {
+            "type": "number"
+          },
+          "type_curriculum": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "careers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Career"
+            }
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "credits",
+          "hours",
+          "semester",
+          "type_curriculum",
+          "department",
+          "careers",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateCareerDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         }
       },
@@ -2146,6 +3115,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         },
         "required": [
@@ -2200,12 +3172,11 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         }
-      },
-      "School": {
-        "type": "object",
-        "properties": {}
       },
       "CreateDepartmentDto": {
         "type": "object",
@@ -2223,10 +3194,19 @@
             "type": "string"
           },
           "school": {
-            "$ref": "#/components/schemas/School"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "classrooms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Classroom"
+            }
           }
         },
         "required": [
@@ -2289,46 +3269,113 @@
             "type": "string"
           },
           "school": {
-            "$ref": "#/components/schemas/School"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "classrooms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Classroom"
+            }
           }
         }
-      },
-      "Teacher": {
-        "type": "object",
-        "properties": {}
       },
       "CreateUserDto": {
         "type": "object",
         "properties": {
           "email": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "admin",
+              "director",
+              "head-department",
+              "planner",
+              "teacher"
+            ]
           },
           "role": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "admin",
+              "director",
+              "head-department",
+              "planner",
+              "teacher"
+            ]
           },
           "teacher": {
-            "$ref": "#/components/schemas/Teacher"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
           },
           "school": {
-            "$ref": "#/components/schemas/School"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "department": {
-            "$ref": "#/components/schemas/Department"
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
           }
         },
         "required": [
           "email",
           "role",
-          "teacher",
-          "status",
-          "school",
-          "department"
+          "status"
+        ]
+      },
+      "Teacher": {
+        "type": "object",
+        "properties": {
+          "id_document": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id_document",
+          "first_name",
+          "last_name",
+          "id",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "UserRespondeDto": {
@@ -2386,22 +3433,42 @@
         "type": "object",
         "properties": {
           "email": {
+            "enum": [
+              "admin",
+              "director",
+              "head-department",
+              "planner",
+              "teacher"
+            ],
             "type": "string"
           },
           "role": {
+            "enum": [
+              "admin",
+              "director",
+              "head-department",
+              "planner",
+              "teacher"
+            ],
             "type": "string"
           },
           "teacher": {
-            "$ref": "#/components/schemas/Teacher"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
           },
           "school": {
-            "$ref": "#/components/schemas/School"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "department": {
-            "$ref": "#/components/schemas/Department"
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -2416,6 +3483,24 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
           }
         },
         "required": [
@@ -2447,6 +3532,41 @@
           "status"
         ]
       },
+      "Day": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "abbreviation",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
       "UpdateDayDto": {
         "type": "object",
         "properties": {
@@ -2458,6 +3578,24 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
           }
         }
       },
@@ -2485,6 +3623,10 @@
             "type": "string"
           },
           "stage": {
+            "enum": [
+              "Por Planificar",
+              "Finalizado"
+            ],
             "type": "string"
           },
           "interval": {
@@ -2495,6 +3637,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         },
         "required": [
@@ -2536,6 +3681,10 @@
             "type": "string"
           },
           "stage": {
+            "enum": [
+              "Por Planificar",
+              "Finalizado"
+            ],
             "type": "string"
           },
           "interval": {
@@ -2559,6 +3708,74 @@
           "interval",
           "duration",
           "status"
+        ]
+      },
+      "Period": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "end": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "start_time": {
+            "type": "string"
+          },
+          "end_time": {
+            "type": "string"
+          },
+          "interval": {
+            "type": "number"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "stage": {
+            "enum": [
+              "Por Planificar",
+              "Finalizado"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "start",
+          "end",
+          "start_time",
+          "end_time",
+          "interval",
+          "duration",
+          "stage",
+          "id",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "UpdatePeriodDto": {
@@ -2585,6 +3802,10 @@
             "type": "string"
           },
           "stage": {
+            "enum": [
+              "Por Planificar",
+              "Finalizado"
+            ],
             "type": "string"
           },
           "interval": {
@@ -2595,6 +3816,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         }
       },
@@ -2623,16 +3847,19 @@
             "type": "number"
           },
           "department": {
-            "$ref": "#/components/schemas/Department"
-          },
-          "status": {
-            "type": "boolean"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "careers": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/IdCreateEntity"
             }
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -2643,7 +3870,6 @@
           "semester",
           "type_curriculum",
           "department",
-          "status",
           "careers"
         ]
       },
@@ -2692,7 +3918,7 @@
           "careers": {
             "type": "array",
             "items": {
-              "type": "array"
+              "$ref": "#/components/schemas/Career"
             }
           }
         },
@@ -2736,16 +3962,19 @@
             "type": "number"
           },
           "department": {
-            "$ref": "#/components/schemas/Department"
-          },
-          "status": {
-            "type": "boolean"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "careers": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/IdCreateEntity"
             }
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "boolean"
           }
         }
       },
@@ -2765,10 +3994,31 @@
             "type": "string"
           },
           "department": {
-            "$ref": "#/components/schemas/Department"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
           }
         },
         "required": [
@@ -2831,20 +4081,33 @@
             "type": "string"
           },
           "department": {
-            "$ref": "#/components/schemas/Department"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
           }
         }
-      },
-      "Subject": {
-        "type": "object",
-        "properties": {}
-      },
-      "Period": {
-        "type": "object",
-        "properties": {}
       },
       "CreateSectionDto": {
         "type": "object",
@@ -2856,16 +4119,19 @@
             "type": "string"
           },
           "subject": {
-            "$ref": "#/components/schemas/Subject"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "period": {
-            "$ref": "#/components/schemas/Period"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "teacher": {
-            "$ref": "#/components/schemas/Teacher"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         },
         "required": [
@@ -2924,14 +4190,14 @@
           "status"
         ]
       },
-      "UpdateSectionDto": {
+      "Section": {
         "type": "object",
         "properties": {
-          "capacity": {
-            "type": "number"
-          },
           "name": {
             "type": "string"
+          },
+          "capacity": {
+            "type": "number"
           },
           "subject": {
             "$ref": "#/components/schemas/Subject"
@@ -2942,22 +4208,60 @@
           "teacher": {
             "$ref": "#/components/schemas/Teacher"
           },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
           "status": {
             "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "capacity",
+          "subject",
+          "period",
+          "teacher",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateSectionDto": {
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         }
-      },
-      "Classroom": {
-        "type": "object",
-        "properties": {}
-      },
-      "Day": {
-        "type": "object",
-        "properties": {}
-      },
-      "Section": {
-        "type": "object",
-        "properties": {}
       },
       "CreateScheduleDto": {
         "type": "object",
@@ -2969,19 +4273,43 @@
             "type": "string"
           },
           "classroom": {
-            "$ref": "#/components/schemas/Classroom"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "day": {
-            "$ref": "#/components/schemas/Day"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "section": {
-            "$ref": "#/components/schemas/Section"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "period": {
-            "$ref": "#/components/schemas/Period"
+            "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
           }
         },
         "required": [
@@ -3049,7 +4377,7 @@
           "status"
         ]
       },
-      "UpdateScheduleDto": {
+      "Schedule": {
         "type": "object",
         "properties": {
           "start": {
@@ -3070,8 +4398,83 @@
           "period": {
             "$ref": "#/components/schemas/Period"
           },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
           "status": {
             "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "classroom",
+          "day",
+          "section",
+          "period",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "day": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
           }
         }
       },
@@ -3090,11 +4493,14 @@
           "departments": {
             "type": "array",
             "items": {
-              "type": "number"
+              "$ref": "#/components/schemas/IdCreateEntity"
             }
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         },
         "required": [
@@ -3122,13 +4528,13 @@
           "departmentIds": {
             "type": "array",
             "items": {
-              "type": "string"
+              "type": "number"
             }
           },
           "departments": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/Department"
             }
           },
           "status": {
@@ -3159,11 +4565,14 @@
           "departments": {
             "type": "array",
             "items": {
-              "type": "number"
+              "$ref": "#/components/schemas/IdCreateEntity"
             }
           },
           "status": {
             "type": "boolean"
+          },
+          "id": {
+            "type": "number"
           }
         }
       },

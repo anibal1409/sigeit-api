@@ -1,3 +1,4 @@
+// eslint-disable-next-line prettier/prettier
 import {
   Column,
   Entity,
@@ -12,7 +13,6 @@ import { Subject } from '../../subject';
 
 @Entity()
 export class Career extends IdEntity {
-
   @Column({ nullable: false, unique: true })
   name!: string;
 
@@ -29,6 +29,6 @@ export class Career extends IdEntity {
   @JoinColumn()
   department?: Department;
 
-  @ManyToMany((type) => Subject, (subject) => subject.careers)
+  @ManyToMany(() => Subject, (subject) => subject.careers)
   subjects: Subject[];
 }

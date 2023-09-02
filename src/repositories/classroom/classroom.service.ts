@@ -26,7 +26,7 @@ export class ClassroomService implements CrudRepository<Classroom> {
   constructor(
     @InjectRepository(Classroom)
     private repository: Repository<Classroom>,
-  ) {}
+  ) { }
 
   async findValid(id: number): Promise<Classroom> {
     const item = await this.repository.findOne({

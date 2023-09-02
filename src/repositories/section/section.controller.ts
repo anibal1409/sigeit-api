@@ -9,13 +9,16 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+// eslint-disable-next-line prettier/prettier
 import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
-import { GetSubjectDepartmentDto } from '../subject';
-import { ResponseSectionDto } from './dto';
+import {
+  GetSectionsDto,
+  ResponseSectionDto,
+} from './dto';
 import { CreateSectionDto } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
 import { SectionService } from './section.service';
@@ -41,7 +44,7 @@ export class SectionController {
   findAll(
     @Param('departmentId', ParseIntPipe) departmentId: number,
     @Param('periodId', ParseIntPipe) periodId: number,
-    @Query() data: GetSubjectDepartmentDto,
+    @Query() data: GetSectionsDto,
   ) {
     return this.sectionService.findAllPeriod(+departmentId, +periodId, data);
   }
