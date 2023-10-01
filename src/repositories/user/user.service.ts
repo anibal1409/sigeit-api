@@ -52,6 +52,15 @@ export class UserService implements CrudRepository<User> {
     });
   }
 
+  async findOneByIdDocument(idDocument: string): Promise<User> {
+    return this.usersRepository.findOne({
+      where: {
+        idDocument,
+      },
+      relations: ['school', 'department', 'teacher'],
+    });
+  }
+
   async findAll(): Promise<Array<UserRespondeDto>> {
     const data = await this.usersRepository.find({
       where: {
@@ -77,6 +86,18 @@ export class UserService implements CrudRepository<User> {
 
       throw new BadRequestException('E-mail in use');
     }
+
+    const userIdDocument = await this.findOneByIdDocument(creatrDto.idDocument);
+    if (userIdDocument) {
+      if (userIdDocument.deleted) {
+        throw new BadRequestException(
+          'The user with this document was previously deleted.',
+        );
+      }
+
+      throw new BadRequestException('Document in use');
+    }
+
     const passwordDefault = (
       await hashPassword(Date.now().toString())
     ).substring(0, 10);
@@ -119,6 +140,7 @@ export class UserService implements CrudRepository<User> {
         teacher: updateUserDto.teacher,
         school: updateUserDto.school,
         department: updateUserDto.department,
+        idDocument: updateUserDto.idDocument,
       }),
     );
   }

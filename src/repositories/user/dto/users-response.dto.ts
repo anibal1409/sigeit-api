@@ -36,6 +36,11 @@ export class UserRespondeDto {
 
   @ApiProperty()
   @IsNotEmpty()
+  @IsString()
+  idDocument!: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
   @IsBoolean()
   status: boolean;
 
@@ -81,5 +86,6 @@ export class UserRespondeDto {
     this.school = data?.school;
     this.departmentId = data?.department?.id;
     this.department = data?.department;
+    this.idDocument = data.idDocument;
   }
 }

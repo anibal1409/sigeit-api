@@ -24,6 +24,9 @@ export class User extends IdEntity {
   @Column({ length: 256, nullable: false, unique: true })
   email!: string;
 
+  @Column({ nullable: true, unique: true })
+  idDocument!: string;
+
   @Index('user_role_index')
   @Column({ nullable: false, default: Roles.Teacher })
   role!: string;

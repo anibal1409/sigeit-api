@@ -10,17 +10,16 @@ import { Department } from '../../department/entities';
 
 @Entity()
 export class Teacher extends IdEntity {
+  @Column({ nullable: false, unique: true })
+  idDocument!: string;
 
   @Column({ nullable: false })
-  id_document!: string;
-
-  @Column({ nullable: false })
-  first_name!: string;
+  firstName!: string;
 
   @Column({ nullable: true })
-  last_name!: string;
+  lastName!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, unique: true })
   email?: string;
 
   @ManyToOne(() => Department, (department) => department.id)

@@ -38,6 +38,11 @@ export class CreateUserDto extends PartialType(
   @IsString()
   role!: Roles;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  idDocument!: string;
+
   @ApiProperty({ type: IdCreateEntity })
   @IsOptional()
   @Type(() => IdCreateEntity)

@@ -24,17 +24,17 @@ export class ResponseTeacherDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  id_document: string;
+  idDocument: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  first_name: string;
+  firstName: string;
 
   @ApiPropertyOptional()
   @IsNotEmpty()
   @IsString()
-  last_name: string;
+  lastName: string;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -58,12 +58,12 @@ export class ResponseTeacherDto {
 
   constructor(data: Teacher) {
     this.id = data.id;
-    this.first_name = data.first_name;
+    this.firstName = data.firstName;
     this.departmentId = data.department.id;
     this.department = data.department;
     this.status = data.status;
-    this.id_document = data.id_document;
-    this.last_name = data.last_name;
+    this.idDocument = data.idDocument;
+    this.lastName = data.lastName;
     this.email = data.email;
   }
 }

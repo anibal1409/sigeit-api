@@ -44,14 +44,14 @@ export class TeacherService implements CrudRepository<Teacher> {
     return this.repository.findOne({
       where: {
         id: Not(id || 0),
-        id_document,
+        idDocument: id_document,
         deleted: false,
       },
     });
   }
 
   async create(createDto: CreateTeacherDto): Promise<ResponseTeacherDto> {
-    if (await this.findByIdDocument(createDto.id_document)) {
+    if (await this.findByIdDocument(createDto.idDocument)) {
       throw new BadRequestException('Teacher already exists.');
     }
 
@@ -65,7 +65,7 @@ export class TeacherService implements CrudRepository<Teacher> {
         deleted: false,
       },
       order: {
-        last_name: 'ASC',
+        lastName: 'ASC',
       },
     });
   }
@@ -79,7 +79,7 @@ export class TeacherService implements CrudRepository<Teacher> {
         },
       },
       order: {
-        last_name: 'ASC',
+        lastName: 'ASC',
       },
     });
   }
@@ -93,14 +93,14 @@ export class TeacherService implements CrudRepository<Teacher> {
     id: number,
     updateDto: UpdateTeacherDto,
   ): Promise<ResponseTeacherDto> {
-    if (await this.findByIdDocument(updateDto.id_document, id)) {
+    if (await this.findByIdDocument(updateDto.idDocument, id)) {
       throw new BadRequestException('Teacher already exists.');
     }
     const item = await this.repository.save({
       id,
-      id_document: updateDto.id_document,
-      first_name: updateDto.first_name,
-      last_name: updateDto.last_name,
+      id_document: updateDto.idDocument,
+      first_name: updateDto.firstName,
+      last_name: updateDto.lastName,
       status: updateDto.status,
       email: updateDto.email,
       department: updateDto.department,

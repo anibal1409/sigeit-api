@@ -23,17 +23,17 @@ export class CreateTeacherDto extends PartialType(
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  id_document: string;
+  idDocument: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  first_name: string;
+  firstName: string;
 
   @ApiPropertyOptional()
   @IsNotEmpty()
   @IsString()
-  last_name: string;
+  lastName: string;
 
   @ApiPropertyOptional()
   @IsOptional()
