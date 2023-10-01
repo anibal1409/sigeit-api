@@ -70,8 +70,12 @@ export class PeriodService implements CrudRepository<Period> {
     if (await this.findByName(createDto.name)) {
       throw new BadRequestException('Period already exists.');
     }
+    console.log(createDto);
+    
 
     const item = await this.repository.save(createDto);
+    console.log(item);
+    
     return await this.findOne(item.id);
   }
 
@@ -107,8 +111,8 @@ export class PeriodService implements CrudRepository<Period> {
       end: updateDto?.end,
       start: updateDto?.start,
       stage: updateDto?.stage,
-      start_time: updateDto?.start_time,
-      end_time: updateDto?.end_time,
+      startTime: updateDto?.startTime,
+      endTime: updateDto?.endTime,
       interval: updateDto?.interval,
     });
 

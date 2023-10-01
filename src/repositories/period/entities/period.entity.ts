@@ -22,10 +22,10 @@ export class Period extends IdEntity {
   end!: Date;
 
   @Column({ nullable: false })
-  start_time!: string;
+  startTime!: string;
 
   @Column({ nullable: false })
-  end_time!: string;
+  endTime!: string;
 
   @Column({ nullable: false })
   interval!: number;

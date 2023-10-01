@@ -1,4 +1,5 @@
 export enum StagePeriod {
-  toPlan = 'Por Planificar',
-  finalized = 'Finalizado',
+  toPlan = 'TO_PLAN',
+  Planned = 'PLANNED',
+  finalized = 'FINALIZED',
 }

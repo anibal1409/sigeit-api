@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -32,23 +32,23 @@ export class CreatePeriodDto extends PartialType(
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   start: Date;
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsDate()
+  @IsDateString()
   end: Date;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  start_time: string;
+  startTime: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  end_time: string;
+  endTime: string;
 
   @ApiProperty()
   @IsNotEmpty()

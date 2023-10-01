@@ -32,7 +32,7 @@ export class CareerService implements CrudRepository<Career> {
         id,
         deleted: false,
       },
-      relations: [],
+      relations: ['department'],
     });
     if (!item) {
       throw new NotFoundException('Career not found');

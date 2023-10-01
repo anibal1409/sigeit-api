@@ -44,12 +44,12 @@ export class ResponsePeriodDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  start_time: string;
+  startTime: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  end_time: string;
+  endTime: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -79,8 +79,8 @@ export class ResponsePeriodDto {
     this.duration = data.duration;
     this.start = data.start;
     this.end = data.end;
-    this.start_time = data.start_time;
-    this.end_time = data.end_time;
+    this.startTime = data.startTime;
+    this.endTime = data.endTime;
     this.interval = data.interval;
     this.stage = data.stage;
   }

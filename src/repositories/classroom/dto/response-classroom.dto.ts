@@ -57,6 +57,7 @@ export class ResponseClassroomDto {
     this.description = data.description;
     this.status = data.status;
     this.departments = data.departments;
+    this.departmentIds = data?.departments?.map((department) => department.id);
     this.type = data.type;
   }
 }
