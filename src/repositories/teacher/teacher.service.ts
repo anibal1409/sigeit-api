@@ -5,12 +5,15 @@ import {
 
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CrudRepository } from '../../common';
+import { UserService } from '../user';
 import {
   CreateTeacherDto,
   UpdateTeacherDto,
@@ -24,6 +27,8 @@ export class TeacherService implements CrudRepository<Teacher> {
   constructor(
     @InjectRepository(Teacher)
     private repository: Repository<Teacher>,
+    @Inject(forwardRef(() => UserService))
+    private userService: UserService,
   ) { }
 
   async findValid(id: number): Promise<Teacher> {
@@ -56,6 +61,8 @@ export class TeacherService implements CrudRepository<Teacher> {
     }
 
     const item = await this.repository.save(createDto);
+    await this.updateUser(item);
+
     return await this.findOne(item.id);
   }
 
@@ -105,6 +112,7 @@ export class TeacherService implements CrudRepository<Teacher> {
       email: updateDto.email,
       department: updateDto.department,
     });
+    await this.updateUser(item);
 
     return this.findOne(item.id);
   }
@@ -113,6 +121,13 @@ export class TeacherService implements CrudRepository<Teacher> {
     const item = await this.findValid(id);
     item.deleted = true;
     return new ResponseTeacherDto(await this.repository.save(item));
+  }
+
+  private async updateUser(teacher: Teacher): Promise<void> {
+    const user = await this.userService.findOneByIdDocument(teacher.idDocument);
+    if (user) {
+      await this.userService.updateTeacher(user.id, teacher.id);
+    }
   }
 }
 

@@ -131,16 +131,31 @@ export class UserService implements CrudRepository<User> {
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
+    const _userRes = await this.usersRepository.save({
+      email: updateUserDto?.email,
+      name: updateUserDto?.name,
+      status: updateUserDto?.status,
+      role: updateUserDto?.role,
+      school: updateUserDto.school,
+      department: updateUserDto.department,
+      idDocument: updateUserDto.idDocument,
+    });
+
+    return new UserRespondeDto(_userRes);
+  }
+
+  async updateTeacher(id: number, teacherId: number): Promise<UserRespondeDto> {
+    const user = await this.findValid(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
     return new UserRespondeDto(
       await this.usersRepository.save({
-        email: updateUserDto?.email,
-        name: updateUserDto?.name,
-        status: updateUserDto?.status,
-        role: updateUserDto?.role,
-        teacher: updateUserDto.teacher,
-        school: updateUserDto.school,
-        department: updateUserDto.department,
-        idDocument: updateUserDto.idDocument,
+        ...user,
+        teacher: {
+          id: teacherId,
+        },
       }),
     );
   }
