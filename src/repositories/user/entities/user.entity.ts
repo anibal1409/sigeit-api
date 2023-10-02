@@ -21,10 +21,10 @@ export class User extends IdEntity {
   @Column({ length: 256, nullable: false })
   name!: string;
 
-  @Column({ length: 256, nullable: false, unique: true })
+  @Column({ nullable: false, unique: true })
   email!: string;
 
-  @Column({ nullable: true, unique: true })
+  @Column({ nullable: false, unique: true })
   idDocument!: string;
 
   @Index('user_role_index')

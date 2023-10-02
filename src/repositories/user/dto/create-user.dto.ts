@@ -29,9 +29,10 @@ export class CreateUserDto extends PartialType(
   ]),
 ) {
   @ApiProperty()
+  @IsNotEmpty()
   @IsEmail()
-  @Type(() => String)
-  email!: Roles;
+  @IsString()
+  email!: string;
 
   @ApiProperty()
   @IsNotEmpty()

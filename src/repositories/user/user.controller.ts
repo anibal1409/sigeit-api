@@ -1,3 +1,5 @@
+import { Request } from 'express';
+
 import {
   Body,
   Controller,
@@ -7,6 +9,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Req,
 } from '@nestjs/common';
 import {
   ApiResponse,
@@ -28,6 +31,7 @@ export class UserController {
     type: UserRespondeDto,
   })
   create(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto);
     return this.userService.create(createUserDto);
   }
 
@@ -36,8 +40,8 @@ export class UserController {
     type: UserRespondeDto,
     isArray: true,
   })
-  findAll() {
-    return this.userService.findAll();
+  findAll(@Req() request: Request) {
+    return this.userService.findAll(+request.cookies?.['sigeit-cookie']?.id);
   }
 
   @Get(':id')

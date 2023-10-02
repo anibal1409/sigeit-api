@@ -125,7 +125,8 @@ export class TeacherService implements CrudRepository<Teacher> {
 
   private async updateUser(teacher: Teacher): Promise<void> {
     const user = await this.userService.findOneByIdDocument(teacher.idDocument);
-    if (user) {
+    console.log('user', user);
+    if (user && user.idDocument === teacher.idDocument) {
       await this.userService.updateTeacher(user.id, teacher.id);
     }
   }

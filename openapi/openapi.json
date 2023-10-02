@@ -3289,14 +3289,7 @@
         "type": "object",
         "properties": {
           "email": {
-            "type": "string",
-            "enum": [
-              "admin",
-              "director",
-              "head-department",
-              "planner",
-              "teacher"
-            ]
+            "type": "string"
           },
           "role": {
             "type": "string",
@@ -3307,6 +3300,9 @@
               "planner",
               "teacher"
             ]
+          },
+          "idDocument": {
+            "type": "string"
           },
           "teacher": {
             "$ref": "#/components/schemas/IdCreateEntity"
@@ -3330,19 +3326,20 @@
         "required": [
           "email",
           "role",
+          "idDocument",
           "status"
         ]
       },
       "Teacher": {
         "type": "object",
         "properties": {
-          "id_document": {
+          "idDocument": {
             "type": "string"
           },
-          "first_name": {
+          "firstName": {
             "type": "string"
           },
-          "last_name": {
+          "lastName": {
             "type": "string"
           },
           "email": {
@@ -3370,9 +3367,9 @@
           }
         },
         "required": [
-          "id_document",
-          "first_name",
-          "last_name",
+          "idDocument",
+          "firstName",
+          "lastName",
           "id",
           "createdAt",
           "updatedAt"
@@ -3391,6 +3388,9 @@
             "type": "string"
           },
           "role": {
+            "type": "string"
+          },
+          "idDocument": {
             "type": "string"
           },
           "status": {
@@ -3420,6 +3420,7 @@
           "name",
           "email",
           "role",
+          "idDocument",
           "status",
           "teacherId",
           "teacher",
@@ -3433,13 +3434,6 @@
         "type": "object",
         "properties": {
           "email": {
-            "enum": [
-              "admin",
-              "director",
-              "head-department",
-              "planner",
-              "teacher"
-            ],
             "type": "string"
           },
           "role": {
@@ -3450,6 +3444,9 @@
               "planner",
               "teacher"
             ],
+            "type": "string"
+          },
+          "idDocument": {
             "type": "string"
           },
           "teacher": {
@@ -3616,16 +3613,17 @@
             "format": "date-time",
             "type": "string"
           },
-          "start_time": {
+          "startTime": {
             "type": "string"
           },
-          "end_time": {
+          "endTime": {
             "type": "string"
           },
           "stage": {
             "enum": [
-              "Por Planificar",
-              "Finalizado"
+              "TO_PLAN",
+              "PLANNED",
+              "FINALIZED"
             ],
             "type": "string"
           },
@@ -3646,8 +3644,8 @@
           "name",
           "start",
           "end",
-          "start_time",
-          "end_time",
+          "startTime",
+          "endTime",
           "stage",
           "interval",
           "duration",
@@ -3674,16 +3672,17 @@
             "format": "date-time",
             "type": "string"
           },
-          "start_time": {
+          "startTime": {
             "type": "string"
           },
-          "end_time": {
+          "endTime": {
             "type": "string"
           },
           "stage": {
             "enum": [
-              "Por Planificar",
-              "Finalizado"
+              "TO_PLAN",
+              "PLANNED",
+              "FINALIZED"
             ],
             "type": "string"
           },
@@ -3702,8 +3701,8 @@
           "name",
           "start",
           "end",
-          "start_time",
-          "end_time",
+          "startTime",
+          "endTime",
           "stage",
           "interval",
           "duration",
@@ -3727,10 +3726,10 @@
             "format": "date-time",
             "type": "string"
           },
-          "start_time": {
+          "startTime": {
             "type": "string"
           },
-          "end_time": {
+          "endTime": {
             "type": "string"
           },
           "interval": {
@@ -3741,8 +3740,9 @@
           },
           "stage": {
             "enum": [
-              "Por Planificar",
-              "Finalizado"
+              "TO_PLAN",
+              "PLANNED",
+              "FINALIZED"
             ],
             "type": "string"
           },
@@ -3768,8 +3768,8 @@
           "name",
           "start",
           "end",
-          "start_time",
-          "end_time",
+          "startTime",
+          "endTime",
           "interval",
           "duration",
           "stage",
@@ -3795,16 +3795,17 @@
             "format": "date-time",
             "type": "string"
           },
-          "start_time": {
+          "startTime": {
             "type": "string"
           },
-          "end_time": {
+          "endTime": {
             "type": "string"
           },
           "stage": {
             "enum": [
-              "Por Planificar",
-              "Finalizado"
+              "TO_PLAN",
+              "PLANNED",
+              "FINALIZED"
             ],
             "type": "string"
           },
@@ -3981,13 +3982,13 @@
       "CreateTeacherDto": {
         "type": "object",
         "properties": {
-          "id_document": {
+          "idDocument": {
             "type": "string"
           },
-          "first_name": {
+          "firstName": {
             "type": "string"
           },
-          "last_name": {
+          "lastName": {
             "type": "string"
           },
           "email": {
@@ -4022,8 +4023,8 @@
           }
         },
         "required": [
-          "id_document",
-          "first_name",
+          "idDocument",
+          "firstName",
           "department",
           "status"
         ]
@@ -4034,13 +4035,13 @@
           "id": {
             "type": "number"
           },
-          "id_document": {
+          "idDocument": {
             "type": "string"
           },
-          "first_name": {
+          "firstName": {
             "type": "string"
           },
-          "last_name": {
+          "lastName": {
             "type": "string"
           },
           "email": {
@@ -4058,8 +4059,8 @@
         },
         "required": [
           "id",
-          "id_document",
-          "first_name",
+          "idDocument",
+          "firstName",
           "departmentId",
           "department",
           "status"
@@ -4068,13 +4069,13 @@
       "UpdateTeacherDto": {
         "type": "object",
         "properties": {
-          "id_document": {
+          "idDocument": {
             "type": "string"
           },
-          "first_name": {
+          "firstName": {
             "type": "string"
           },
-          "last_name": {
+          "lastName": {
             "type": "string"
           },
           "email": {

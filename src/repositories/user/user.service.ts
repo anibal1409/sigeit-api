@@ -1,4 +1,7 @@
-import { Repository } from 'typeorm';
+import {
+  Not,
+  Repository,
+} from 'typeorm';
 
 import {
   BadRequestException,
@@ -61,9 +64,10 @@ export class UserService implements CrudRepository<User> {
     });
   }
 
-  async findAll(): Promise<Array<UserRespondeDto>> {
+  async findAll(userId: number): Promise<Array<UserRespondeDto>> {
     const data = await this.usersRepository.find({
       where: {
+        id: Not(userId),
         deleted: false,
       },
       relations: ['school', 'department', 'teacher'],
@@ -88,7 +92,8 @@ export class UserService implements CrudRepository<User> {
     }
 
     const userIdDocument = await this.findOneByIdDocument(creatrDto.idDocument);
-    if (userIdDocument) {
+    console.log(userIdDocument);
+    if (userIdDocument && userIdDocument.idDocument === creatrDto.idDocument) {
       if (userIdDocument.deleted) {
         throw new BadRequestException(
           'The user with this document was previously deleted.',
@@ -102,6 +107,8 @@ export class UserService implements CrudRepository<User> {
       await hashPassword(Date.now().toString())
     ).substring(0, 10);
 
+    console.log(creatrDto);
+
     const user = this.usersRepository.create({
       email: creatrDto.email,
       password: await hashPassword(passwordDefault),
@@ -110,6 +117,7 @@ export class UserService implements CrudRepository<User> {
       teacher: creatrDto.teacher,
       school: creatrDto.school,
       department: creatrDto.department,
+      idDocument: creatrDto.idDocument,
     });
 
     const _userRes = await this.usersRepository.save(user);

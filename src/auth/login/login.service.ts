@@ -38,12 +38,14 @@ export class LoginService {
       secret: JWT_CONST.secret,
       expiresIn: JWT_CONST.expiresIn,
     });
-    const secretData = {
-      token: _token,
-    };
 
     const { email, id, role, name, school, department, teacher } =
       await this.userService.findOneByEmail(user.email);
+
+    const secretData = {
+      token: _token,
+      id,
+    };
 
     const _expiredTime = parseInt(
       (await this.jwtAuthService.decode(_token)).exp + '000',
