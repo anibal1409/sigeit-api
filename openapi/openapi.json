@@ -3028,7 +3028,7 @@
           "semester": {
             "type": "number"
           },
-          "type_curriculum": {
+          "typeCurriculum": {
             "type": "number"
           },
           "department": {
@@ -3064,7 +3064,7 @@
           "credits",
           "hours",
           "semester",
-          "type_curriculum",
+          "typeCurriculum",
           "department",
           "careers",
           "id",
@@ -3844,7 +3844,7 @@
           "semester": {
             "type": "number"
           },
-          "type_curriculum": {
+          "typeCurriculum": {
             "type": "number"
           },
           "department": {
@@ -3869,7 +3869,7 @@
           "credits",
           "hours",
           "semester",
-          "type_curriculum",
+          "typeCurriculum",
           "department",
           "careers"
         ]
@@ -3898,7 +3898,7 @@
           "semester": {
             "type": "number"
           },
-          "type_curriculum": {
+          "typeCurriculum": {
             "type": "number"
           },
           "departmentId": {
@@ -3930,7 +3930,7 @@
           "credits",
           "hours",
           "semester",
-          "type_curriculum",
+          "typeCurriculum",
           "departmentId",
           "department",
           "status",
@@ -3959,7 +3959,7 @@
           "semester": {
             "type": "number"
           },
-          "type_curriculum": {
+          "typeCurriculum": {
             "type": "number"
           },
           "department": {
