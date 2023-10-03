@@ -32,8 +32,8 @@ export class Subject extends IdEntity {
   @Column({ nullable: false })
   semester!: number;
 
-  @Column({ nullable: false })
-  type_curriculum!: number;
+  @Column({ nullable: true })
+  typeCurriculum!: number;
 
   @ManyToOne(() => Department, (department) => department.id)
   @JoinColumn()
@@ -41,6 +41,6 @@ export class Subject extends IdEntity {
 
   @ManyToMany(() => Career, (carrer) => carrer.subjects)
   @JoinTable()
-  careers: Career[]
+  careers: Career[];
 
 }

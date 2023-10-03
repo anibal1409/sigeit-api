@@ -56,7 +56,7 @@ export class ResponseSubjectDto {
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
-  type_curriculum!: number;
+  typeCurriculum!: number;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -95,7 +95,7 @@ export class ResponseSubjectDto {
     this.credits = data.credits;
     this.hours = data.hours;
     this.semester = data.semester;
-    this.type_curriculum = data.type_curriculum;
+    this.typeCurriculum = data.typeCurriculum;
     this.careers = data.careers;
   }
 }

@@ -57,7 +57,7 @@ export class CreateSubjectDto extends PartialType(
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
-  type_curriculum!: number;
+  typeCurriculum!: number;
 
   @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()

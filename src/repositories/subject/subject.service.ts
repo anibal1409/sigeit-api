@@ -115,7 +115,7 @@ export class SubjectService implements CrudRepository<Subject> {
       semester: updateDto.semester,
       credits: updateDto.credits,
       hours: updateDto.hours,
-      type_curriculum: updateDto.type_curriculum,
+      type_curriculum: updateDto.typeCurriculum,
       status: updateDto.status,
       careers: updateDto.careers,
     });
