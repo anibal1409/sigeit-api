@@ -1114,6 +1114,37 @@
         ]
       }
     },
+    "/period/active": {
+      "get": {
+        "operationId": "PeriodController_findActive",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Period"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      }
+    },
     "/period/{id}": {
       "get": {
         "operationId": "PeriodController_findOne",
@@ -1220,37 +1251,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponsePeriodDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponsePeriodDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "period"
-        ]
-      }
-    },
-    "/period/active": {
-      "get": {
-        "operationId": "PeriodController_findActive",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Period"
                 }
               }
             }
@@ -1540,7 +1540,24 @@
       },
       "get": {
         "operationId": "TeacherController_findAll",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",

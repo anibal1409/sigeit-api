@@ -40,6 +40,14 @@ export class PeriodController {
     return this.periodService.findAll();
   }
 
+  @Get('active')
+  @ApiResponse({
+    type: ResponsePeriodDto,
+  })
+  findActive() {
+    return this.periodService.findActive();
+  }
+
   @Get(':id')
   @ApiResponse({
     type: ResponsePeriodDto,
@@ -65,14 +73,6 @@ export class PeriodController {
   })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.periodService.remove(+id);
-  }
-
-  @Get('active')
-  @ApiResponse({
-    type: ResponsePeriodDto,
-  })
-  findActive() {
-    return this.periodService.findActive();
   }
 
 }

@@ -7,12 +7,14 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
+import { GetTeachersDto } from './dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { ResponseTeacherDto } from './dto/response-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
@@ -37,8 +39,8 @@ export class TeacherController {
     type: ResponseTeacherDto,
     isArray: true,
   })
-  findAll() {
-    return this.teacherService.findAll();
+  findAll(@Query() data: GetTeachersDto) {
+    return this.teacherService.findAll(data);
   }
 
   @Get('/department/:id')

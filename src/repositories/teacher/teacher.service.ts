@@ -16,6 +16,7 @@ import { CrudRepository } from '../../common';
 import { UserService } from '../user';
 import {
   CreateTeacherDto,
+  GetTeachersDto,
   UpdateTeacherDto,
 } from './dto';
 import { ResponseTeacherDto } from './dto/response-teacher.dto';
@@ -66,14 +67,21 @@ export class TeacherService implements CrudRepository<Teacher> {
     return await this.findOne(item.id);
   }
 
-  findAll()  {
+  findAll(data: GetTeachersDto) {
     return this.repository.find({
       where: {
         deleted: false,
+        department: {
+          id: data?.departmentId || Not(0),
+          school: {
+            id: data?.schoolId || Not(0),
+          },
+        },
       },
       order: {
         lastName: 'ASC',
       },
+      relations: ['department'],
     });
   }
 

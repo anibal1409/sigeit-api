@@ -56,7 +56,7 @@ export class PeriodService implements CrudRepository<Period> {
       where: {
         deleted: false,
         status: true,
-        stage: StagePeriod.toPlan,
+        stage: StagePeriod.toPlan || StagePeriod.Planned,
       },
       relations: [],
     });
