@@ -46,7 +46,7 @@ export class SectionController {
     @Param('periodId', ParseIntPipe) periodId: number,
     @Query() data: GetSectionsDto,
   ) {
-    return this.sectionService.findAllPeriod(+departmentId, +periodId, data);
+    return this.sectionService.findAllOfPeriod(+departmentId, +periodId, data);
   }
 
   @Get(':id')

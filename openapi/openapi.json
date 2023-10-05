@@ -4307,27 +4307,6 @@
           },
           "id": {
             "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "abbreviation": {
-            "type": "string"
-          },
-          "department": {
-            "$ref": "#/components/schemas/Department"
-          },
-          "subjects": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Subject"
-            }
           }
         },
         "required": [
@@ -4472,27 +4451,6 @@
           },
           "id": {
             "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "abbreviation": {
-            "type": "string"
-          },
-          "department": {
-            "$ref": "#/components/schemas/Department"
-          },
-          "subjects": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Subject"
-            }
           }
         }
       },

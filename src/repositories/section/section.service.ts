@@ -77,7 +77,7 @@ export class SectionService implements CrudRepository<Section> {
     return await this.findOne(item.id);
   }
 
-  findAllPeriod(
+  findAllOfPeriod(
     departmentId: number,
     periodId: number,
     query?: GetSectionsDto,

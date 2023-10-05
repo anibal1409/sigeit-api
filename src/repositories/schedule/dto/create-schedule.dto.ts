@@ -12,10 +12,18 @@ import {
 } from '@nestjs/swagger';
 
 import { IdCreateEntity } from '../../base';
-import { Career } from '../../career/entities';
+import { Schedule } from '../entities';
 
 export class CreateScheduleDto extends PartialType(
-  OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(Schedule, [
+    'updatedAt',
+    'createdAt',
+    'deleted',
+    'classroom',
+    'day',
+    'section',
+    'period',
+  ]),
 ) {
 
   @ApiProperty()

@@ -108,8 +108,18 @@ export class ScheduleService implements CrudRepository<Schedule> {
           id: query?.dayId || Not(0),
         },
       },
-      relations: ['classroom', 'day', 'period', 'section'],
+      relations: [
+        'classroom',
+        'day',
+        'period',
+        'section',
+        'section.subject',
+        'section.teacher',
+      ],
       order: {
+        day: {
+          id: 'ASC',
+        },
         start: 'ASC',
       },
     });

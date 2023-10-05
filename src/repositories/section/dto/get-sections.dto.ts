@@ -18,4 +18,9 @@ export class GetSectionsDto {
   @IsOptional()
   @Type(() => Number)
   semester?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  dayId?: number;
 }
