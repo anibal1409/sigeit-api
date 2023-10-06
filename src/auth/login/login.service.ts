@@ -44,19 +44,15 @@ export class LoginService {
       await this.userService.findOneByEmail(user.email);
 
     const secretData = {
-      ...getDefaultCokieOptions(),
       token: _token,
       id,
     };
-
-    console.log(secretData);
-    
 
     const _expiredTime = parseInt(
       (await this.jwtAuthService.decode(_token)).exp + '000',
     );
 
-    res.cookie('sigeit-cookie', secretData, { httpOnly: true });
+    res.cookie('sigeit-cookie', secretData, { ...getDefaultCokieOptions()});
 
     return {
       email,
