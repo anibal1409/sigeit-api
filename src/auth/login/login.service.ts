@@ -49,6 +49,9 @@ export class LoginService {
       id,
     };
 
+    console.log(secretData);
+    
+
     const _expiredTime = parseInt(
       (await this.jwtAuthService.decode(_token)).exp + '000',
     );
