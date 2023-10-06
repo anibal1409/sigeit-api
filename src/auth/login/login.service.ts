@@ -9,6 +9,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 import { UserService } from '../../repositories';
+import { getDefaultCokieOptions } from '../cookies';
 import {
   JWT_CONST,
   JwtAuthService,
@@ -43,6 +44,7 @@ export class LoginService {
       await this.userService.findOneByEmail(user.email);
 
     const secretData = {
+      ...getDefaultCokieOptions(),
       token: _token,
       id,
     };
