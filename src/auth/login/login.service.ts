@@ -52,7 +52,7 @@ export class LoginService {
       (await this.jwtAuthService.decode(_token)).exp + '000',
     );
 
-    res.cookie('sigeit-cookie', secretData, { ...getDefaultCokieOptions()});
+    res.cookie('sigeit-cookie', secretData, { ...getDefaultCokieOptions() });
 
     return {
       email,

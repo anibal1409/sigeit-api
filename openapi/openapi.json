@@ -1847,6 +1847,14 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
           }
         ],
         "responses": {
@@ -2111,6 +2119,14 @@
           },
           {
             "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
             "required": false,
             "in": "query",
             "schema": {

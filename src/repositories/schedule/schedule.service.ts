@@ -100,6 +100,16 @@ export class ScheduleService implements CrudRepository<Schedule> {
         },
         section: {
           id: query?.sectionId || Not(0),
+          subject: {
+            id: query?.subjectId || Not(0),
+            semester: query?.semester || Not(0),
+            department: {
+              id: query?.departmentId || Not(0),
+            },
+          },
+          teacher: {
+            id: query?.teacherId || Not(0),
+          },
         },
         classroom: {
           id: query?.classroomId || Not(0),
@@ -117,6 +127,11 @@ export class ScheduleService implements CrudRepository<Schedule> {
         'section.teacher',
       ],
       order: {
+        section: {
+          subject: {
+            semester: 'ASC',
+          },
+        },
         day: {
           id: 'ASC',
         },

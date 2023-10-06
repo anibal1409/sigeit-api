@@ -38,4 +38,9 @@ export class GetSchedulesDto {
   @IsOptional()
   @Type(() => Number)
   classroomId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  departmentId?: number;
 }
