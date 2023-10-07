@@ -130,6 +130,7 @@ export class ScheduleService implements CrudRepository<Schedule> {
         section: {
           subject: {
             semester: 'ASC',
+            name: 'ASC',
           },
         },
         day: {
