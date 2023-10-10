@@ -46,11 +46,11 @@ export class TeacherService implements CrudRepository<Teacher> {
     return item;
   }
 
-  findByIdDocument(id_document: string, id?: number): Promise<Teacher> {
+  findByIdDocument(idDocument: string, id?: number): Promise<Teacher> {
     return this.repository.findOne({
       where: {
         id: Not(id || 0),
-        idDocument: id_document,
+        idDocument,
         deleted: false,
       },
     });
@@ -111,16 +111,19 @@ export class TeacherService implements CrudRepository<Teacher> {
     if (await this.findByIdDocument(updateDto.idDocument, id)) {
       throw new BadRequestException('Teacher already exists.');
     }
+    console.log('updateDto', updateDto);
+    
     const item = await this.repository.save({
       id,
-      id_document: updateDto.idDocument,
-      first_name: updateDto.firstName,
-      last_name: updateDto.lastName,
+      idDocument: updateDto.idDocument,
+      firstName: updateDto.firstName,
+      lastName: updateDto.lastName,
       status: updateDto.status,
       email: updateDto.email,
       department: updateDto.department,
     });
-    await this.updateUser(item);
+    console.log('item', item);
+    // await this.updateUser(item);
 
     return this.findOne(item.id);
   }

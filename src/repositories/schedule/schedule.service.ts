@@ -132,6 +132,7 @@ export class ScheduleService implements CrudRepository<Schedule> {
             semester: 'ASC',
             name: 'ASC',
           },
+          name: 'ASC',
         },
         day: {
           id: 'ASC',
