@@ -141,12 +141,15 @@ export class UserService implements CrudRepository<User> {
     }
 
     const _userRes = await this.usersRepository.save({
+      id,
       email: updateUserDto?.email,
       name: updateUserDto?.name,
       status: updateUserDto?.status,
       role: updateUserDto?.role,
-      school: updateUserDto.school,
-      department: updateUserDto.department,
+      school: updateUserDto.school?.id ? updateUserDto.school : null,
+      department: updateUserDto.department?.id
+        ? updateUserDto.department
+        : null,
       idDocument: updateUserDto.idDocument,
     });
 
