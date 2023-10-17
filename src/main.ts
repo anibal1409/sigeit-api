@@ -1,4 +1,4 @@
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 // eslint-disable-next-line prettier/prettier
 import {
@@ -6,6 +6,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+// eslint-disable-next-line prettier/prettier
 import {
   DocumentBuilder,
   SwaggerModule,

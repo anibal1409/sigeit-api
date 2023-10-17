@@ -4,6 +4,7 @@ import { CareerModule } from './career/career.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { DayModule } from './day/day.module';
 import { DepartmentModule } from './department';
+import { DocumentModule } from './document';
 import { PeriodModule } from './period/period.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { SchoolModule } from './school/school.module';
@@ -25,6 +26,7 @@ import { UserModule } from './user/user.module';
     SectionModule,
     ScheduleModule,
     ClassroomModule,
+    DocumentModule,
   ],
   exports: [UserModule],
 })

@@ -22,7 +22,7 @@
     "generate:clients2": "node openapi.js generate -l typescript-angular -i openapi.yaml -o ./libs/dashboard-sdk -c ./openapi/config.json"
   },
   "dependencies": {
-    "@nestjs-modules/mailer": "^1.9.1",
+    "@nestjs-modules/mailer": "^1.7.1",
     "@nestjs/common": "^10.2.7",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.2.7",
