@@ -10,6 +10,7 @@ import {
 import { ApiHideProperty } from '@nestjs/swagger';
 
 import { IdEntity } from '../../base';
+import { Career } from '../../career/entities';
 import { Department } from '../../department';
 import { School } from '../../school';
 import { Teacher } from '../../teacher';
@@ -20,6 +21,12 @@ export class User extends IdEntity {
 
   @Column({ length: 256, nullable: false })
   name!: string;
+
+  @Column({ nullable: true })
+  firstName!: string;
+
+  @Column({ nullable: true })
+  lastName!: string;
 
   @Column({ nullable: false, unique: true })
   email!: string;
@@ -47,4 +54,9 @@ export class User extends IdEntity {
   @ManyToOne(() => Department, (department) => department.id)
   @JoinColumn()
   department?: Department;
+
+  @ManyToOne(() => Career, (career) => career.id)
+  @JoinColumn()
+  career?: Career;
+
 }

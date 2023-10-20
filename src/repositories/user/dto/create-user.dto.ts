@@ -9,6 +9,7 @@ import {
 
 import {
   ApiProperty,
+  ApiPropertyOptional,
   OmitType,
   PartialType,
 } from '@nestjs/swagger';
@@ -44,6 +45,21 @@ export class CreateUserDto extends PartialType(
   @IsString()
   idDocument!: string;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @ApiPropertyOptional()
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
+
+  @ApiPropertyOptional()
+  @IsNotEmpty()
+  @IsString()
+  firstName: string;
+
   @ApiProperty({ type: IdCreateEntity })
   @IsOptional()
   @Type(() => IdCreateEntity)
@@ -63,4 +79,9 @@ export class CreateUserDto extends PartialType(
   @IsOptional()
   @Type(() => IdCreateEntity)
   department?: IdCreateEntity;
+
+  @ApiProperty({ type: IdCreateEntity })
+  @IsOptional()
+  @Type(() => IdCreateEntity)
+  careerId?: IdCreateEntity;
 }

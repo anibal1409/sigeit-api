@@ -52,6 +52,7 @@ export const recovery = (_url: string): string => `
 export const welcome = (
   email_: string,
   user_: string,
+  role_: string,
   password_: string,
   systemUrl_: string
 ): string => `
@@ -96,6 +97,7 @@ export const welcome = (
           text-align: center;
         ">
         <strong>Email:</strong> ${email_}<br />
+        <strong>Rol:</strong> ${role_}<br />
         <div style="
             padding-top: 20px;
             font-size: 12px;

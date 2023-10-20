@@ -27,6 +27,16 @@ export class UserRespondeDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  lastName: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  firstName: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
   email: string;
 
   @ApiProperty()
@@ -87,5 +97,7 @@ export class UserRespondeDto {
     this.departmentId = data?.department?.id;
     this.department = data?.department;
     this.idDocument = data.idDocument;
+    this.lastName = data.lastName;
+    this.firstName = data.firstName;
   }
 }

@@ -19,6 +19,7 @@ import {
 import { UserRespondeDto } from './dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Roles } from './enums';
 import { UserService } from './user.service';
 
 @ApiTags('user')
@@ -31,8 +32,15 @@ export class UserController {
     type: UserRespondeDto,
   })
   create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     return this.userService.create(createUserDto);
+  }
+
+  @Post('/student')
+  @ApiResponse({
+    type: UserRespondeDto,
+  })
+  createStudent(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create({ ...createUserDto, role: Roles.Student });
   }
 
   @Get()

@@ -15,6 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { Public } from '../../auth/login/login.guard';
 import {
   GetSchedulesDto,
   ResponseScheduleDto,
@@ -36,6 +37,7 @@ export class ScheduleController {
     return this.scheduleService.create(createScheduleDto);
   }
 
+  @Public()
   @Get('/period/:id')
   @ApiResponse({
     type: ResponseScheduleDto,

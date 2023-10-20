@@ -34,13 +34,21 @@ export class MailService {
   async sendWelcome(
     email_: string,
     user_: string,
+    role_: string,
     password_: string
   ): Promise<boolean> {
     try {
       await this.mailerService.sendMail({
         to: email_,
-        subject: 'SIGEIT - Bienvenido a SOFTWARE DE MARKETING SOCIAL',
-        html: welcome(email_, user_, password_, 'http://localhost:4200/login'),
+        subject:
+          'SIGEIT UDO - Bienvenido al SISTEMA PARA LA GESTION DE ITINERARIOS',
+        html: welcome(
+          email_,
+          user_,
+          role_,
+          password_,
+          'http://localhost:4200/login',
+        ),
       });
     } catch (error) {
       console.log(3333, error);

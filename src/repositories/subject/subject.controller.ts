@@ -14,6 +14,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { Public } from '../../auth/login/login.guard';
 import { GetSubjectDepartmentDto } from './dto';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { ResponseSubjectDto } from './dto/response-subject.dto';
@@ -33,6 +34,7 @@ export class SubjectController {
     return this.subjectService.create(createSubjectDto);
   }
 
+  @Public()
   @Get()
   @ApiResponse({
     type: ResponseSubjectDto,

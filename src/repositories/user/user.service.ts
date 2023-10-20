@@ -19,6 +19,7 @@ import {
 } from './dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities';
+import { ROLES_LIST } from './enums/roles';
 
 @Injectable()
 export class UserService implements CrudRepository<User> {
@@ -55,10 +56,11 @@ export class UserService implements CrudRepository<User> {
     });
   }
 
-  async findOneByIdDocument(idDocument: string): Promise<User> {
+  async findOneByIdDocument(idDocument: string, role?: string): Promise<User> {
     return this.usersRepository.findOne({
       where: {
         idDocument,
+        role: role || null, 
       },
       relations: ['school', 'department', 'teacher'],
     });
@@ -91,8 +93,10 @@ export class UserService implements CrudRepository<User> {
       throw new BadRequestException('E-mail in use');
     }
 
-    const userIdDocument = await this.findOneByIdDocument(creatrDto.idDocument);
-    console.log(userIdDocument);
+    const userIdDocument = await this.findOneByIdDocument(
+      creatrDto.idDocument,
+      creatrDto.role,
+    );
     if (userIdDocument && userIdDocument.idDocument === creatrDto.idDocument) {
       if (userIdDocument.deleted) {
         throw new BadRequestException(
@@ -107,12 +111,12 @@ export class UserService implements CrudRepository<User> {
       await hashPassword(Date.now().toString())
     ).substring(0, 10);
 
-    console.log(creatrDto);
-
     const user = this.usersRepository.create({
       email: creatrDto.email,
       password: await hashPassword(passwordDefault),
       name: creatrDto.name,
+      lastName: creatrDto.lastName,
+      firstName: creatrDto.firstName,
       role: creatrDto.role,
       teacher: creatrDto.teacher,
       school: creatrDto.school,
@@ -125,6 +129,7 @@ export class UserService implements CrudRepository<User> {
     await this.mailService.sendWelcome(
       creatrDto.email,
       creatrDto.name,
+      ROLES_LIST[_userRes.role],
       passwordDefault,
     );
 
@@ -139,11 +144,30 @@ export class UserService implements CrudRepository<User> {
     if (!user) {
       throw new NotFoundException('User not found');
     }
+    const userIdDocument = await this.findOneByIdDocument(
+      updateUserDto.idDocument,
+      updateUserDto.role,
+    );
+    if (
+      userIdDocument &&
+      updateUserDto.id !== id &&
+      userIdDocument.idDocument === updateUserDto.idDocument
+    ) {
+      if (userIdDocument.deleted) {
+        throw new BadRequestException(
+          'The user with this document was previously deleted.',
+        );
+      }
+
+      throw new BadRequestException('Document in use');
+    }
 
     const _userRes = await this.usersRepository.save({
       id,
       email: updateUserDto?.email,
       name: updateUserDto?.name,
+      lastName: updateUserDto?.lastName,
+      firstName: updateUserDto?.firstName,
       status: updateUserDto?.status,
       role: updateUserDto?.role,
       school: updateUserDto.school?.id ? updateUserDto.school : null,

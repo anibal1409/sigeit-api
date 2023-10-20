@@ -13,6 +13,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { Public } from '../../auth/login/login.guard';
 import { CareerService } from './career.service';
 import { CreateCareerDto } from './dto/create-career.dto';
 import { ResponseCareerDto } from './dto/response-career.dto';
@@ -31,6 +32,7 @@ export class CareerController {
     return this.careerService.create(createCareerDto);
   }
 
+  @Public()
   @Get()
   @ApiResponse({
     type: ResponseCareerDto,

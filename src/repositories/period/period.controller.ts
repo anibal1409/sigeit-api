@@ -13,6 +13,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { Public } from '../../auth/login';
 import { ResponsePeriodDto } from './dto';
 import { CreatePeriodDto } from './dto/create-period.dto';
 import { UpdatePeriodDto } from './dto/update-period.dto';
@@ -40,6 +41,7 @@ export class PeriodController {
     return this.periodService.findAll();
   }
 
+  @Public()
   @Get('active')
   @ApiResponse({
     type: ResponsePeriodDto,

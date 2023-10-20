@@ -13,6 +13,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { Public } from '../../auth/login/login.guard';
 import { DayService } from './day.service';
 import { CreateDayDto } from './dto/create-day.dto';
 import { ResponseDayDto } from './dto/response-day.dto';
@@ -31,6 +32,7 @@ export class DayController {
     return this.dayService.create(createDayDto);
   }
 
+  @Public()
   @Get()
   @ApiResponse({
     type: ResponseDayDto,
