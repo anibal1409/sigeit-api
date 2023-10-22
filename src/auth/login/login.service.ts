@@ -40,7 +40,7 @@ export class LoginService {
       expiresIn: JWT_CONST.expiresIn,
     });
 
-    const { email, id, role, name, school, department, teacher } =
+    const { email, id, role, name, school, department, teacher, career } =
       await this.userService.findOneByEmail(user.email);
 
     const secretData = {
@@ -63,6 +63,7 @@ export class LoginService {
       school,
       department,
       teacher,
+      career,
     };
   }
 

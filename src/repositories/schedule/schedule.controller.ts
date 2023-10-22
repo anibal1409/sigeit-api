@@ -50,6 +50,19 @@ export class ScheduleController {
     return this.scheduleService.findAllPeriod(id, data);
   }
 
+  @Public()
+  @Get('students/period/:id')
+  @ApiResponse({
+    type: ResponseScheduleDto,
+    isArray: true,
+  })
+  findAllStudents(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() data: GetSchedulesDto,
+  ) {
+    return this.scheduleService.findAllPeriod(id, data, true);
+  }
+
   @Get(':id')
   @ApiResponse({
     type: ResponseScheduleDto,

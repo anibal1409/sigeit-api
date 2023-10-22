@@ -35,6 +35,7 @@ export class UserService implements CrudRepository<User> {
       where: {
         id,
       },
+      relations: ['school', 'department', 'teacher', 'career'],
     });
     if (!user) {
       throw new NotFoundException('User not found');
@@ -52,7 +53,7 @@ export class UserService implements CrudRepository<User> {
       where: {
         email,
       },
-      relations: ['school', 'department', 'teacher'],
+      relations: ['school', 'department', 'teacher', 'career'],
     });
   }
 
@@ -118,10 +119,10 @@ export class UserService implements CrudRepository<User> {
       lastName: creatrDto.lastName,
       firstName: creatrDto.firstName,
       role: creatrDto.role,
-      teacher: creatrDto.teacher,
-      school: creatrDto.school,
-      department: creatrDto.department,
-      idDocument: creatrDto.idDocument,
+      school: creatrDto.school?.id ? creatrDto.school : null,
+      department: creatrDto.department?.id ? creatrDto.department : null,
+      career: creatrDto.career?.id ? creatrDto.career : null,
+      teacher: creatrDto.teacher?.id ? creatrDto.teacher : null,
     });
 
     const _userRes = await this.usersRepository.save(user);
@@ -170,11 +171,13 @@ export class UserService implements CrudRepository<User> {
       firstName: updateUserDto?.firstName,
       status: updateUserDto?.status,
       role: updateUserDto?.role,
+      idDocument: updateUserDto.idDocument,
       school: updateUserDto.school?.id ? updateUserDto.school : null,
       department: updateUserDto.department?.id
         ? updateUserDto.department
         : null,
-      idDocument: updateUserDto.idDocument,
+      career: updateUserDto.career?.id ? updateUserDto.career : null,
+      teacher: updateUserDto.teacher?.id ? updateUserDto.teacher : null,
     });
 
     return new UserRespondeDto(_userRes);

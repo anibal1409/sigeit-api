@@ -8,6 +8,7 @@ import {
 
 import { ApiProperty } from '@nestjs/swagger';
 
+import { Career } from '../../career/entities';
 import { Department } from '../../department';
 import { School } from '../../school';
 import { Teacher } from '../../teacher';
@@ -84,6 +85,16 @@ export class UserRespondeDto {
   @Type(() => Department)
   department: Department;
 
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => Number)
+  careerId: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => Career)
+  career: Career;
+
   constructor(data: User) {
     this.id = data.id;
     this.name = data.name;
@@ -99,5 +110,7 @@ export class UserRespondeDto {
     this.idDocument = data.idDocument;
     this.lastName = data.lastName;
     this.firstName = data.firstName;
+    this.careerId = data?.career?.id;
+    this.career = data?.career;
   }
 }

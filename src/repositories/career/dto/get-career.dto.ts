@@ -1,9 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsOptional } from 'class-validator';
+// eslint-disable-next-line prettier/prettier
+import {
+  IsBoolean,
+  IsOptional,
+} from 'class-validator';
 
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class GetDepartmentsDto {
+export class GetCareersDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
@@ -11,7 +15,12 @@ export class GetDepartmentsDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Type(() => Boolean)
+  @Type(() => Number)
+  departmentId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
   status?: boolean;
 }
 

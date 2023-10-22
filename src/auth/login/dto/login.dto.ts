@@ -8,6 +8,7 @@ import {
 
 import { ApiProperty } from '@nestjs/swagger';
 
+import { Career } from '../../../repositories/career';
 import { Department } from '../../../repositories/department/entities';
 import { School } from '../../../repositories/school/entities';
 import { Teacher } from '../../../repositories/teacher/entities';
@@ -69,4 +70,9 @@ export class LoginUserResponseDto {
   @IsOptional()
   @Type(() => Teacher)
   teacher: Teacher;
+
+  @ApiProperty()
+  @IsOptional()
+  @Type(() => Career)
+  career: Career;
 }

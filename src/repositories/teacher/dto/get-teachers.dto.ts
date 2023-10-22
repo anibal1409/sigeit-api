@@ -13,5 +13,10 @@ export class GetTeachersDto {
   @IsOptional()
   @Type(() => Number)
   departmentId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Boolean)
+  status?: boolean;
 }
 

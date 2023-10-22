@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import {
   ApiResponse,
@@ -15,6 +16,7 @@ import {
 
 import { Public } from '../../auth/login/login.guard';
 import { CareerService } from './career.service';
+import { GetCareersDto } from './dto';
 import { CreateCareerDto } from './dto/create-career.dto';
 import { ResponseCareerDto } from './dto/response-career.dto';
 import { UpdateCareerDto } from './dto/update-career.dto';
@@ -38,8 +40,8 @@ export class CareerController {
     type: ResponseCareerDto,
     isArray: true,
   })
-  findAll() {
-    return this.careerService.findAll();
+  findAll(@Query() data: GetCareersDto) {
+    return this.careerService.findAll(data);
   }
 
   @Get(':id')

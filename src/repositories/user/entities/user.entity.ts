@@ -31,7 +31,7 @@ export class User extends IdEntity {
   @Column({ nullable: false, unique: true })
   email!: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   idDocument!: string;
 
   @Index('user_role_index')

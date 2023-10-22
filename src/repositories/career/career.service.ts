@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CrudRepository } from '../../common';
 import {
   CreateCareerDto,
+  GetCareersDto,
   UpdateCareerDto,
 } from './dto';
 import { ResponseCareerDto } from './dto/response-career.dto';
@@ -59,10 +60,17 @@ export class CareerService implements CrudRepository<Career> {
     return await this.findOne(item.id);
   }
 
-  findAll() {
+  findAll(data: GetCareersDto) {
     return this.repository.find({
       where: {
+        status: data?.status,
         deleted: false,
+        department: {
+          id: data?.departmentId || Not(0),
+          school: {
+            id: data?.schoolId || Not(0),
+          },
+        },
       },
       order: {
         name: 'ASC',

@@ -23,4 +23,9 @@ export class GetSectionsDto {
   @IsOptional()
   @Type(() => Number)
   dayId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Boolean)
+  status?: boolean;
 }

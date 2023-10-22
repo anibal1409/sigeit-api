@@ -23,6 +23,11 @@ export class ResponseSectionDto {
   @IsNotEmpty()
   @Type(() => Number)
   capacity: number;
+  
+  @ApiProperty()
+  @IsNotEmpty()
+  @Type(() => Number)
+  inscribed: number;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -75,5 +80,6 @@ export class ResponseSectionDto {
     this.period = data.period;
     this.teacherId = data.teacher.id;
     this.teacher = data.teacher;
+    this.inscribed = data.inscribed;
   }
 }

@@ -77,6 +77,7 @@ export class TeacherService implements CrudRepository<Teacher> {
             id: data?.schoolId || Not(0),
           },
         },
+        status: data?.status,
       },
       order: {
         lastName: 'ASC',

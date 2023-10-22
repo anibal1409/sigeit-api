@@ -61,7 +61,32 @@
       },
       "get": {
         "operationId": "CareerController_findAll",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -473,6 +498,14 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -700,6 +733,47 @@
                   "items": {
                     "$ref": "#/components/schemas/UserRespondeDto"
                   }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/student": {
+      "post": {
+        "operationId": "UserController_createStudent",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
                 }
               }
             }
@@ -1337,6 +1411,14 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -1555,6 +1637,14 @@
             "in": "query",
             "schema": {
               "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -1855,6 +1945,14 @@
             "schema": {
               "type": "number"
             }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -2131,6 +2229,132 @@
             "in": "query",
             "schema": {
               "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Schedule"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseScheduleDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/students/period/{id}": {
+      "get": {
+        "operationId": "ScheduleController_findAllStudents",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "periodId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -2852,6 +3076,30 @@
         ]
       }
     },
+    "/auth/create-student": {
+      "post": {
+        "operationId": "AuthController_createStudent",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
     "/auth/recovery-password/{recovery_token}": {
       "get": {
         "operationId": "AuthController_getRecoveryById",
@@ -3564,10 +3812,20 @@
               "director",
               "head-department",
               "planner",
-              "teacher"
+              "teacher",
+              "student"
             ]
           },
           "idDocument": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
             "type": "string"
           },
           "teacher": {
@@ -3582,17 +3840,18 @@
           "department": {
             "$ref": "#/components/schemas/IdCreateEntity"
           },
+          "career": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
           "id": {
             "type": "number"
-          },
-          "name": {
-            "type": "string"
           }
         },
         "required": [
           "email",
           "role",
           "idDocument",
+          "name",
           "status"
         ]
       },
@@ -3650,6 +3909,12 @@
           "name": {
             "type": "string"
           },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
           "email": {
             "type": "string"
           },
@@ -3679,11 +3944,19 @@
           },
           "department": {
             "$ref": "#/components/schemas/Department"
+          },
+          "careerId": {
+            "type": "number"
+          },
+          "career": {
+            "$ref": "#/components/schemas/Career"
           }
         },
         "required": [
           "id",
           "name",
+          "lastName",
+          "firstName",
           "email",
           "role",
           "idDocument",
@@ -3693,7 +3966,9 @@
           "schoolId",
           "school",
           "departmentId",
-          "department"
+          "department",
+          "careerId",
+          "career"
         ]
       },
       "UpdateUserDto": {
@@ -3708,11 +3983,21 @@
               "director",
               "head-department",
               "planner",
-              "teacher"
+              "teacher",
+              "student"
             ],
             "type": "string"
           },
           "idDocument": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
             "type": "string"
           },
           "teacher": {
@@ -3727,11 +4012,11 @@
           "department": {
             "$ref": "#/components/schemas/IdCreateEntity"
           },
+          "career": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
           "id": {
             "type": "number"
-          },
-          "name": {
-            "type": "string"
           }
         }
       },
@@ -4399,6 +4684,9 @@
           },
           "id": {
             "type": "number"
+          },
+          "inscribed": {
+            "type": "number"
           }
         },
         "required": [
@@ -4417,6 +4705,9 @@
             "type": "number"
           },
           "capacity": {
+            "type": "number"
+          },
+          "inscribed": {
             "type": "number"
           },
           "name": {
@@ -4447,6 +4738,7 @@
         "required": [
           "id",
           "capacity",
+          "inscribed",
           "name",
           "subjectId",
           "subject",
@@ -4464,6 +4756,9 @@
             "type": "string"
           },
           "capacity": {
+            "type": "number"
+          },
+          "inscribed": {
             "type": "number"
           },
           "subject": {
@@ -4496,6 +4791,7 @@
         "required": [
           "name",
           "capacity",
+          "inscribed",
           "subject",
           "period",
           "teacher",
@@ -4526,6 +4822,9 @@
             "type": "boolean"
           },
           "id": {
+            "type": "number"
+          },
+          "inscribed": {
             "type": "number"
           }
         }
@@ -4983,6 +5282,9 @@
           },
           "teacher": {
             "$ref": "#/components/schemas/Teacher"
+          },
+          "career": {
+            "$ref": "#/components/schemas/Career"
           }
         },
         "required": [
@@ -4993,7 +5295,8 @@
           "loginStamp",
           "school",
           "department",
-          "teacher"
+          "teacher",
+          "career"
         ]
       },
       "RecoveryPasswordDto": {

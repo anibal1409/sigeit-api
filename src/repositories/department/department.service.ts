@@ -64,15 +64,13 @@ export class DepartmentService implements CrudRepository<Department> {
     return this.repository.find({
       where: {
         deleted: false,
+        status: data?.status,
         school: {
           id: data?.schoolId || Not(0),
         },
       },
       relations: ['school'],
       order: {
-        school: {
-          name: 'ASC',
-        },
         name: 'ASC',
       },
     });

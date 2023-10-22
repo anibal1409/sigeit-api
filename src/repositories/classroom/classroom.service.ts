@@ -66,6 +66,7 @@ export class ClassroomService implements CrudRepository<Classroom> {
     return this.repository.find({
       where: {
         deleted: false,
+        status: data?.status,
         departments: {
           id: data.departmentId,
         },

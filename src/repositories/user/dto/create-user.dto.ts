@@ -27,6 +27,7 @@ export class CreateUserDto extends PartialType(
     'teacher',
     'school',
     'department',
+    'career',
   ]),
 ) {
   @ApiProperty()
@@ -83,5 +84,5 @@ export class CreateUserDto extends PartialType(
   @ApiProperty({ type: IdCreateEntity })
   @IsOptional()
   @Type(() => IdCreateEntity)
-  careerId?: IdCreateEntity;
+  career?: IdCreateEntity;
 }

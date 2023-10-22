@@ -6,7 +6,10 @@ import {
 import {
   Body,
   Controller,
+  forwardRef,
   Get,
+  HttpStatus,
+  Inject,
   Param,
   Post,
   Put,
@@ -19,6 +22,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import {
+  CreateUserDto,
+  UserService,
+} from '../repositories/user';
 import {
   ChangePasswordDto,
   ChangePasswordResponseDto,
@@ -46,8 +53,10 @@ export class AuthController {
     private readonly logoutService: LogoutService,
     private readonly recoveryPasswordService: RecoveryPasswordService,
     private readonly changePasswordService: ChangePasswordService,
-    private readonly loginService: LoginService
-  ) {}
+    private readonly loginService: LoginService,
+    @Inject(forwardRef(() => UserService))
+    private readonly userService: UserService,
+  ) { }
 
   @Post('login')
   @Public()
@@ -80,6 +89,15 @@ export class AuthController {
     @Body() recoveryPasswordDto: RecoveryPasswordDto
   ): Promise<RecoveryPasswordResponseDto> {
     return this.recoveryPasswordService.generateRecovery(recoveryPasswordDto);
+  }
+
+  @Post('create-student')
+  @Public()
+  async createStudent(
+    @Body() createUserDto: CreateUserDto
+  ): Promise<HttpStatus> {
+    await this.userService.create(createUserDto);
+    return HttpStatus.OK;
   }
 
   @Get('recovery-password/:recovery_token')
@@ -119,4 +137,5 @@ export class AuthController {
       token,
       body.newPassword
     );
-  }}
+  }
+}

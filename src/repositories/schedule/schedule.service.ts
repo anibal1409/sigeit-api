@@ -1,5 +1,6 @@
 // eslint-disable-next-line prettier/prettier
 import {
+  MoreThan,
   Not,
   Repository,
 } from 'typeorm';
@@ -91,21 +92,25 @@ export class ScheduleService implements CrudRepository<Schedule> {
     return await this.findOne(item.id);
   }
 
-  findAllPeriod(periodId: number, query?: GetSchedulesDto) {
+  findAllPeriod(periodId: number, query?: GetSchedulesDto, students = false) {
     return this.repository.find({
       where: {
         deleted: false,
+        status: query?.status,
         period: {
           id: periodId,
         },
         section: {
           id: query?.sectionId || Not(0),
+          status: students || null,
+          capacity: students ? MoreThan(0) : null,
           subject: {
             id: query?.subjectId || Not(0),
             semester: query?.semester || Not(0),
             department: {
               id: query?.departmentId || Not(0),
             },
+            status: students || null,
           },
           teacher: {
             id: query?.teacherId || Not(0),

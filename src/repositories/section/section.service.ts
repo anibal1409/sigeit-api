@@ -85,6 +85,7 @@ export class SectionService implements CrudRepository<Section> {
     return this.repository.find({
       where: {
         deleted: false,
+        status: query?.status,
         period: {
           id: periodId,
         },

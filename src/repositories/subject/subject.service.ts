@@ -75,6 +75,7 @@ export class SubjectService implements CrudRepository<Subject> {
     return this.repository.find({
       where: {
         deleted: false,
+        status: data.status,
         department: {
           id: data.departmentId,
         },
