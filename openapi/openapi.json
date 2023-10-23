@@ -2977,6 +2977,355 @@
         ]
       }
     },
+    "/inscription": {
+      "post": {
+        "operationId": "InscriptionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
+    "/inscription/close": {
+      "post": {
+        "operationId": "InscriptionController_close",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseInscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
+    "/inscription/period/{id}": {
+      "get": {
+        "operationId": "InscriptionController_findAll",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "stage",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "Validated",
+                "Registered"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "careerId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "schedules",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inscription"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseInscriptionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
+    "/inscription/{id}": {
+      "get": {
+        "operationId": "InscriptionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      },
+      "patch": {
+        "operationId": "InscriptionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      },
+      "delete": {
+        "operationId": "InscriptionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
     "/auth/login": {
       "post": {
         "operationId": "AuthController_login",
@@ -5231,6 +5580,210 @@
             ]
           },
           "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": [
+              "Validated",
+              "Registered"
+            ]
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "user": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "id": {
+            "type": "number"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "stage",
+          "section",
+          "user"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "idDocument": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/Teacher"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "career": {
+            "$ref": "#/components/schemas/Career"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "firstName",
+          "lastName",
+          "email",
+          "idDocument",
+          "role",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ResponseInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "stage": {
+            "enum": [
+              "Validated",
+              "Registered"
+            ],
+            "type": "string"
+          },
+          "sectionId": {
+            "type": "number"
+          },
+          "section": {
+            "$ref": "#/components/schemas/Section"
+          },
+          "userId": {
+            "type": "number"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": [
+          "id",
+          "stage",
+          "sectionId",
+          "section",
+          "userId",
+          "user"
+        ]
+      },
+      "CloseInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "ids"
+        ]
+      },
+      "Inscription": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "section": {
+            "$ref": "#/components/schemas/Section"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "stage",
+          "section",
+          "user",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "enum": [
+              "Validated",
+              "Registered"
+            ],
+            "type": "string"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "user": {
             "$ref": "#/components/schemas/IdCreateEntity"
           },
           "id": {

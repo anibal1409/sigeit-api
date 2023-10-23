@@ -96,7 +96,7 @@ export class ScheduleService implements CrudRepository<Schedule> {
     return this.repository.find({
       where: {
         deleted: false,
-        status: query?.status,
+        status: query?.status || null,
         period: {
           id: periodId,
         },

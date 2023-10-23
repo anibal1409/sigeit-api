@@ -1,4 +1,5 @@
 import { Type } from 'class-transformer';
+// eslint-disable-next-line prettier/prettier
 import {
   IsBooleanString,
   IsOptional,
@@ -6,7 +7,14 @@ import {
 
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class GetSchedulesDto {
+import { StageInscription } from '../enums';
+
+export class GetInscriptionDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => String)
+  stage?: StageInscription;
+
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
@@ -15,12 +23,17 @@ export class GetSchedulesDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
-  subjectId?: number;
+  careerId?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
-  periodId?: number;
+  schoolId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
+  departmentId?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -30,25 +43,25 @@ export class GetSchedulesDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
-  semester?: number;
+  subjectId?: number;
   
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
-  dayId?: number;
+  userId?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
-  classroomId?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Type(() => Number)
-  departmentId?: number;
+  semester?: number;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsBooleanString()
   status?: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBooleanString()
+  schedules?: boolean;
 }

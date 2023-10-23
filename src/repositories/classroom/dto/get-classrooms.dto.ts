@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer';
 // eslint-disable-next-line prettier/prettier
 import {
-  IsBoolean,
+  IsBooleanString,
   IsOptional,
 } from 'class-validator';
 
@@ -20,7 +20,7 @@ export class GetClassroomsDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsBoolean()
+  @IsBooleanString()
   status?: boolean;
 }
 
