@@ -77,11 +77,7 @@ export class SectionService implements CrudRepository<Section> {
     return await this.findOne(item.id);
   }
 
-  findAllOfPeriod(
-    departmentId: number,
-    periodId: number,
-    query?: GetSectionsDto,
-  ) {
+  findAllOfPeriod(periodId: number, query?: GetSectionsDto) {
     return this.repository.find({
       where: {
         deleted: false,
@@ -92,7 +88,7 @@ export class SectionService implements CrudRepository<Section> {
         subject: {
           id: query?.subjectId || Not(0),
           department: {
-            id: departmentId,
+            id: query?.departmentId || Not(0),
           },
           semester: query?.semester || Not(0),
         },

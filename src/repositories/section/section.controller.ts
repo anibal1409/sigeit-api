@@ -36,17 +36,16 @@ export class SectionController {
     return this.sectionService.create(createSectionDto);
   }
 
-  @Get('/department/:departmentId/period/:periodId')
+  @Get('/period/:periodId')
   @ApiResponse({
     type: ResponseSectionDto,
     isArray: true,
   })
   findAll(
-    @Param('departmentId', ParseIntPipe) departmentId: number,
     @Param('periodId', ParseIntPipe) periodId: number,
     @Query() data: GetSectionsDto,
   ) {
-    return this.sectionService.findAllOfPeriod(+departmentId, +periodId, data);
+    return this.sectionService.findAllOfPeriod(+periodId, data);
   }
 
   @Get(':id')

@@ -910,6 +910,279 @@
         ]
       }
     },
+    "/teacher": {
+      "post": {
+        "operationId": "TeacherController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeacherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      },
+      "get": {
+        "operationId": "TeacherController_findAll",
+        "parameters": [
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseTeacherDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/teacher/department/{id}": {
+      "get": {
+        "operationId": "TeacherController_findAllDepartment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseTeacherDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/teacher/{id}": {
+      "get": {
+        "operationId": "TeacherController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      },
+      "patch": {
+        "operationId": "TeacherController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTeacherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      },
+      "delete": {
+        "operationId": "TeacherController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
     "/day": {
       "post": {
         "operationId": "DayController_create",
@@ -1580,279 +1853,6 @@
         ]
       }
     },
-    "/teacher": {
-      "post": {
-        "operationId": "TeacherController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateTeacherDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "teacher"
-        ]
-      },
-      "get": {
-        "operationId": "TeacherController_findAll",
-        "parameters": [
-          {
-            "name": "schoolId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "departmentId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "status",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Teacher"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseTeacherDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "teacher"
-        ]
-      }
-    },
-    "/teacher/department/{id}": {
-      "get": {
-        "operationId": "TeacherController_findAllDepartment",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Teacher"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseTeacherDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "teacher"
-        ]
-      }
-    },
-    "/teacher/{id}": {
-      "get": {
-        "operationId": "TeacherController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "teacher"
-        ]
-      },
-      "patch": {
-        "operationId": "TeacherController_update",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateTeacherDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "teacher"
-        ]
-      },
-      "delete": {
-        "operationId": "TeacherController_remove",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTeacherDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "teacher"
-        ]
-      }
-    },
     "/section": {
       "post": {
         "operationId": "SectionController_create",
@@ -1894,12 +1894,12 @@
         ]
       }
     },
-    "/section/department/{departmentId}/period/{periodId}": {
+    "/section/period/{periodId}": {
       "get": {
         "operationId": "SectionController_findAll",
         "parameters": [
           {
-            "name": "departmentId",
+            "name": "periodId",
             "required": true,
             "in": "path",
             "schema": {
@@ -1907,9 +1907,9 @@
             }
           },
           {
-            "name": "periodId",
-            "required": true,
-            "in": "path",
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
             "schema": {
               "type": "number"
             }
@@ -4369,6 +4369,137 @@
           }
         }
       },
+      "CreateTeacherDto": {
+        "type": "object",
+        "properties": {
+          "idDocument": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
+          }
+        },
+        "required": [
+          "idDocument",
+          "firstName",
+          "department",
+          "status"
+        ]
+      },
+      "ResponseTeacherDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "idDocument": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "departmentId": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "idDocument",
+          "firstName",
+          "departmentId",
+          "department",
+          "status"
+        ]
+      },
+      "UpdateTeacherDto": {
+        "type": "object",
+        "properties": {
+          "idDocument": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Subject"
+            }
+          }
+        }
+      },
       "CreateDayDto": {
         "type": "object",
         "properties": {
@@ -4876,137 +5007,6 @@
           },
           "status": {
             "type": "boolean"
-          }
-        }
-      },
-      "CreateTeacherDto": {
-        "type": "object",
-        "properties": {
-          "idDocument": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "department": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "abbreviation": {
-            "type": "string"
-          },
-          "subjects": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Subject"
-            }
-          }
-        },
-        "required": [
-          "idDocument",
-          "firstName",
-          "department",
-          "status"
-        ]
-      },
-      "ResponseTeacherDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "idDocument": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "departmentId": {
-            "type": "number"
-          },
-          "department": {
-            "$ref": "#/components/schemas/Department"
-          },
-          "status": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "id",
-          "idDocument",
-          "firstName",
-          "departmentId",
-          "department",
-          "status"
-        ]
-      },
-      "UpdateTeacherDto": {
-        "type": "object",
-        "properties": {
-          "idDocument": {
-            "type": "string"
-          },
-          "firstName": {
-            "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "department": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "logo": {
-            "type": "string"
-          },
-          "abbreviation": {
-            "type": "string"
-          },
-          "subjects": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Subject"
-            }
           }
         }
       },

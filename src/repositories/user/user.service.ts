@@ -14,6 +14,10 @@ import { hashPassword } from '../../auth';
 import { CrudRepository } from '../../common';
 import { MailService } from '../../mail';
 import {
+  Teacher,
+  TeacherService,
+} from '../teacher';
+import {
   CreateUserDto,
   UserRespondeDto,
 } from './dto';
@@ -28,6 +32,7 @@ export class UserService implements CrudRepository<User> {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly mailService: MailService,
+    private readonly teacherService: TeacherService,
   ) { }
 
   async findValid(id: number): Promise<User> {
@@ -231,5 +236,9 @@ export class UserService implements CrudRepository<User> {
     const user = await this.findValid(id);
     user.deleted = true;
     return new UserRespondeDto(await this.usersRepository.save(user));
+  }
+
+  findTeacherIdDocument(idDocument: string): Promise<Teacher> {
+    return this.teacherService.findByIdDocument(idDocument);
   }
 }

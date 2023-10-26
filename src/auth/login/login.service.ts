@@ -40,8 +40,24 @@ export class LoginService {
       expiresIn: JWT_CONST.expiresIn,
     });
 
-    const { email, id, role, name, school, department, teacher, career } =
-      await this.userService.findOneByEmail(user.email);
+    const {
+      email,
+      id,
+      role,
+      name,
+      school,
+      department,
+      teacher,
+      career,
+      idDocument,
+    } = await this.userService.findOneByEmail(user.email);
+    let teacher2;
+    if (idDocument && !teacher?.id) {
+      teacher2 = await this.userService.findTeacherIdDocument(idDocument);
+      if (teacher2) {
+        await this.userService.updateTeacher(id, teacher2.id);
+      }
+    }
 
     const secretData = {
       token: _token,
@@ -62,7 +78,7 @@ export class LoginService {
       loginStamp: _expiredTime,
       school,
       department,
-      teacher,
+      teacher: teacher || teacher2,
       career,
     };
   }

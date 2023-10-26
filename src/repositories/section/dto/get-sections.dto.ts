@@ -10,6 +10,11 @@ export class GetSectionsDto {
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)
+  departmentId?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Type(() => Number)
   subjectId?: number;
 
   @ApiPropertyOptional()
