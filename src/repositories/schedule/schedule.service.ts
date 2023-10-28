@@ -188,4 +188,8 @@ export class ScheduleService implements CrudRepository<Schedule> {
     item.deleted = true;
     return new ResponseScheduleDto(await this.repository.save(item));
   }
+
+  createMany(createDto: Array<CreateScheduleDto>): Promise<Schedule[]> {
+    return this.repository.save(createDto);
+  }
 }

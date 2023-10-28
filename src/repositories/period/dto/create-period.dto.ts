@@ -68,5 +68,10 @@ export class CreatePeriodDto extends PartialType(
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
+  copyPrevious!: boolean;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsBoolean()
   status!: boolean;
 }

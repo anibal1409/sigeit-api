@@ -1492,6 +1492,37 @@
         ]
       }
     },
+    "/period/to-plan": {
+      "get": {
+        "operationId": "PeriodController_findToPlan",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Period"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      }
+    },
     "/period/{id}": {
       "get": {
         "operationId": "PeriodController_findOne",
@@ -1615,502 +1646,6 @@
         },
         "tags": [
           "period"
-        ]
-      }
-    },
-    "/subject": {
-      "post": {
-        "operationId": "SubjectController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSubjectDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "subject"
-        ]
-      },
-      "get": {
-        "operationId": "SubjectController_findAll",
-        "parameters": [
-          {
-            "name": "semester",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "careerId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "departmentId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "status",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Subject"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseSubjectDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "subject"
-        ]
-      }
-    },
-    "/subject/{id}": {
-      "get": {
-        "operationId": "SubjectController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "subject"
-        ]
-      },
-      "patch": {
-        "operationId": "SubjectController_update",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateSubjectDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "subject"
-        ]
-      },
-      "delete": {
-        "operationId": "SubjectController_remove",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSubjectDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "subject"
-        ]
-      }
-    },
-    "/section": {
-      "post": {
-        "operationId": "SectionController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSectionDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "section"
-        ]
-      }
-    },
-    "/section/period/{periodId}": {
-      "get": {
-        "operationId": "SectionController_findAll",
-        "parameters": [
-          {
-            "name": "periodId",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "departmentId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "subjectId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "teacherId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "semester",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "dayId",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "status",
-            "required": false,
-            "in": "query",
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Section"
-                  }
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ResponseSectionDto"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "section"
-        ]
-      }
-    },
-    "/section/{id}": {
-      "get": {
-        "operationId": "SectionController_findOne",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "section"
-        ]
-      },
-      "patch": {
-        "operationId": "SectionController_update",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateSectionDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "section"
-        ]
-      },
-      "delete": {
-        "operationId": "SectionController_remove",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseSectionDto"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "section"
         ]
       }
     },
@@ -2514,6 +2049,502 @@
         },
         "tags": [
           "schedule"
+        ]
+      }
+    },
+    "/section": {
+      "post": {
+        "operationId": "SectionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/section/period/{periodId}": {
+      "get": {
+        "operationId": "SectionController_findAll",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Section"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSectionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/section/{id}": {
+      "get": {
+        "operationId": "SectionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      },
+      "patch": {
+        "operationId": "SectionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      },
+      "delete": {
+        "operationId": "SectionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/subject": {
+      "post": {
+        "operationId": "SubjectController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSubjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      },
+      "get": {
+        "operationId": "SubjectController_findAll",
+        "parameters": [
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "careerId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Subject"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSubjectDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      }
+    },
+    "/subject/{id}": {
+      "get": {
+        "operationId": "SubjectController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      },
+      "patch": {
+        "operationId": "SubjectController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      },
+      "delete": {
+        "operationId": "SubjectController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
         ]
       }
     },
@@ -4652,6 +4683,7 @@
           },
           "stage": {
             "enum": [
+              "TO_START",
               "TO_PLAN",
               "PLANNED",
               "FINALIZED"
@@ -4663,6 +4695,9 @@
           },
           "duration": {
             "type": "number"
+          },
+          "copyPrevious": {
+            "type": "boolean"
           },
           "status": {
             "type": "boolean"
@@ -4680,6 +4715,7 @@
           "stage",
           "interval",
           "duration",
+          "copyPrevious",
           "status"
         ]
       },
@@ -4711,6 +4747,7 @@
           },
           "stage": {
             "enum": [
+              "TO_START",
               "TO_PLAN",
               "PLANNED",
               "FINALIZED"
@@ -4771,6 +4808,7 @@
           },
           "stage": {
             "enum": [
+              "TO_START",
               "TO_PLAN",
               "PLANNED",
               "FINALIZED"
@@ -4834,6 +4872,7 @@
           },
           "stage": {
             "enum": [
+              "TO_START",
               "TO_PLAN",
               "PLANNED",
               "FINALIZED"
@@ -4846,10 +4885,354 @@
           "duration": {
             "type": "number"
           },
+          "copyPrevious": {
+            "type": "boolean"
+          },
           "status": {
             "type": "boolean"
           },
           "id": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "day": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "classroom",
+          "day",
+          "section",
+          "period",
+          "status"
+        ]
+      },
+      "Section": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "number"
+          },
+          "inscribed": {
+            "type": "number"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/Subject"
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/Teacher"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "capacity",
+          "inscribed",
+          "subject",
+          "period",
+          "teacher",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "ResponseScheduleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroomId": {
+            "type": "number"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/Classroom"
+          },
+          "dayId": {
+            "type": "number"
+          },
+          "day": {
+            "$ref": "#/components/schemas/Day"
+          },
+          "sectionId": {
+            "type": "number"
+          },
+          "section": {
+            "$ref": "#/components/schemas/Section"
+          },
+          "periodId": {
+            "type": "number"
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "start",
+          "end",
+          "classroomId",
+          "classroom",
+          "dayId",
+          "day",
+          "sectionId",
+          "section",
+          "periodId",
+          "period",
+          "status"
+        ]
+      },
+      "Schedule": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/Classroom"
+          },
+          "day": {
+            "$ref": "#/components/schemas/Day"
+          },
+          "section": {
+            "$ref": "#/components/schemas/Section"
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "classroom",
+          "day",
+          "section",
+          "period",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "day": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          }
+        }
+      },
+      "CreateSectionDto": {
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "inscribed": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "capacity",
+          "name",
+          "subject",
+          "period",
+          "teacher",
+          "status"
+        ]
+      },
+      "ResponseSectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "capacity": {
+            "type": "number"
+          },
+          "inscribed": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subjectId": {
+            "type": "number"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/Subject"
+          },
+          "periodId": {
+            "type": "number"
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "teacherId": {
+            "type": "number"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/Teacher"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "capacity",
+          "inscribed",
+          "name",
+          "subjectId",
+          "subject",
+          "periodId",
+          "period",
+          "teacherId",
+          "teacher",
+          "status"
+        ]
+      },
+      "UpdateSectionDto": {
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "number"
+          },
+          "inscribed": {
             "type": "number"
           }
         }
@@ -5007,347 +5390,6 @@
           },
           "status": {
             "type": "boolean"
-          }
-        }
-      },
-      "CreateSectionDto": {
-        "type": "object",
-        "properties": {
-          "capacity": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "subject": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "period": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "teacher": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "number"
-          },
-          "inscribed": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "capacity",
-          "name",
-          "subject",
-          "period",
-          "teacher",
-          "status"
-        ]
-      },
-      "ResponseSectionDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "capacity": {
-            "type": "number"
-          },
-          "inscribed": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "subjectId": {
-            "type": "number"
-          },
-          "subject": {
-            "$ref": "#/components/schemas/Subject"
-          },
-          "periodId": {
-            "type": "number"
-          },
-          "period": {
-            "$ref": "#/components/schemas/Period"
-          },
-          "teacherId": {
-            "type": "number"
-          },
-          "teacher": {
-            "$ref": "#/components/schemas/Teacher"
-          },
-          "status": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "id",
-          "capacity",
-          "inscribed",
-          "name",
-          "subjectId",
-          "subject",
-          "periodId",
-          "period",
-          "teacherId",
-          "teacher",
-          "status"
-        ]
-      },
-      "Section": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "capacity": {
-            "type": "number"
-          },
-          "inscribed": {
-            "type": "number"
-          },
-          "subject": {
-            "$ref": "#/components/schemas/Subject"
-          },
-          "period": {
-            "$ref": "#/components/schemas/Period"
-          },
-          "teacher": {
-            "$ref": "#/components/schemas/Teacher"
-          },
-          "id": {
-            "type": "number"
-          },
-          "createdAt": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "updatedAt": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "deleted": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "name",
-          "capacity",
-          "inscribed",
-          "subject",
-          "period",
-          "teacher",
-          "id",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "UpdateSectionDto": {
-        "type": "object",
-        "properties": {
-          "capacity": {
-            "type": "number"
-          },
-          "name": {
-            "type": "string"
-          },
-          "subject": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "period": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "teacher": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "number"
-          },
-          "inscribed": {
-            "type": "number"
-          }
-        }
-      },
-      "CreateScheduleDto": {
-        "type": "object",
-        "properties": {
-          "start": {
-            "type": "string"
-          },
-          "end": {
-            "type": "string"
-          },
-          "classroom": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "day": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "section": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "period": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "number"
-          }
-        },
-        "required": [
-          "start",
-          "end",
-          "classroom",
-          "day",
-          "section",
-          "period",
-          "status"
-        ]
-      },
-      "ResponseScheduleDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "number"
-          },
-          "start": {
-            "type": "string"
-          },
-          "end": {
-            "type": "string"
-          },
-          "classroomId": {
-            "type": "number"
-          },
-          "classroom": {
-            "$ref": "#/components/schemas/Classroom"
-          },
-          "dayId": {
-            "type": "number"
-          },
-          "day": {
-            "$ref": "#/components/schemas/Day"
-          },
-          "sectionId": {
-            "type": "number"
-          },
-          "section": {
-            "$ref": "#/components/schemas/Section"
-          },
-          "periodId": {
-            "type": "number"
-          },
-          "period": {
-            "$ref": "#/components/schemas/Period"
-          },
-          "status": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "id",
-          "start",
-          "end",
-          "classroomId",
-          "classroom",
-          "dayId",
-          "day",
-          "sectionId",
-          "section",
-          "periodId",
-          "period",
-          "status"
-        ]
-      },
-      "Schedule": {
-        "type": "object",
-        "properties": {
-          "start": {
-            "type": "string"
-          },
-          "end": {
-            "type": "string"
-          },
-          "classroom": {
-            "$ref": "#/components/schemas/Classroom"
-          },
-          "day": {
-            "$ref": "#/components/schemas/Day"
-          },
-          "section": {
-            "$ref": "#/components/schemas/Section"
-          },
-          "period": {
-            "$ref": "#/components/schemas/Period"
-          },
-          "id": {
-            "type": "number"
-          },
-          "createdAt": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "updatedAt": {
-            "format": "date-time",
-            "type": "string"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "deleted": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "start",
-          "end",
-          "classroom",
-          "day",
-          "section",
-          "period",
-          "id",
-          "createdAt",
-          "updatedAt"
-        ]
-      },
-      "UpdateScheduleDto": {
-        "type": "object",
-        "properties": {
-          "start": {
-            "type": "string"
-          },
-          "end": {
-            "type": "string"
-          },
-          "classroom": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "day": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "section": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "period": {
-            "$ref": "#/components/schemas/IdCreateEntity"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "id": {
-            "type": "number"
           }
         }
       },

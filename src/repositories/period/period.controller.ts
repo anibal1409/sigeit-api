@@ -17,6 +17,7 @@ import { Public } from '../../auth/login';
 import { ResponsePeriodDto } from './dto';
 import { CreatePeriodDto } from './dto/create-period.dto';
 import { UpdatePeriodDto } from './dto/update-period.dto';
+import { StagePeriod } from './enum';
 import { PeriodService } from './period.service';
 
 @ApiTags('period')
@@ -47,7 +48,18 @@ export class PeriodController {
     type: ResponsePeriodDto,
   })
   findActive() {
-    return this.periodService.findActive();
+    return this.periodService.findByStage([StagePeriod.Planned]);
+  }
+
+  @Get('to-plan')
+  @ApiResponse({
+    type: ResponsePeriodDto,
+  })
+  findToPlan() {
+    return this.periodService.findByStage([
+      StagePeriod.toStart,
+      StagePeriod.toPlan,
+    ]);
   }
 
   @Get(':id')

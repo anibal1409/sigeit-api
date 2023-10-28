@@ -86,7 +86,7 @@ export class InscriptionService implements CrudRepository<Inscription> {
     this.validateSection(section);
 
     const item = await this.repository.save(createDto);
-    section.capacity -= 1;
+    section.inscribed += 1;
     await this.sectionService.update(section.id, section);
 
     return await this.findOne(item.id);
@@ -177,13 +177,13 @@ export class InscriptionService implements CrudRepository<Inscription> {
     if (inscription.section.id !== updateDto.section.id) {
       const section = await this.sectionService.findOne(updateDto.section.id);
       this.validateSection(section);
-      section.capacity -= 1;
+      section.inscribed += 1;
       await this.sectionService.update(section.id, section);
 
       const lastSection = await this.sectionService.findOne(
         inscription.section.id,
       );
-      lastSection.capacity += 1;
+      lastSection.inscribed -= 1;
       await this.sectionService.update(lastSection.id, lastSection);
     }
 
@@ -223,7 +223,7 @@ export class InscriptionService implements CrudRepository<Inscription> {
   }
 
   private validateSection(section: ResponseSectionDto) {
-    if (section.capacity <= 0) {
+    if (section.inscribed >= section.capacity) {
       throw new BadRequestException('Sección sin capacidad.');
     }
   }
