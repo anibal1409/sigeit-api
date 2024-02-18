@@ -155,9 +155,10 @@ export class UserService implements CrudRepository<User> {
       updateUserDto.idDocument,
       updateUserDto.role,
     );
+
     if (
       userIdDocument &&
-      updateUserDto.id !== id &&
+      userIdDocument.id !== id &&
       userIdDocument.idDocument === updateUserDto.idDocument
     ) {
       if (userIdDocument.deleted) {
