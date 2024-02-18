@@ -124,6 +124,7 @@ export class UserService implements CrudRepository<User> {
       lastName: creatrDto.lastName,
       firstName: creatrDto.firstName,
       role: creatrDto.role,
+      idDocument: creatrDto.idDocument,
       school: creatrDto.school?.id ? creatrDto.school : null,
       department: creatrDto.department?.id ? creatrDto.department : null,
       career: creatrDto.career?.id ? creatrDto.career : null,

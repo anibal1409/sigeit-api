@@ -87,7 +87,7 @@ export const welcome = (
         letter-spacing: 0.3px;
         text-align: center;
       ">
-      <strong>Usuario:</strong> ${user_}<br />
+      <strong>Nombre:</strong> ${user_}<br />
       <div style="
           padding-top: 20px;
           font-size: 12px;
