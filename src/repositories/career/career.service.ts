@@ -97,6 +97,7 @@ export class CareerService implements CrudRepository<Career> {
       abbreviation: updateDto?.abbreviation,
       logo: updateDto?.logo,
       department: updateDto.department,
+      status: updateDto.status,
     });
 
     return this.findOne(item.id);

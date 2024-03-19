@@ -70,9 +70,20 @@ export class PeriodService implements CrudRepository<Period> {
       },
       relations: [],
     });
+
+    return item;
+  }
+
+  async findPeriodActive() {
+    const item = await this.findByStage([
+      StagePeriod.Planned,
+      StagePeriod.toPlan,
+    ]);
+
     if (!item) {
       throw new NotFoundException('Period not found');
     }
+
     return item;
   }
 
@@ -83,7 +94,7 @@ export class PeriodService implements CrudRepository<Period> {
 
     if (await this.findByStage([StagePeriod.toStart])) {
       throw new BadRequestException(
-        'No puede existir más de un período académico por iniciar.'
+        'No puede existir más de un período académico por iniciar.',
       );
     }
 

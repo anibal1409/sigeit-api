@@ -87,6 +87,7 @@ export class SchoolService implements CrudRepository<School> {
       description: updateDto?.description,
       abbreviation: updateDto.abbreviation,
       logo: updateDto?.logo,
+      status: updateDto.status,
     });
 
     return this.findOne(item.id);

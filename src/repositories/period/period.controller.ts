@@ -48,7 +48,7 @@ export class PeriodController {
     type: ResponsePeriodDto,
   })
   findActive() {
-    return this.periodService.findByStage([StagePeriod.Planned]);
+    return this.periodService.findPeriodActive();
   }
 
   @Get('to-plan')

@@ -95,6 +95,7 @@ export class DepartmentService implements CrudRepository<Department> {
       abbreviation: updateDto.abbreviation,
       logo: updateDto?.logo,
       school: updateDto?.school,
+      status: updateDto.status,
     });
 
     return this.findOne(item.id);

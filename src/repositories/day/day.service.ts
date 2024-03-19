@@ -84,6 +84,7 @@ export class DayService implements CrudRepository<Day> {
       id,
       name: updateDto.name,
       abbreviation: updateDto?.abbreviation,
+      status: updateDto.status,
     });
 
     return this.findOne(item.id);
