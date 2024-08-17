@@ -134,6 +134,7 @@ export class SectionService implements CrudRepository<Section> {
       subject: updateDto.subject,
       period: updateDto.period,
       teacher: updateDto.teacher,
+      all: updateDto?.all,
     });
 
     return this.findOne(item.id);

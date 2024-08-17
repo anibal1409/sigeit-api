@@ -18,7 +18,7 @@ export class Section extends IdEntity {
 
   @Column({ nullable: true })
   capacity: number;
-  
+
   @Column({ default: 0 })
   inscribed: number;
 
@@ -33,4 +33,7 @@ export class Section extends IdEntity {
   @ManyToOne(() => Teacher, (teacher) => teacher.id)
   @JoinColumn()
   teacher: Teacher;
+
+  @Column({ default: false, nullable: true })
+  all: boolean;
 }

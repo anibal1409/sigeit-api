@@ -5089,6 +5089,9 @@
           "teacher": {
             "$ref": "#/components/schemas/Teacher"
           },
+          "all": {
+            "type": "boolean"
+          },
           "id": {
             "type": "number"
           },
@@ -5114,6 +5117,7 @@
           "subject",
           "period",
           "teacher",
+          "all",
           "id",
           "createdAt",
           "updatedAt"
@@ -5275,6 +5279,9 @@
           "status": {
             "type": "boolean"
           },
+          "all": {
+            "type": "boolean"
+          },
           "id": {
             "type": "number"
           },
@@ -5326,6 +5333,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "all": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -5339,7 +5349,8 @@
           "period",
           "teacherId",
           "teacher",
-          "status"
+          "status",
+          "all"
         ]
       },
       "UpdateSectionDto": {
@@ -5361,6 +5372,9 @@
             "$ref": "#/components/schemas/IdCreateEntity"
           },
           "status": {
+            "type": "boolean"
+          },
+          "all": {
             "type": "boolean"
           },
           "id": {
@@ -6085,7 +6099,13 @@
           "user": {
             "$ref": "#/components/schemas/User"
           },
+          "activityType": {
+            "type": "string"
+          },
           "activity": {
+            "type": "string"
+          },
+          "requestBody": {
             "type": "string"
           },
           "createdAt": {
@@ -6096,7 +6116,9 @@
         "required": [
           "id",
           "user",
+          "activityType",
           "activity",
+          "requestBody",
           "createdAt"
         ]
       },

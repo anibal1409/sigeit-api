@@ -23,7 +23,7 @@ export class ResponseSectionDto {
   @IsNotEmpty()
   @Type(() => Number)
   capacity: number;
-  
+
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)
@@ -69,6 +69,11 @@ export class ResponseSectionDto {
   @IsBoolean()
   status!: boolean;
 
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsBoolean()
+  all!: boolean;
+
   constructor(data: Section) {
     this.id = data.id;
     this.name = data.name;
@@ -81,5 +86,6 @@ export class ResponseSectionDto {
     this.teacherId = data.teacher.id;
     this.teacher = data.teacher;
     this.inscribed = data.inscribed;
+    this.all = data.all;
   }
 }

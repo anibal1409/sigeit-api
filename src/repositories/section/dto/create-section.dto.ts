@@ -2,11 +2,13 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsNotEmpty,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
 import {
   ApiProperty,
+  ApiPropertyOptional,
   OmitType,
   PartialType,
 } from '@nestjs/swagger';
@@ -53,4 +55,9 @@ export class CreateSectionDto extends PartialType(
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  all?: boolean;
 }
