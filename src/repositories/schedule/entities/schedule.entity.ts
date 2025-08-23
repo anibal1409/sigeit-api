@@ -21,19 +21,19 @@ export class Schedule extends IdEntity {
   @Column({ nullable: true })
   end: string;
 
-  @ManyToOne(() => Classroom, (classroom) => classroom.id)
+  @ManyToOne(() => Classroom, (classroom) => classroom.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   classroom: Classroom;
 
-  @ManyToOne(() => Day, (day) => day.id)
+  @ManyToOne(() => Day, (day) => day.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   day: Day;
 
-  @ManyToOne(() => Section, (section) => section.id)
+  @ManyToOne(() => Section, (section) => section.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   section: Section;
 
-  @ManyToOne(() => Period, (period) => period.id)
+  @ManyToOne(() => Period, (period) => period.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   period: Period;
 }

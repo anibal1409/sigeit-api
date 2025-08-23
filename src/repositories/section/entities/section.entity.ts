@@ -22,15 +22,15 @@ export class Section extends IdEntity {
   @Column({ default: 0 })
   inscribed: number;
 
-  @ManyToOne(() => Subject, (subject) => subject.id)
+  @ManyToOne(() => Subject, (subject) => subject.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   subject: Subject;
 
-  @ManyToOne(() => Period, (period) => period.id)
+  @ManyToOne(() => Period, (period) => period.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   period: Period;
 
-  @ManyToOne(() => Teacher, (teacher) => teacher.id)
+  @ManyToOne(() => Teacher, (teacher) => teacher.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   teacher: Teacher;
 

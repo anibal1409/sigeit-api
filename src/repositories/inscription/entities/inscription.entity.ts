@@ -19,11 +19,11 @@ export class Inscription extends IdEntity {
   @Column({ nullable: false, default: StageInscription.Validated })
   stage!: string;
 
-  @ManyToOne(() => Section, (section) => section.id)
+  @ManyToOne(() => Section, (section) => section.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   section!: Section;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   user!: User;
 

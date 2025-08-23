@@ -25,7 +25,7 @@ export class Career extends IdEntity {
   @Column({ nullable: false, unique: true })
   abbreviation!: string;
 
-  @ManyToOne(() => Department, (department) => department.id)
+  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   department?: Department;
 

@@ -25,7 +25,7 @@ export class Department extends IdEntity {
   @Column({ nullable: false, unique: true })
   abbreviation: string;
 
-  @ManyToOne(() => School, (school) => school.id)
+  @ManyToOne(() => School, (school) => school.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   school!: School;
 

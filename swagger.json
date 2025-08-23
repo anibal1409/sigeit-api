@@ -1,0 +1,4518 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/career": {
+      "post": {
+        "operationId": "CareerController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCareerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "career"
+        ]
+      },
+      "get": {
+        "operationId": "CareerController_findAll",
+        "parameters": [
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseCareerDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "career"
+        ]
+      }
+    },
+    "/career/{id}": {
+      "get": {
+        "operationId": "CareerController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "career"
+        ]
+      },
+      "patch": {
+        "operationId": "CareerController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCareerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "career"
+        ]
+      },
+      "delete": {
+        "operationId": "CareerController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCareerDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "career"
+        ]
+      }
+    },
+    "/school": {
+      "post": {
+        "operationId": "SchoolController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSchoolDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      },
+      "get": {
+        "operationId": "SchoolController_findAll",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSchoolDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      }
+    },
+    "/school/{id}": {
+      "get": {
+        "operationId": "SchoolController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      },
+      "patch": {
+        "operationId": "SchoolController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSchoolDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      },
+      "delete": {
+        "operationId": "SchoolController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSchoolDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "school"
+        ]
+      }
+    },
+    "/department": {
+      "post": {
+        "operationId": "DepartmentController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDepartmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "department"
+        ]
+      },
+      "get": {
+        "operationId": "DepartmentController_findAll",
+        "parameters": [
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseDepartmentDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "department"
+        ]
+      }
+    },
+    "/department/{id}": {
+      "get": {
+        "operationId": "DepartmentController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "department"
+        ]
+      },
+      "patch": {
+        "operationId": "DepartmentController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDepartmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "department"
+        ]
+      },
+      "delete": {
+        "operationId": "DepartmentController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "department"
+        ]
+      }
+    },
+    "/user": {
+      "post": {
+        "operationId": "UserController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "get": {
+        "operationId": "UserController_findAll",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserRespondeDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/student": {
+      "post": {
+        "operationId": "UserController_createStudent",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "operationId": "UserController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "patch": {
+        "operationId": "UserController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      },
+      "delete": {
+        "operationId": "UserController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRespondeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/teacher": {
+      "post": {
+        "operationId": "TeacherController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeacherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      },
+      "get": {
+        "operationId": "TeacherController_findAll",
+        "parameters": [
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseTeacherDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/teacher/department/{id}": {
+      "get": {
+        "operationId": "TeacherController_findAllDepartment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseTeacherDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/teacher/{id}": {
+      "get": {
+        "operationId": "TeacherController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      },
+      "patch": {
+        "operationId": "TeacherController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTeacherDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      },
+      "delete": {
+        "operationId": "TeacherController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/day": {
+      "post": {
+        "operationId": "DayController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDayDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "day"
+        ]
+      },
+      "get": {
+        "operationId": "DayController_findAll",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseDayDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "day"
+        ]
+      }
+    },
+    "/day/{id}": {
+      "get": {
+        "operationId": "DayController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "day"
+        ]
+      },
+      "patch": {
+        "operationId": "DayController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDayDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "day"
+        ]
+      },
+      "delete": {
+        "operationId": "DayController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDayDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "day"
+        ]
+      }
+    },
+    "/period": {
+      "post": {
+        "operationId": "PeriodController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePeriodDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      },
+      "get": {
+        "operationId": "PeriodController_findAll",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponsePeriodDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      }
+    },
+    "/period/active": {
+      "get": {
+        "operationId": "PeriodController_findActive",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      }
+    },
+    "/period/to-plan": {
+      "get": {
+        "operationId": "PeriodController_findToPlan",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      }
+    },
+    "/period/{id}": {
+      "get": {
+        "operationId": "PeriodController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      },
+      "patch": {
+        "operationId": "PeriodController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePeriodDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      },
+      "delete": {
+        "operationId": "PeriodController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponsePeriodDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "period"
+        ]
+      }
+    },
+    "/schedule": {
+      "post": {
+        "operationId": "ScheduleController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScheduleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/period/{id}": {
+      "get": {
+        "operationId": "ScheduleController_findAll",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "periodId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseScheduleDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/students/period/{id}": {
+      "get": {
+        "operationId": "ScheduleController_findAllStudents",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "periodId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseScheduleDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/{id}": {
+      "get": {
+        "operationId": "ScheduleController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      },
+      "patch": {
+        "operationId": "ScheduleController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateScheduleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      },
+      "delete": {
+        "operationId": "ScheduleController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/section": {
+      "post": {
+        "operationId": "SectionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/section/period/{periodId}": {
+      "get": {
+        "operationId": "SectionController_findAll",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSectionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/section/period/{periodId}/sections": {
+      "get": {
+        "operationId": "SectionController_findSectionsByPeriod",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSectionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/section/{id}": {
+      "get": {
+        "operationId": "SectionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      },
+      "patch": {
+        "operationId": "SectionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      },
+      "delete": {
+        "operationId": "SectionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSectionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/inscription": {
+      "post": {
+        "operationId": "InscriptionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
+    "/inscription/close": {
+      "post": {
+        "operationId": "InscriptionController_close",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseInscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
+    "/inscription/period/{id}": {
+      "get": {
+        "operationId": "InscriptionController_findAll",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "stage",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "careerId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "schoolId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "schedules",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseInscriptionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
+    "/inscription/{id}": {
+      "get": {
+        "operationId": "InscriptionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      },
+      "patch": {
+        "operationId": "InscriptionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInscriptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      },
+      "delete": {
+        "operationId": "InscriptionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInscriptionDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "inscription"
+        ]
+      }
+    },
+    "/subject": {
+      "post": {
+        "operationId": "SubjectController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSubjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      },
+      "get": {
+        "operationId": "SubjectController_findAll",
+        "parameters": [
+          {
+            "name": "semester",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "careerId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSubjectDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      }
+    },
+    "/subject/{id}": {
+      "get": {
+        "operationId": "SubjectController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      },
+      "patch": {
+        "operationId": "SubjectController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSubjectDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      },
+      "delete": {
+        "operationId": "SubjectController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSubjectDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "subject"
+        ]
+      }
+    },
+    "/classroom": {
+      "post": {
+        "operationId": "ClassroomController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClassroomDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "classroom"
+        ]
+      },
+      "get": {
+        "operationId": "ClassroomController_findAll",
+        "parameters": [
+          {
+            "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseClassroomDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "classroom"
+        ]
+      }
+    },
+    "/classroom/{id}": {
+      "get": {
+        "operationId": "ClassroomController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "classroom"
+        ]
+      },
+      "patch": {
+        "operationId": "ClassroomController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClassroomDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "classroom"
+        ]
+      },
+      "delete": {
+        "operationId": "ClassroomController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassroomDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "classroom"
+        ]
+      }
+    },
+    "/document": {
+      "post": {
+        "operationId": "DocumentController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDocumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      },
+      "get": {
+        "operationId": "DocumentController_findAll",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseDocumentDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      }
+    },
+    "/document/active": {
+      "get": {
+        "operationId": "DocumentController_findActive",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      }
+    },
+    "/document/{id}": {
+      "get": {
+        "operationId": "DocumentController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      },
+      "patch": {
+        "operationId": "DocumentController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDocumentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      },
+      "delete": {
+        "operationId": "DocumentController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "document"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginUserResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/recovery-password": {
+      "post": {
+        "operationId": "AuthController_generateRecovery",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecoveryPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryPasswordDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/create-student": {
+      "post": {
+        "operationId": "AuthController_createStudent",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/recovery-password/{recovery_token}": {
+      "get": {
+        "operationId": "AuthController_getRecoveryById",
+        "parameters": [
+          {
+            "name": "recovery_token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      },
+      "post": {
+        "operationId": "AuthController_postRecoveryById",
+        "parameters": [
+          {
+            "name": "recovery_token",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecoveryPasswordResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/auth/change-password": {
+      "put": {
+        "operationId": "AuthController_changePassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/activities": {
+      "post": {
+        "operationId": "ActivitiesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateActivityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "operationId": "ActivitiesController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/activities/{id}": {
+      "get": {
+        "operationId": "ActivitiesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "operationId": "ActivitiesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActivityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "operationId": "ActivitiesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "SIGEIT-API Documentation",
+    "description": "API completa para el Sistema de Gestión de Información Educativa y Tecnológica",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "activities",
+      "description": "Gestión de actividades y logs del sistema"
+    },
+    {
+      "name": "auth",
+      "description": "Autenticación y autorización"
+    },
+    {
+      "name": "careers",
+      "description": "Gestión de carreras universitarias"
+    },
+    {
+      "name": "classrooms",
+      "description": "Gestión de aulas y salones"
+    },
+    {
+      "name": "days",
+      "description": "Gestión de días y calendario"
+    },
+    {
+      "name": "departments",
+      "description": "Gestión de departamentos académicos"
+    },
+    {
+      "name": "documents",
+      "description": "Gestión de documentos"
+    },
+    {
+      "name": "inscriptions",
+      "description": "Gestión de inscripciones estudiantiles"
+    },
+    {
+      "name": "periods",
+      "description": "Gestión de períodos académicos"
+    },
+    {
+      "name": "schedules",
+      "description": "Gestión de horarios"
+    },
+    {
+      "name": "schools",
+      "description": "Gestión de escuelas y facultades"
+    },
+    {
+      "name": "sections",
+      "description": "Gestión de secciones de clases"
+    },
+    {
+      "name": "subjects",
+      "description": "Gestión de materias y asignaturas"
+    },
+    {
+      "name": "teachers",
+      "description": "Gestión de profesores"
+    },
+    {
+      "name": "users",
+      "description": "Gestión de usuarios del sistema"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "IdCreateEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "CreateCareerDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "abbreviation",
+          "department",
+          "status"
+        ]
+      },
+      "Department": {
+        "type": "object",
+        "properties": {}
+      },
+      "ResponseCareerDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "departmentId": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "abbreviation",
+          "departmentId",
+          "department",
+          "status"
+        ]
+      },
+      "UpdateCareerDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateSchoolDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "abbreviation",
+          "status"
+        ]
+      },
+      "ResponseSchoolDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "abbreviation",
+          "status"
+        ]
+      },
+      "UpdateSchoolDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateDepartmentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "school": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "abbreviation",
+          "school",
+          "status"
+        ]
+      },
+      "School": {
+        "type": "object",
+        "properties": {}
+      },
+      "ResponseDepartmentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "schoolId": {
+            "type": "number"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "abbreviation",
+          "schoolId",
+          "school",
+          "status"
+        ]
+      },
+      "UpdateDepartmentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "school": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "idDocument": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "school": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "career": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          }
+        },
+        "required": [
+          "email",
+          "role",
+          "idDocument",
+          "name",
+          "teacher",
+          "status",
+          "school",
+          "department",
+          "career"
+        ]
+      },
+      "Teacher": {
+        "type": "object",
+        "properties": {}
+      },
+      "Career": {
+        "type": "object",
+        "properties": {}
+      },
+      "UserRespondeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "idDocument": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "teacherId": {
+            "type": "number"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/Teacher"
+          },
+          "schoolId": {
+            "type": "number"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "departmentId": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "careerId": {
+            "type": "number"
+          },
+          "career": {
+            "$ref": "#/components/schemas/Career"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "lastName",
+          "firstName",
+          "email",
+          "role",
+          "idDocument",
+          "status",
+          "teacherId",
+          "teacher",
+          "schoolId",
+          "school",
+          "departmentId",
+          "department",
+          "careerId",
+          "career"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "idDocument": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "school": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "career": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          }
+        }
+      },
+      "CreateTeacherDto": {
+        "type": "object",
+        "properties": {
+          "idDocument": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "idDocument",
+          "firstName",
+          "department",
+          "status"
+        ]
+      },
+      "ResponseTeacherDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "idDocument": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "departmentId": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "idDocument",
+          "firstName",
+          "departmentId",
+          "department",
+          "status"
+        ]
+      },
+      "UpdateTeacherDto": {
+        "type": "object",
+        "properties": {
+          "idDocument": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateDayDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "abbreviation",
+          "status"
+        ]
+      },
+      "ResponseDayDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "abbreviation",
+          "status"
+        ]
+      },
+      "UpdateDayDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "abbreviation": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreatePeriodDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "end": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "interval": {
+            "type": "number"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "copyPrevious": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "start",
+          "end",
+          "startTime",
+          "endTime",
+          "stage",
+          "interval",
+          "duration",
+          "copyPrevious",
+          "status"
+        ]
+      },
+      "ResponsePeriodDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "end": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "interval": {
+            "type": "number"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "start",
+          "end",
+          "startTime",
+          "endTime",
+          "stage",
+          "interval",
+          "duration",
+          "status"
+        ]
+      },
+      "UpdatePeriodDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "start": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "end": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string"
+          },
+          "endTime": {
+            "type": "string"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "interval": {
+            "type": "number"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "copyPrevious": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "day": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "classroom",
+          "day",
+          "section",
+          "period",
+          "status"
+        ]
+      },
+      "Classroom": {
+        "type": "object",
+        "properties": {}
+      },
+      "Day": {
+        "type": "object",
+        "properties": {}
+      },
+      "Section": {
+        "type": "object",
+        "properties": {}
+      },
+      "Period": {
+        "type": "object",
+        "properties": {}
+      },
+      "ResponseScheduleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroomId": {
+            "type": "number"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/Classroom"
+          },
+          "dayId": {
+            "type": "number"
+          },
+          "day": {
+            "$ref": "#/components/schemas/Day"
+          },
+          "sectionId": {
+            "type": "number"
+          },
+          "section": {
+            "$ref": "#/components/schemas/Section"
+          },
+          "periodId": {
+            "type": "number"
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "start",
+          "end",
+          "classroomId",
+          "classroom",
+          "dayId",
+          "day",
+          "sectionId",
+          "section",
+          "periodId",
+          "period",
+          "status"
+        ]
+      },
+      "UpdateScheduleDto": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "day": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateSectionDto": {
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "all": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "capacity",
+          "name",
+          "subject",
+          "period",
+          "teacher",
+          "status"
+        ]
+      },
+      "Subject": {
+        "type": "object",
+        "properties": {}
+      },
+      "ResponseSectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "capacity": {
+            "type": "number"
+          },
+          "inscribed": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subjectId": {
+            "type": "number"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/Subject"
+          },
+          "periodId": {
+            "type": "number"
+          },
+          "period": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "teacherId": {
+            "type": "number"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/Teacher"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "all": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "capacity",
+          "inscribed",
+          "name",
+          "subjectId",
+          "subject",
+          "periodId",
+          "period",
+          "teacherId",
+          "teacher",
+          "status",
+          "all"
+        ]
+      },
+      "UpdateSectionDto": {
+        "type": "object",
+        "properties": {
+          "capacity": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "all": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "user": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          }
+        },
+        "required": [
+          "stage",
+          "section",
+          "user"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {}
+      },
+      "ResponseInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "sectionId": {
+            "type": "number"
+          },
+          "section": {
+            "$ref": "#/components/schemas/Section"
+          },
+          "userId": {
+            "type": "number"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "required": [
+          "id",
+          "stage",
+          "sectionId",
+          "section",
+          "userId",
+          "user"
+        ]
+      },
+      "CloseInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "ids"
+        ]
+      },
+      "UpdateInscriptionDto": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "user": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          }
+        }
+      },
+      "CreateSubjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "credits": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "hours": {
+            "type": "number"
+          },
+          "semester": {
+            "type": "number"
+          },
+          "typeCurriculum": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "careers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdCreateEntity"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "code",
+          "credits",
+          "hours",
+          "semester",
+          "typeCurriculum",
+          "department",
+          "careers"
+        ]
+      },
+      "ResponseSubjectDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "credits": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "hours": {
+            "type": "number"
+          },
+          "semester": {
+            "type": "number"
+          },
+          "typeCurriculum": {
+            "type": "number"
+          },
+          "departmentId": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "careerIds": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "careers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "code",
+          "credits",
+          "hours",
+          "semester",
+          "typeCurriculum",
+          "departmentId",
+          "department",
+          "status",
+          "careerIds",
+          "careers"
+        ]
+      },
+      "UpdateSubjectDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "credits": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "hours": {
+            "type": "number"
+          },
+          "semester": {
+            "type": "number"
+          },
+          "typeCurriculum": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "careers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdCreateEntity"
+            }
+          }
+        }
+      },
+      "CreateClassroomDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "departments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdCreateEntity"
+            }
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "departments",
+          "status"
+        ]
+      },
+      "ResponseClassroomDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "departmentIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "departments": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "departmentIds",
+          "departments",
+          "status"
+        ]
+      },
+      "UpdateClassroomDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "departments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IdCreateEntity"
+            }
+          },
+          "status": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateDocumentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "type",
+          "department"
+        ]
+      },
+      "ResponseDocumentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "departmentId": {
+            "type": "number"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "status": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "type",
+          "departmentId",
+          "department",
+          "status"
+        ]
+      },
+      "UpdateDocumentDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "department": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          }
+        }
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "LoginUserResponseDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "loginStamp": {
+            "type": "number"
+          },
+          "school": {
+            "$ref": "#/components/schemas/School"
+          },
+          "department": {
+            "$ref": "#/components/schemas/Department"
+          },
+          "teacher": {
+            "$ref": "#/components/schemas/Teacher"
+          },
+          "career": {
+            "$ref": "#/components/schemas/Career"
+          }
+        },
+        "required": [
+          "email",
+          "id",
+          "name",
+          "role",
+          "loginStamp",
+          "school",
+          "department",
+          "teacher",
+          "career"
+        ]
+      },
+      "RecoveryPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "RecoveryPasswordResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ChangePasswordDto": {
+        "type": "object",
+        "properties": {
+          "newPassword": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "newPassword"
+        ]
+      },
+      "ChangePasswordResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "CreateActivityDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateActivityDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

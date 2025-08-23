@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -11,6 +8,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CrudRepository } from '../../common';
+import { InscriptionService } from '../inscription';
+import { ScheduleService } from '../schedule';
 import {
   CreateSectionDto,
   GetSectionsDto,
@@ -21,11 +20,12 @@ import { Section } from './entities';
 
 @Injectable()
 export class SectionService implements CrudRepository<Section> {
-
   constructor(
     @InjectRepository(Section)
     private repository: Repository<Section>,
-  ) { }
+    private readonly scheduleService: ScheduleService,
+    private readonly inscriptionService: InscriptionService,
+  ) {}
 
   async findValid(id: number): Promise<Section> {
     const item = await this.repository.findOne({
@@ -142,6 +142,26 @@ export class SectionService implements CrudRepository<Section> {
 
   async remove(id: number): Promise<ResponseSectionDto> {
     const item = await this.findValid(id);
+
+    // Eliminar en cascada todos los horarios relacionados
+    const schedules = await this.scheduleService.findAllPeriod(item.period.id, {
+      sectionId: item.id,
+    });
+
+    for (const schedule of schedules) {
+      await this.scheduleService.remove(schedule.id);
+    }
+
+    // Eliminar en cascada todas las inscripciones relacionadas
+    const inscriptions = await this.inscriptionService.findAll(item.period.id, {
+      sectionId: item.id,
+    });
+
+    for (const inscription of inscriptions) {
+      await this.inscriptionService.remove(inscription.id);
+    }
+
+    // Finalmente eliminar la sección
     item.deleted = true;
     return new ResponseSectionDto(await this.repository.save(item));
   }

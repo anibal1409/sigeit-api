@@ -22,7 +22,7 @@ export class Teacher extends IdEntity {
   @Column({ nullable: true, unique: true })
   email?: string;
 
-  @ManyToOne(() => Department, (department) => department.id)
+  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   department?: Department;
 }

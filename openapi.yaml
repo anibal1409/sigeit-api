@@ -1211,6 +1211,122 @@ paths:
                 $ref: "#/components/schemas/ResponseSectionDto"
       tags:
         - section
+  "/section/period/{periodId}":
+    get:
+      operationId: findAllOfPeriod
+      parameters:
+        - name: periodId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: departmentId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: subjectId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: teacherId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: semester
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: dayId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseSectionDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseSectionDto"
+      tags:
+        - section
+  "/section/period/{periodId}/sections":
+    get:
+      operationId: findSectionsByPeriod
+      parameters:
+        - name: periodId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: departmentId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: subjectId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: teacherId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: semester
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: dayId
+          required: false
+          in: query
+          schema:
+            type: number
+        - name: status
+          required: false
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseSectionDto"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ResponseSectionDto"
+      tags:
+        - section
   /schedule:
     post:
       operationId: create

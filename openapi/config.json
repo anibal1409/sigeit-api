@@ -1,4 +1,14 @@
-{
-  "fileNaming": "kebab-case",
+{            
+  "providedInRoot": true,         
+  "serviceSuffix": "ApiService",    
+  "modelPropertyNaming": "camelCase", 
+  "useRxJS": true,                  
+  "apiModulePrefix": "",          
+  "apiServiceSuffix": "Service",  
+  "fileNaming": "kebab-case",       
+  "withInterfaces": false,          
+  "unwrapRequired": true,
+  "generatePublicApi": true,
+  "ngVersion": "20.0.0",
   "useSingleRequestParameter": false
 }

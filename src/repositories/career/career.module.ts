@@ -11,5 +11,6 @@ import { Career } from './entities';
   ],
   controllers: [CareerController],
   providers: [CareerService],
+  exports: [TypeOrmModule, CareerService],
 })
 export class CareerModule {}

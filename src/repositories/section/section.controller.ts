@@ -48,6 +48,18 @@ export class SectionController {
     return this.sectionService.findAllOfPeriod(+periodId, data);
   }
 
+  @Get('/period/:periodId/sections')
+  @ApiResponse({
+    type: ResponseSectionDto,
+    isArray: true,
+  })
+  findSectionsByPeriod(
+    @Param('periodId', ParseIntPipe) periodId: number,
+    @Query() data: GetSectionsDto,
+  ) {
+    return this.sectionService.findAllOfPeriod(+periodId, data);
+  }
+
   @Get(':id')
   @ApiResponse({
     type: ResponseSectionDto,

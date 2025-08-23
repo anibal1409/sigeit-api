@@ -11,5 +11,6 @@ import { PeriodService } from './period.service';
   imports: [TypeOrmModule.forFeature([Period]), ScheduleModule, SectionModule],
   controllers: [PeriodController],
   providers: [PeriodService],
+  exports: [TypeOrmModule, PeriodService],
 })
 export class PeriodModule {}

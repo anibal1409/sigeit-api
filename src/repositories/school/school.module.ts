@@ -9,5 +9,6 @@ import { SchoolService } from './school.service';
   imports: [TypeOrmModule.forFeature([School])],
   controllers: [SchoolController],
   providers: [SchoolService],
+  exports: [TypeOrmModule, SchoolService],
 })
 export class SchoolModule {}

@@ -22,7 +22,7 @@ export class DocumentE extends IdEntity {
   @Column({ nullable: false })
   type!: TypeDocument;
 
-  @ManyToOne(() => Department, (department) => department.id)
+  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   department?: Department;
 

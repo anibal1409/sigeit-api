@@ -43,19 +43,19 @@ export class User extends IdEntity {
   @Column({ length: 256, nullable: false })
   password!: string;
 
-  @ManyToOne(() => Teacher, (teacher) => teacher.id)
+  @ManyToOne(() => Teacher, (teacher) => teacher.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   teacher?: Teacher;
 
-  @ManyToOne(() => School, (school) => school.id)
+  @ManyToOne(() => School, (school) => school.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   school?: School;
 
-  @ManyToOne(() => Department, (department) => department.id)
+  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   department?: Department;
 
-  @ManyToOne(() => Career, (career) => career.id)
+  @ManyToOne(() => Career, (career) => career.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   career?: Career;
 

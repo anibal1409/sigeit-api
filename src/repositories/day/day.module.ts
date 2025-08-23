@@ -11,5 +11,6 @@ import { Day } from './entities';
   ],
   controllers: [DayController],
   providers: [DayService],
+  exports: [TypeOrmModule, DayService],
 })
 export class DayModule {}

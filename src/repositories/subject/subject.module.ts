@@ -9,5 +9,6 @@ import { SubjectService } from './subject.service';
   imports: [TypeOrmModule.forFeature([Subject])],
   controllers: [SubjectController],
   providers: [SubjectService],
+  exports: [TypeOrmModule, SubjectService],
 })
 export class SubjectModule {}
