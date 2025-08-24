@@ -1,8 +1,5 @@
 import { Type } from 'class-transformer';
-import {
-  IsBooleanString,
-  IsOptional,
-} from 'class-validator';
+import { IsBooleanString, IsOptional } from 'class-validator';
 
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -31,7 +28,7 @@ export class GetSchedulesDto {
   @IsOptional()
   @Type(() => Number)
   semester?: number;
-  
+
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)

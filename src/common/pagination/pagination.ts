@@ -4,7 +4,7 @@ export function pagination<T>(
   page: number,
   size: number,
   data: T[],
-  total: number
+  total: number,
 ): PaginationDto<T> {
   const currentPage = page;
   const lastPage = Math.ceil(total / size);

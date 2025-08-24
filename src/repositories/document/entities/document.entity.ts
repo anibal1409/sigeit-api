@@ -7,12 +7,11 @@ import {
 } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Department } from '../../department';
+import { Department } from '../../department/entities';
 import { TypeDocument } from '../enum';
 
 @Entity()
 export class DocumentE extends IdEntity {
-
   @Column({ nullable: false })
   name!: string;
 
@@ -22,8 +21,9 @@ export class DocumentE extends IdEntity {
   @Column({ nullable: false })
   type!: TypeDocument;
 
-  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Department, (department) => department.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   department?: Department;
-
 }

@@ -1,8 +1,5 @@
 import { Type } from 'class-transformer';
-import {
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 // eslint-disable-next-line prettier/prettier
 import {
@@ -16,7 +13,7 @@ import { DocumentE } from '../entities';
 import { TypeDocument } from '../enum';
 
 export class CreateDocumentDto extends PartialType(
-  OmitType(DocumentE, ['updatedAt', 'createdAt', 'deleted', 'department'])
+  OmitType(DocumentE, ['updatedAt', 'createdAt', 'deleted', 'department']),
 ) {
   @ApiProperty()
   @IsNotEmpty()
@@ -37,5 +34,4 @@ export class CreateDocumentDto extends PartialType(
   @IsNotEmpty()
   @Type(() => IdCreateEntity)
   department: IdCreateEntity;
-
 }

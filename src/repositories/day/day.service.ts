@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -10,21 +7,16 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
-import {
-  CreateDayDto,
-  ResponseDayDto,
-  UpdateDayDto,
-} from './dto';
+import { CrudRepository } from '../../common/use-case';
+import { CreateDayDto, ResponseDayDto, UpdateDayDto } from './dto';
 import { Day } from './entities';
 
 @Injectable()
 export class DayService implements CrudRepository<Day> {
-
   constructor(
     @InjectRepository(Day)
     private repository: Repository<Day>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<Day> {
     const item = await this.repository.findOne({
@@ -96,4 +88,3 @@ export class DayService implements CrudRepository<Day> {
     return new ResponseDayDto(await this.repository.save(item));
   }
 }
-

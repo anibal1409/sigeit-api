@@ -14,7 +14,6 @@ import { StageInscription } from '../enums';
 
 @Entity()
 export class Inscription extends IdEntity {
-
   @Index('inscription_stage_index')
   @Column({ nullable: false, default: StageInscription.Validated })
   stage!: string;
@@ -26,5 +25,4 @@ export class Inscription extends IdEntity {
   @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   user!: User;
-
 }

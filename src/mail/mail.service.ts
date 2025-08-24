@@ -1,10 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 
-import {
-  recovery,
-  welcome,
-} from './templates/templates';
+import { recovery, welcome } from './templates/templates';
 
 @Injectable()
 export class MailService {
@@ -35,7 +32,7 @@ export class MailService {
     email_: string,
     user_: string,
     role_: string,
-    password_: string
+    password_: string,
   ): Promise<boolean> {
     try {
       await this.mailerService.sendMail({

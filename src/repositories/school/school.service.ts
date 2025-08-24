@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
+import { CrudRepository } from '../../common/use-case';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { ResponseSchoolDto } from './dto/response-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
@@ -22,7 +22,7 @@ export class SchoolService implements CrudRepository<School> {
   constructor(
     @InjectRepository(School)
     private repository: Repository<School>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<School> {
     const item = await this.repository.findOne({

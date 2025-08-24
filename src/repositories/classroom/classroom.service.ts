@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -10,23 +7,21 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
+import { CrudRepository } from '../../common/use-case';
 import {
   CreateClassroomDto,
   GetClassroomsDto,
   UpdateClassroomDto,
 } from './dto';
 import { ResponseClassroomDto } from './dto/response-classroom.dto';
-// eslint-disable-next-line prettier/prettier
 import { Classroom } from './entities';
 
 @Injectable()
 export class ClassroomService implements CrudRepository<Classroom> {
-
   constructor(
     @InjectRepository(Classroom)
     private repository: Repository<Classroom>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<Classroom> {
     const item = await this.repository.findOne({

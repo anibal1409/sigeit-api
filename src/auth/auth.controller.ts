@@ -1,7 +1,4 @@
-import {
-  Request,
-  Response,
-} from 'express';
+import { Request, Response } from 'express';
 
 import {
   Body,
@@ -17,15 +14,10 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import {
-  CreateUserDto,
-  UserService,
-} from '../repositories/user';
+import { CreateUserDto } from '../repositories/user/dto';
+import { UserService } from '../repositories/user/user.service';
 import {
   ChangePasswordDto,
   ChangePasswordResponseDto,
@@ -56,7 +48,7 @@ export class AuthController {
     private readonly loginService: LoginService,
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
-  ) { }
+  ) {}
 
   @Post('login')
   @Public()
@@ -67,7 +59,7 @@ export class AuthController {
   login(
     @Body() args: LoginDto,
     @Req() req: Request,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
   ): Promise<LoginUserResponseDto> {
     return this.loginService.login(req.user as UserLoginDto, res);
   }
@@ -86,7 +78,7 @@ export class AuthController {
     type: RecoveryPasswordDto,
   })
   generateRecovery(
-    @Body() recoveryPasswordDto: RecoveryPasswordDto
+    @Body() recoveryPasswordDto: RecoveryPasswordDto,
   ): Promise<RecoveryPasswordResponseDto> {
     return this.recoveryPasswordService.generateRecovery(recoveryPasswordDto);
   }
@@ -94,7 +86,7 @@ export class AuthController {
   @Post('create-student')
   @Public()
   async createStudent(
-    @Body() createUserDto: CreateUserDto
+    @Body() createUserDto: CreateUserDto,
   ): Promise<HttpStatus> {
     await this.userService.create(createUserDto);
     return HttpStatus.OK;
@@ -106,7 +98,7 @@ export class AuthController {
     type: RecoveryPasswordResponseDto,
   })
   async getRecoveryById(
-    @Param('recovery_token') _token: string
+    @Param('recovery_token') _token: string,
   ): Promise<RecoveryPasswordResponseDto> {
     return await this.recoveryPasswordService.check(_token);
   }
@@ -118,7 +110,7 @@ export class AuthController {
   })
   postRecoveryById(
     @Param('recovery_token') _token: string,
-    @Body() body: ChangePasswordDto
+    @Body() body: ChangePasswordDto,
   ): Promise<RecoveryPasswordResponseDto> {
     return this.recoveryPasswordService.recovery(_token, body.newPassword);
   }
@@ -129,13 +121,13 @@ export class AuthController {
   })
   async changePassword(
     @Req() req: Request,
-    @Body() body: ChangePasswordDto
+    @Body() body: ChangePasswordDto,
   ): Promise<ChangePasswordResponseDto> {
     const token = req.cookies['sigeit-cookie'].token;
 
     return await this.changePasswordService.changePassword(
       token,
-      body.newPassword
+      body.newPassword,
     );
   }
 }

@@ -1,18 +1,12 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Period } from '../../period';
-import { Subject } from '../../subject';
-import { Teacher } from '../../teacher';
+import { Period } from '../../period/entities';
+import { Subject } from '../../subject/entities';
+import { Teacher } from '../../teacher/entities';
 
 @Entity()
 export class Section extends IdEntity {
-
   @Column({ nullable: false })
   name: string;
 

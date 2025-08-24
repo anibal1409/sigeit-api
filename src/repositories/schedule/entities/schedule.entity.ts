@@ -14,14 +14,15 @@ import { Section } from '../../section/entities';
 
 @Entity()
 export class Schedule extends IdEntity {
-
   @Column({ nullable: false })
   start: string;
 
   @Column({ nullable: true })
   end: string;
 
-  @ManyToOne(() => Classroom, (classroom) => classroom.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Classroom, (classroom) => classroom.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   classroom: Classroom;
 

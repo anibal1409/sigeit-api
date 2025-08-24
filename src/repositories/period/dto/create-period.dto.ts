@@ -18,7 +18,7 @@ import { Period } from '../entities';
 import { StagePeriod } from '../enum';
 
 export class CreatePeriodDto extends PartialType(
-  OmitType(Period, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(Period, ['updatedAt', 'createdAt', 'deleted']),
 ) {
   @ApiProperty()
   @IsNotEmpty()

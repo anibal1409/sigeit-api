@@ -1,12 +1,6 @@
-import {
-  JsonWebTokenError,
-  TokenExpiredError,
-} from 'jsonwebtoken';
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 
-import {
-  BadRequestException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { JWT_CONST } from './constants';
@@ -14,13 +8,13 @@ import { JwtResult } from './jwt-result';
 
 @Injectable()
 export class JwtAuthService {
-  constructor(private jwtService: JwtService) { }
+  constructor(private jwtService: JwtService) {}
 
   /**
- * Decodifica un token de JWT y obtiene el email (username) y el userId (sub);
- * @param token_ - Token para ser decodificado
- * @returns
- */
+   * Decodifica un token de JWT y obtiene el email (username) y el userId (sub);
+   * @param token_ - Token para ser decodificado
+   * @returns
+   */
   async decode(token_: string): Promise<JwtResult> {
     try {
       return await this.jwtService.verifyAsync(token_, {

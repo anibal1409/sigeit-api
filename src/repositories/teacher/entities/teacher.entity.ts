@@ -1,9 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import { IdEntity } from '../../base';
 import { Department } from '../../department/entities';
@@ -22,7 +17,9 @@ export class Teacher extends IdEntity {
   @Column({ nullable: true, unique: true })
   email?: string;
 
-  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Department, (department) => department.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   department?: Department;
 }

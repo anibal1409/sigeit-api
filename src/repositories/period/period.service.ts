@@ -1,8 +1,4 @@
-import {
-  In,
-  Not,
-  Repository,
-} from 'typeorm';
+import { In, Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -11,25 +7,19 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
-import {
-  CreateScheduleDto,
-  ScheduleService,
-} from '../schedule';
-import { SectionService } from '../section';
-import {
-  CreatePeriodDto,
-  ResponsePeriodDto,
-  UpdatePeriodDto,
-} from './dto';
+import { CrudRepository } from '../../common/use-case';
+import { ScheduleService } from '../schedule/schedule.service';
+import { SectionService } from '../section/section.service';
+import { CreatePeriodDto, ResponsePeriodDto, UpdatePeriodDto } from './dto';
 import { Period } from './entities';
 import { StagePeriod } from './enum';
+import { CreateScheduleDto } from '../schedule/dto';
 
 @Injectable()
 export class PeriodService implements CrudRepository<Period> {
   constructor(
     @InjectRepository(Period)
-    private repository: Repository<Period>,
+    private readonly repository: Repository<Period>,
     private readonly scheduleService: ScheduleService,
     private readonly sectionService: SectionService,
   ) {}

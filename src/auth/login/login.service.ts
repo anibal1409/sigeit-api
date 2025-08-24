@@ -8,17 +8,11 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { UserService } from '../../repositories';
+import { UserService } from '../../repositories/user/user.service';
 import { getDefaultCokieOptions } from '../cookies';
-import {
-  JWT_CONST,
-  JwtAuthService,
-} from '../jwt-auth';
+import { JWT_CONST, JwtAuthService } from '../jwt-auth';
 import { comparePassword } from '../password-hasher';
-import {
-  LoginUserResponseDto,
-  UserLoginDto,
-} from './dto';
+import { LoginUserResponseDto, UserLoginDto } from './dto';
 
 @Injectable()
 export class LoginService {
@@ -27,7 +21,7 @@ export class LoginService {
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly jwtAuthService: JwtAuthService,
-  ) { }
+  ) {}
 
   async login(
     user: UserLoginDto,
@@ -93,5 +87,3 @@ export class LoginService {
     return { email: user.email, id: user.id };
   }
 }
-
-

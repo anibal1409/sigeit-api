@@ -6,7 +6,7 @@ describe('pagination', () => {
       1,
       10,
       ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'],
-      10
+      10,
     );
     expect(paginationResult).toHaveProperty('paginationData');
   });

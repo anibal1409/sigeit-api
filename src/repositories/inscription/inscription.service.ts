@@ -1,8 +1,4 @@
-import {
-  DeleteResult,
-  Not,
-  Repository,
-} from 'typeorm';
+import { DeleteResult, Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -13,9 +9,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
-import { ScheduleService } from '../schedule';
-import { ResponseSectionDto } from '../section';
+import { CrudRepository } from '../../common/use-case';
+import { ScheduleService } from '../schedule/schedule.service';
+import { ResponseSectionDto } from '../section/dto';
 import { SectionService } from '../section/section.service';
 import {
   CloseInscriptionDto,
@@ -29,7 +25,6 @@ import { StageInscription } from './enums';
 
 @Injectable()
 export class InscriptionService implements CrudRepository<Inscription> {
-
   constructor(
     @InjectRepository(Inscription)
     private repository: Repository<Inscription>,

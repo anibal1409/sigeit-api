@@ -11,10 +11,7 @@ import {
   Post,
   Req,
 } from '@nestjs/common';
-import {
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserRespondeDto } from './dto';
 import { CreateUserDto } from './dto/create-user.dto';

@@ -13,7 +13,7 @@ import {
   ApiPropertyOptional,
 } from '@nestjs/swagger';
 
-import { School } from '../../school';
+import { School } from '../../school/entities';
 import { Department } from '../entities';
 
 export class ResponseDepartmentDto {

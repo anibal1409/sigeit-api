@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -10,22 +7,17 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
-import {
-  CreateTeacherDto,
-  GetTeachersDto,
-  UpdateTeacherDto,
-} from './dto';
+import { CrudRepository } from '../../common/use-case';
+import { CreateTeacherDto, GetTeachersDto, UpdateTeacherDto } from './dto';
 import { ResponseTeacherDto } from './dto/response-teacher.dto';
 import { Teacher } from './entities';
 
 @Injectable()
 export class TeacherService implements CrudRepository<Teacher> {
-
   constructor(
     @InjectRepository(Teacher)
     private repository: Repository<Teacher>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<Teacher> {
     const item = await this.repository.findOne({
@@ -126,4 +118,3 @@ export class TeacherService implements CrudRepository<Teacher> {
     return new ResponseTeacherDto(await this.repository.save(item));
   }
 }
-

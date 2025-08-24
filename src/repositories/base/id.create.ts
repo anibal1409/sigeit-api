@@ -12,4 +12,3 @@ export class IdCreateEntity {
   @IsNumber()
   id!: number;
 }
-

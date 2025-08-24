@@ -11,7 +11,9 @@ async function generateSwagger() {
 
   const config = new DocumentBuilder()
     .setTitle('SIGEIT-API Documentation')
-    .setDescription('API completa para el Sistema de Gestión de Información Educativa y Tecnológica')
+    .setDescription(
+      'API completa para el Sistema de Gestión de Información Educativa y Tecnológica',
+    )
     .setVersion('1.0')
     .addTag('activities', 'Gestión de actividades y logs del sistema')
     .addTag('auth', 'Autenticación y autorización')
@@ -39,4 +41,4 @@ async function generateSwagger() {
   console.log('Especificación OpenAPI generada en ./swagger.json');
 }
 
-generateSwagger(); 
+generateSwagger();

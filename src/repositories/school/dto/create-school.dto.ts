@@ -1,9 +1,4 @@
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import {
   ApiProperty,
@@ -15,9 +10,8 @@ import {
 import { School } from '../entities';
 
 export class CreateSchoolDto extends PartialType(
-  OmitType(School, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(School, ['updatedAt', 'createdAt', 'deleted']),
 ) {
-
   @ApiProperty()
   @IsNotEmpty()
   @IsString()

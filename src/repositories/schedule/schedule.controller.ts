@@ -16,10 +16,7 @@ import {
 } from '@nestjs/swagger';
 
 import { Public } from '../../auth/login/login.guard';
-import {
-  GetSchedulesDto,
-  ResponseScheduleDto,
-} from './dto';
+import { GetSchedulesDto, ResponseScheduleDto } from './dto';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
 import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { ScheduleService } from './schedule.service';

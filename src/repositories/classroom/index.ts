@@ -1,4 +1,3 @@
-
 export * from './classroom.controller';
 export * from './classroom.module';
 

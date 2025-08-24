@@ -8,8 +8,8 @@ import {
 // eslint-disable-next-line prettier/prettier
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Section } from '../../section';
-import { User } from '../../user';
+import { Section } from '../../section/entities';
+import { User } from '../../user/entities';
 import { Inscription } from '../entities';
 import { StageInscription } from '../enums';
 

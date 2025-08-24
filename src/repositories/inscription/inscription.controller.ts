@@ -9,10 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import {
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Public } from '../../auth/login/login.guard';
 import {

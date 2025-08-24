@@ -1,10 +1,6 @@
-import {
-  forwardRef,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 
-import { UserService } from '../../repositories';
+import { UserService } from '../../repositories/user/user.service';
 import { JwtAuthService } from '../jwt-auth';
 import { ChangePasswordResponseDto } from './dto';
 
@@ -17,7 +13,7 @@ export class ChangePasswordService {
   ) {}
   async changePassword(
     token_: string,
-    newPassword_: string
+    newPassword_: string,
   ): Promise<ChangePasswordResponseDto> {
     const { username: email, sub: id } =
       await this.jwtAuthService.decode(token_);

@@ -1,16 +1,10 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-} from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 import { IdEntity } from '../../base';
-import { Department } from '../../department';
+import { Department } from '../../department/entities';
 
 @Entity()
 export class Classroom extends IdEntity {
-
   @Column({ nullable: false, unique: true })
   name: string;
 

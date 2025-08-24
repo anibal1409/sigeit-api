@@ -1,21 +1,12 @@
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
-import {
-  ApiProperty,
-  OmitType,
-  PartialType,
-} from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
 import { Career } from '../../career/entities';
 
 export class CreateDayDto extends PartialType(
-  OmitType(Career, ['updatedAt', 'createdAt', 'deleted'])
+  OmitType(Career, ['updatedAt', 'createdAt', 'deleted']),
 ) {
-
   @ApiProperty()
   @IsNotEmpty()
   @IsString()

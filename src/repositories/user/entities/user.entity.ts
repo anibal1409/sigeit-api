@@ -1,24 +1,17 @@
 import { Exclude } from 'class-transformer';
-import {
-  Column,
-  Entity,
-  Index,
-  JoinColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 
 import { ApiHideProperty } from '@nestjs/swagger';
 
 import { IdEntity } from '../../base';
 import { Career } from '../../career/entities';
-import { Department } from '../../department';
-import { School } from '../../school';
-import { Teacher } from '../../teacher';
+import { Department } from '../../department/entities';
+import { School } from '../../school/entities';
+import { Teacher } from '../../teacher/entities';
 import { Roles } from '../enums';
 
 @Entity()
 export class User extends IdEntity {
-
   @Column({ length: 256, nullable: false })
   name!: string;
 
@@ -51,12 +44,13 @@ export class User extends IdEntity {
   @JoinColumn()
   school?: School;
 
-  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Department, (department) => department.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   department?: Department;
 
   @ManyToOne(() => Career, (career) => career.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   career?: Career;
-
 }

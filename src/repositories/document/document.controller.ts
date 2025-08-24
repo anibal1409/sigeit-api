@@ -8,16 +8,10 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import {
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { DocumentService } from './document.service';
-import {
-  CreateDocumentDto,
-  ResponseDocumentDto,
-} from './dto';
+import { CreateDocumentDto, ResponseDocumentDto } from './dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 
 @ApiTags('document')
@@ -76,5 +70,4 @@ export class DocumentController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.documentService.remove(+id);
   }
-
 }

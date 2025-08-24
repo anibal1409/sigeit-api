@@ -1,14 +1,9 @@
 import { Type } from 'class-transformer';
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Career } from '../../../repositories/career';
+import { Career } from '../../../repositories/career/entities';
 import { Department } from '../../../repositories/department/entities';
 import { School } from '../../../repositories/school/entities';
 import { Teacher } from '../../../repositories/teacher/entities';

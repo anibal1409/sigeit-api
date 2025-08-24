@@ -9,10 +9,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import {
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { GetTeachersDto } from './dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';

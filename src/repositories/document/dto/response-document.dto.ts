@@ -1,14 +1,9 @@
 import { Type } from 'class-transformer';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Department } from '../../department';
+import { Department } from '../../department/entities';
 import { DocumentE } from '../entities';
 import { TypeDocument } from '../enum';
 

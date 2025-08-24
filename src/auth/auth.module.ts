@@ -1,26 +1,17 @@
-import {
-  forwardRef,
-  Module,
-} from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
 
-import { MailModule } from '../mail';
-import { UserModule } from '../repositories';
+import { MailModule } from '../mail/mail.module';
+import { UserModule } from '../repositories/user/user.module';
 import { AuthController } from './auth.controller';
 import { ChangePasswordService } from './change-password';
-import {
-  JWT_CONST,
-  JwtAuthGuard,
-} from './jwt-auth';
+import { JWT_CONST, JwtAuthGuard } from './jwt-auth';
 import { JwtAuthService } from './jwt-auth/jwt-auth.service';
 import { LoginService } from './login/login.service';
 import { LogoutService } from './logout';
 import { RecoveryPasswordService } from './recovery-password';
-import {
-  JwtStrategy,
-  LocalStrategy,
-} from './strategies';
+import { JwtStrategy, LocalStrategy } from './strategies';
 
 @Module({
   imports: [
@@ -45,4 +36,4 @@ import {
   ],
   exports: [],
 })
-export class AuthModule { }
+export class AuthModule {}

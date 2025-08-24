@@ -44,7 +44,7 @@ export class GetInscriptionDto {
   @IsOptional()
   @Type(() => Number)
   subjectId?: number;
-  
+
   @ApiPropertyOptional()
   @IsOptional()
   @Type(() => Number)

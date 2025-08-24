@@ -1,15 +1,7 @@
 import { Type } from 'class-transformer';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
-import {
-  ApiProperty,
-  OmitType,
-  PartialType,
-} from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 
 import { IdCreateEntity } from '../../base';
 import { Schedule } from '../entities';
@@ -25,7 +17,6 @@ export class CreateScheduleDto extends PartialType(
     'period',
   ]),
 ) {
-
   @ApiProperty()
   @IsNotEmpty()
   @IsString()

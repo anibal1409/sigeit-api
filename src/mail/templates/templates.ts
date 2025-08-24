@@ -54,7 +54,7 @@ export const welcome = (
   user_: string,
   role_: string,
   password_: string,
-  systemUrl_: string
+  systemUrl_: string,
 ): string => `
 <body>
   <div style="

@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -10,22 +7,17 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
-import {
-  CreateCareerDto,
-  GetCareersDto,
-  UpdateCareerDto,
-} from './dto';
+import { CrudRepository } from '../../common/use-case';
+import { CreateCareerDto, GetCareersDto, UpdateCareerDto } from './dto';
 import { ResponseCareerDto } from './dto/response-career.dto';
 import { Career } from './entities';
 
 @Injectable()
 export class CareerService implements CrudRepository<Career> {
-
   constructor(
     @InjectRepository(Career)
     private repository: Repository<Career>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<Career> {
     const item = await this.repository.findOne({

@@ -16,7 +16,9 @@ import {
 } from '@nestjs/swagger';
 
 import {
+  GenerateReportDto,
   GetSectionsDto,
+  ReportResponseDto,
   ResponseSectionDto,
 } from './dto';
 import { CreateSectionDto } from './dto/create-section.dto';
@@ -85,5 +87,16 @@ export class SectionController {
   })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.sectionService.remove(+id);
+  }
+
+  @Post('generate-report')
+  @ApiResponse({
+    description: 'Genera un reporte Excel de secciones académicas',
+    type: ReportResponseDto,
+  })
+  async generateReport(
+    @Body() reportParams: GenerateReportDto,
+  ): Promise<ReportResponseDto> {
+    return this.sectionService.generateReport(reportParams);
   }
 }

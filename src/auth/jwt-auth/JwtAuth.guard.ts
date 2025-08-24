@@ -30,7 +30,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     user: any,
     info: any,
     context: ExecutionContext,
-    status?: any
+    status?: any,
   ): any {
     if (info instanceof Error) {
       if (info.message == 'No auth token') {
@@ -51,7 +51,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 
   canActivate(
-    context: ExecutionContext
+    context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),

@@ -7,7 +7,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 import { MailService } from '../../mail/mail.service';
-import { UserService } from '../../repositories';
+import { UserService } from '../../repositories/user/user.service';
 import { JwtAuthService } from '../jwt-auth';
 import { JWT_CONST } from '../jwt-auth/constants';
 import {
@@ -73,7 +73,7 @@ export class RecoveryPasswordService {
 
   async recovery(
     _token: string,
-    _newPassword: string
+    _newPassword: string,
   ): Promise<RecoveryPasswordResponseDto> {
     const { username: email, sub: id } =
       await this.jwtAuthService.decode(_token);
@@ -90,5 +90,4 @@ export class RecoveryPasswordService {
       return { message: 'Error al cambiar la contraseña.' };
     }
   }
-
 }

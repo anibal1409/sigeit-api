@@ -13,7 +13,6 @@ import { Department } from '../../department/entities';
 
 @Entity()
 export class Subject extends IdEntity {
-
   @Column({ nullable: false, unique: true })
   code!: string;
 
@@ -35,12 +34,13 @@ export class Subject extends IdEntity {
   @Column({ nullable: true })
   typeCurriculum!: number;
 
-  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Department, (department) => department.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   department!: Department;
 
   @ManyToMany(() => Career, (carrer) => carrer.subjects)
   @JoinTable()
   careers: Career[];
-
 }

@@ -23,4 +23,3 @@ export class GetCareersDto {
   @IsBooleanString()
   status?: boolean;
 }
-

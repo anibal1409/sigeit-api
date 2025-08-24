@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -10,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
+import { CrudRepository } from '../../common/use-case';
 import {
   CreateSubjectDto,
   GetSubjectDepartmentDto,
@@ -21,7 +18,6 @@ import { Subject } from './entities';
 
 @Injectable()
 export class SubjectService implements CrudRepository<Subject> {
-
   constructor(
     @InjectRepository(Subject)
     private repository: Repository<Subject>,

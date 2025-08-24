@@ -23,4 +23,3 @@ export class GetClassroomsDto {
   @IsBooleanString()
   status?: boolean;
 }
-

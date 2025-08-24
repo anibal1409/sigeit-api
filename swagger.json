@@ -1854,6 +1854,37 @@
         ]
       }
     },
+    "/section/generate-report": {
+      "post": {
+        "operationId": "SectionController_generateReport",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateReportDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "Genera un reporte Excel de secciones académicas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
     "/inscription": {
       "post": {
         "operationId": "InscriptionController_create",
@@ -4009,6 +4040,90 @@
             "type": "boolean"
           }
         }
+      },
+      "GenerateReportDto": {
+        "type": "object",
+        "properties": {
+          "periodId": {
+            "type": "number",
+            "description": "ID del período académico",
+            "example": 1
+          },
+          "departmentId": {
+            "type": "number",
+            "description": "ID del departamento",
+            "example": 1
+          },
+          "groupBy": {
+            "type": "string",
+            "description": "Campo por el cual agrupar (semester o teacherName)",
+            "example": "semester"
+          },
+          "semester": {
+            "type": "number",
+            "description": "ID del semestre específico",
+            "example": 1
+          },
+          "teacherId": {
+            "type": "number",
+            "description": "ID del profesor específico",
+            "example": 1
+          },
+          "status": {
+            "type": "boolean",
+            "description": "Estado de las secciones",
+            "example": true
+          }
+        },
+        "required": [
+          "periodId",
+          "departmentId"
+        ]
+      },
+      "ReportResponseDto": {
+        "type": "object",
+        "properties": {
+          "buffer": {
+            "type": "string",
+            "description": "Buffer del archivo Excel generado",
+            "example": "base64-encoded-excel-file",
+            "format": "binary"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Nombre del archivo generado",
+            "example": "reporte_secciones_2024-08-24.xlsx"
+          },
+          "contentType": {
+            "type": "string",
+            "description": "Tipo MIME del archivo",
+            "example": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          },
+          "contentLength": {
+            "type": "number",
+            "description": "Tamaño del archivo en bytes",
+            "example": 1024
+          },
+          "generatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Fecha y hora de generación del reporte",
+            "example": "2024-08-24T18:30:00.000Z"
+          },
+          "message": {
+            "type": "string",
+            "description": "Mensaje de confirmación",
+            "example": "Reporte generado exitosamente"
+          }
+        },
+        "required": [
+          "buffer",
+          "filename",
+          "contentType",
+          "contentLength",
+          "generatedAt",
+          "message"
+        ]
       },
       "CreateInscriptionDto": {
         "type": "object",

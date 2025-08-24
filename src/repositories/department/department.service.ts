@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -21,11 +18,10 @@ import { Department } from './entities';
 
 @Injectable()
 export class DepartmentService implements CrudRepository<Department> {
-
   constructor(
     @InjectRepository(Department)
     private repository: Repository<Department>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<Department> {
     const item = await this.repository.findOne({

@@ -7,10 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
-import {
-  ApiProperty,
-  ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Period } from '../entities';
 import { StagePeriod } from '../enum';

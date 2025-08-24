@@ -6,9 +6,7 @@ import { CareerService } from './career.service';
 import { Career } from './entities';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Career]),
-  ],
+  imports: [TypeOrmModule.forFeature([Career])],
   controllers: [CareerController],
   providers: [CareerService],
   exports: [TypeOrmModule, CareerService],

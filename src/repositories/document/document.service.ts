@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -10,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
+import { CrudRepository } from '../../common/use-case';
 import {
   CreateDocumentDto,
   ResponseDocumentDto,
@@ -20,11 +17,10 @@ import { DocumentE } from './entities';
 
 @Injectable()
 export class DocumentService implements CrudRepository<DocumentE> {
-
   constructor(
     @InjectRepository(DocumentE)
     private repository: Repository<DocumentE>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<DocumentE> {
     const item = await this.repository.findOne({

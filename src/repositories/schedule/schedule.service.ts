@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { CrudRepository } from '../../common';
+import { CrudRepository } from '../../common/use-case';
 import {
   CreateScheduleDto,
   GetSchedulesDto,
@@ -23,11 +23,10 @@ import { Schedule } from './entities';
 
 @Injectable()
 export class ScheduleService implements CrudRepository<Schedule> {
-
   constructor(
     @InjectRepository(Schedule)
     private repository: Repository<Schedule>,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<Schedule> {
     const item = await this.repository.findOne({

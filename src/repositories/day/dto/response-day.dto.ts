@@ -1,16 +1,11 @@
 import { Type } from 'class-transformer';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
 import { Day } from '../entities';
 
 export class ResponseDayDto {
-
   @ApiProperty()
   @IsNotEmpty()
   @Type(() => Number)

@@ -1,7 +1,4 @@
-import {
-  Test,
-  TestingModule,
-} from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 
 import { InscriptionController } from './inscription.controller';
 import { InscriptionService } from './inscription.service';

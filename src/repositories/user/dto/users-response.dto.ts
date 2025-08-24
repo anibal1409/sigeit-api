@@ -1,17 +1,12 @@
 import { Type } from 'class-transformer';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
 import { Career } from '../../career/entities';
-import { Department } from '../../department';
-import { School } from '../../school';
-import { Teacher } from '../../teacher';
+import { Department } from '../../department/entities';
+import { School } from '../../school/entities';
+import { Teacher } from '../../teacher/entities';
 import { User } from '../entities';
 
 export class UserRespondeDto {

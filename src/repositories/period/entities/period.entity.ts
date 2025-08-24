@@ -1,14 +1,10 @@
-import {
-  Column,
-  Entity,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import { IdEntity } from '../../base';
 import { StagePeriod } from '../enum';
 
 @Entity()
 export class Period extends IdEntity {
-
   @Column({ nullable: false, unique: true })
   name!: string;
 
@@ -35,5 +31,4 @@ export class Period extends IdEntity {
 
   @Column({ nullable: false })
   stage!: StagePeriod;
-
 }

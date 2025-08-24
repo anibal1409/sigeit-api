@@ -9,7 +9,7 @@ import {
 
 import { IdEntity } from '../../base';
 import { Department } from '../../department/entities';
-import { Subject } from '../../subject';
+import { Subject } from '../../subject/entities';
 
 @Entity()
 export class Career extends IdEntity {
@@ -25,7 +25,9 @@ export class Career extends IdEntity {
   @Column({ nullable: false, unique: true })
   abbreviation!: string;
 
-  @ManyToOne(() => Department, (department) => department.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Department, (department) => department.id, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   department?: Department;
 

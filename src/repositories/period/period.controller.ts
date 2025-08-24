@@ -8,10 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import {
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Public } from '../../auth/login';
 import { ResponsePeriodDto } from './dto';
@@ -88,5 +85,4 @@ export class PeriodController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.periodService.remove(+id);
   }
-
 }

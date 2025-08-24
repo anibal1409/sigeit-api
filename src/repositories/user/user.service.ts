@@ -1,7 +1,4 @@
-import {
-  Not,
-  Repository,
-} from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -10,30 +7,24 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { hashPassword } from '../../auth';
-import { CrudRepository } from '../../common';
-import { MailService } from '../../mail';
-import {
-  Teacher,
-  TeacherService,
-} from '../teacher';
-import {
-  CreateUserDto,
-  UserRespondeDto,
-} from './dto';
+import { hashPassword } from '../../auth/password-hasher';
+import { CrudRepository } from '../../common/use-case';
+import { MailService } from '../../mail/mail.service';
+import { TeacherService } from '../teacher/teacher.service';
+import { CreateUserDto, UserRespondeDto } from './dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities';
 import { ROLES_LIST } from './enums/roles';
+import { Teacher } from '../teacher/entities';
 
 @Injectable()
 export class UserService implements CrudRepository<User> {
-
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly mailService: MailService,
     private readonly teacherService: TeacherService,
-  ) { }
+  ) {}
 
   async findValid(id: number): Promise<User> {
     const user = await this.usersRepository.findOne({
@@ -66,7 +57,7 @@ export class UserService implements CrudRepository<User> {
     return this.usersRepository.findOne({
       where: {
         idDocument,
-        role: role || null, 
+        role: role || null,
       },
       relations: ['school', 'department', 'teacher'],
     });
@@ -145,7 +136,7 @@ export class UserService implements CrudRepository<User> {
 
   async update(
     id: number,
-    updateUserDto: UpdateUserDto
+    updateUserDto: UpdateUserDto,
   ): Promise<UserRespondeDto> {
     const user = await this.findValid(id);
     if (!user) {
@@ -208,7 +199,7 @@ export class UserService implements CrudRepository<User> {
   async changePassword(
     email: string,
     id: number,
-    newPassword: string
+    newPassword: string,
   ): Promise<boolean> {
     if (!newPassword) {
       throw new BadRequestException('Password is required');

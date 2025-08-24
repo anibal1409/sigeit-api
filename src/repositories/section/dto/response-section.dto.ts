@@ -1,16 +1,11 @@
 import { Type } from 'class-transformer';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Period } from '../../period';
-import { Subject } from '../../subject';
-import { Teacher } from '../../teacher';
+import { Period } from '../../period/entities';
+import { Subject } from '../../subject/entities';
+import { Teacher } from '../../teacher/entities';
 import { Section } from '../entities';
 
 export class ResponseSectionDto {

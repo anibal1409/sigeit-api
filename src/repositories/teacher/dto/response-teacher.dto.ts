@@ -7,12 +7,9 @@ import {
   IsString,
 } from 'class-validator';
 
-import {
-  ApiProperty,
-  ApiPropertyOptional,
-} from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-import { Department } from '../../department';
+import { Department } from '../../department/entities';
 import { Teacher } from '../entities';
 
 export class ResponseTeacherDto {
