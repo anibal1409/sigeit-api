@@ -1,6 +1,6 @@
 {            
   "providedInRoot": true,         
-  "serviceSuffix": "ApiService",    
+  "serviceSuffix": "Service",    
   "modelPropertyNaming": "camelCase", 
   "useRxJS": true,                  
   "apiModulePrefix": "",          
