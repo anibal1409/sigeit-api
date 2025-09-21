@@ -1565,6 +1565,126 @@
         ]
       }
     },
+    "/schedule/download/planned-schedules": {
+      "get": {
+        "operationId": "ScheduleController_downloadPlannedSchedules",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "required": true,
+            "in": "query",
+            "description": "ID del departamento",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "description": "ID del período",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Estado de los horarios",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Campo por el cual agrupar (semester, teacherName)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Información del archivo Excel con los horarios planificados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": {
+                      "type": "string"
+                    },
+                    "downloadUrl": {
+                      "type": "string"
+                    },
+                    "contentType": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/download-file/planned-schedules": {
+      "get": {
+        "operationId": "ScheduleController_downloadFilePlannedSchedules",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "required": true,
+            "in": "query",
+            "description": "ID del departamento",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "description": "ID del período",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Estado de los horarios",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "groupBy",
+            "required": false,
+            "in": "query",
+            "description": "Campo por el cual agrupar (semester, teacherName)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
     "/section": {
       "post": {
         "operationId": "SectionController_create",

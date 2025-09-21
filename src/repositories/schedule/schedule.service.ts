@@ -11,10 +11,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as ExcelJS from 'exceljs';
 
 import { CrudRepository } from '../../common/use-case';
 import {
   CreateScheduleDto,
+  DownloadPlannedSchedulesDto,
   GetSchedulesDto,
   ResponseScheduleDto,
   UpdateScheduleDto,
@@ -190,5 +192,124 @@ export class ScheduleService implements CrudRepository<Schedule> {
 
   createMany(createDto: Array<CreateScheduleDto>): Promise<Schedule[]> {
     return this.repository.save(createDto);
+  }
+
+  async downloadPlannedSchedules(dto: DownloadPlannedSchedulesDto): Promise<Buffer> {
+    const schedules = await this.findAllPeriod(dto.periodId, {
+      departmentId: dto.departmentId,
+      status: dto.status !== undefined ? dto.status === 1 : true,
+    });
+
+    // Agrupar datos por el campo especificado
+    const groupedData = this.groupSchedules(schedules, dto.groupBy || 'semester');
+
+    // Crear workbook de Excel
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Horarios');
+
+    let rowCount = 2;
+
+    // Obtener información del departamento y período
+    const department = schedules[0]?.section?.subject?.department;
+    const period = schedules[0]?.period;
+
+    // Título principal
+    worksheet.mergeCells(`B${rowCount}:K${rowCount}`);
+    worksheet.getCell(`B${rowCount}`).value = `PLANIFICACION ACADEMICA ${department?.abbreviation}-${period?.name}`;
+    worksheet.getCell(`B${rowCount}`).font = { bold: true, size: 14 };
+    worksheet.getCell(`B${rowCount}`).alignment = { horizontal: 'center' };
+    rowCount += 2;
+
+    // Procesar cada grupo
+    Object.keys(groupedData).forEach((groupKey) => {
+      const groupText = dto.groupBy === 'teacherName' ? 'Profesor' : 'Semestre';
+      
+      // Título del grupo
+      worksheet.mergeCells(`B${rowCount}:K${rowCount}`);
+      worksheet.getCell(`B${rowCount}`).value = `${groupText} ${groupKey}`;
+      worksheet.getCell(`B${rowCount}`).font = { bold: true };
+      rowCount++;
+
+      // Encabezados de columnas
+      const headers = [
+        'Código',
+        'Asignatura',
+        'Sección',
+        'Día',
+        'Aula',
+        'Desde',
+        'Hasta',
+        'Profesor',
+        'Nombre',
+        'Capacidad',
+      ];
+
+      headers.forEach((header, index) => {
+        const cell = worksheet.getCell(rowCount, index + 2);
+        cell.value = header;
+        cell.font = { bold: true };
+        cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'FFE0E0E0' },
+        };
+      });
+      rowCount++;
+
+      // Datos del grupo
+      groupedData[groupKey].forEach((schedule: any) => {
+        const rowData = [
+          schedule.section?.subject?.code || '',
+          schedule.section?.subject?.name || '',
+          schedule.section?.name || '',
+          schedule.day?.name || '',
+          schedule.classroom?.name || '',
+          schedule.start || '',
+          schedule.end || '',
+          schedule.section?.teacher?.idDocument || '',
+          schedule.section?.teacher ? `${schedule.section.teacher.firstName} ${schedule.section.teacher.lastName}` : '',
+          schedule.section?.capacity || '',
+        ];
+
+        rowData.forEach((value, index) => {
+          worksheet.getCell(rowCount, index + 2).value = value;
+        });
+        rowCount++;
+      });
+
+      rowCount += 1; // Espacio entre grupos
+    });
+
+    // Ajustar ancho de columnas
+    worksheet.columns.forEach((column, index) => {
+      if (index >= 1 && index <= 11) {
+        column.width = 15;
+      }
+    });
+
+    // Generar buffer del archivo
+    const buffer = await workbook.xlsx.writeBuffer();
+    return Buffer.from(buffer);
+  }
+
+  private groupSchedules(schedules: Schedule[], groupBy: string): Record<string, Schedule[]> {
+    const grouped: Record<string, Schedule[]> = {};
+
+    schedules.forEach((schedule) => {
+      let groupKey: string;
+      
+      if (groupBy === 'teacherName') {
+        groupKey = schedule.section?.teacher ? `${schedule.section.teacher.firstName} ${schedule.section.teacher.lastName}` : 'Sin profesor';
+      } else {
+        groupKey = schedule.section?.subject?.semester?.toString() || 'Sin semestre';
+      }
+
+      if (!grouped[groupKey]) {
+        grouped[groupKey] = [];
+      }
+      grouped[groupKey].push(schedule);
+    });
+
+    return grouped;
   }
 }
