@@ -1,0 +1,5 @@
+---
+description: Reglas de desarrollo para el proyecto Sigeit
+globs:
+alwaysApply: true
+---

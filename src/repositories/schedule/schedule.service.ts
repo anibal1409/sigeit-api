@@ -223,10 +223,17 @@ export class ScheduleService implements CrudRepository<Schedule> {
     // Procesar cada grupo
     Object.keys(groupedData).forEach((groupKey) => {
       const groupText = dto.groupBy === 'teacherName' ? 'Profesor' : 'Semestre';
-      
+
+      // Calcular horas totales si es por profesor
+      let groupTitle = `${groupText} ${groupKey}`;
+      if (dto.groupBy === 'teacherName') {
+        const totalHours = this.calculateTeacherTotalHoursFromSchedules(groupedData[groupKey]);
+        groupTitle = `${groupText} ${groupKey} (${totalHours})`;
+      }
+
       // Título del grupo
       worksheet.mergeCells(`B${rowCount}:K${rowCount}`);
-      worksheet.getCell(`B${rowCount}`).value = `${groupText} ${groupKey}`;
+      worksheet.getCell(`B${rowCount}`).value = groupTitle;
       worksheet.getCell(`B${rowCount}`).font = { bold: true };
       rowCount++;
 
@@ -297,7 +304,7 @@ export class ScheduleService implements CrudRepository<Schedule> {
 
     schedules.forEach((schedule) => {
       let groupKey: string;
-      
+
       if (groupBy === 'teacherName') {
         groupKey = schedule.section?.teacher ? `${schedule.section.teacher.firstName} ${schedule.section.teacher.lastName}` : 'Sin profesor';
       } else {
@@ -311,5 +318,20 @@ export class ScheduleService implements CrudRepository<Schedule> {
     });
 
     return grouped;
+  }
+
+  private calculateTeacherTotalHoursFromSchedules(schedules: Schedule[]): number {
+    // Obtener secciones únicas para evitar duplicar horas
+    const uniqueSections = new Map();
+    schedules.forEach(schedule => {
+      if (schedule.section?.id) {
+        uniqueSections.set(schedule.section.id, schedule.section);
+      }
+    });
+
+    // Sumar las horas de las secciones únicas
+    return Array.from(uniqueSections.values()).reduce((totalHours, section) => {
+      return totalHours + (section.subject?.hours || 0);
+    }, 0);
   }
 }

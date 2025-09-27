@@ -369,10 +369,13 @@ export class SectionService implements CrudRepository<Section> {
     for (const [teacherName, teacherSections] of Object.entries(
       teacherGroups,
     )) {
+      // Calcular horas totales del profesor
+      const totalHours = this.calculateTeacherTotalHours(teacherSections);
+
       // Encabezado del profesor
       worksheet.mergeCells(`B${currentRow}:H${currentRow}`);
       const teacherHeader = worksheet.getCell(`B${currentRow}`);
-      teacherHeader.value = `Profesor: ${teacherName}`;
+      teacherHeader.value = `Profesor: ${teacherName} (${totalHours})`;
       teacherHeader.font = { bold: true, size: 14, color: { argb: 'FFFFFF' } };
       teacherHeader.fill = {
         type: 'pattern',
@@ -436,6 +439,12 @@ export class SectionService implements CrudRepository<Section> {
       groups[teacherName].push(section);
       return groups;
     }, {});
+  }
+
+  private calculateTeacherTotalHours(teacherSections: any[]): number {
+    return teacherSections.reduce((totalHours, section) => {
+      return totalHours + (section.subject?.hours || 0);
+    }, 0);
   }
 
   private styleColumnHeaders(worksheet: ExcelJS.Worksheet, row: number): void {
