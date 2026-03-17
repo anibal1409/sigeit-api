@@ -12,7 +12,8 @@ async function generateSwagger() {
   const config = new DocumentBuilder()
     .setTitle('SIGEIT-API Documentation')
     .setDescription(
-      'API completa para el Sistema de Gestión de Información Educativa y Tecnológica',
+      'API completa para el Sistema de Gestión de Información Educativa y Tecnológica. ' +
+        'Módulo **statistics** (`/statistics/*`): métricas en camelCase para dashboards (comparación de períodos, docentes por día, carga, aulas, etc.); no usa datos de inscripciones.',
     )
     .setVersion('1.0')
     .addTag('audit', 'Auditoría de acciones en el sistema')
@@ -26,6 +27,7 @@ async function generateSwagger() {
     .addTag('periods', 'Gestión de períodos académicos')
     .addTag('schedules', 'Gestión de horarios')
     .addTag('schools', 'Gestión de escuelas y facultades')
+    .addTag('statistics', 'Estadísticas y métricas para reportes')
     .addTag('sections', 'Gestión de secciones de clases')
     .addTag('subjects', 'Gestión de materias y asignaturas')
     .addTag('teachers', 'Gestión de profesores')

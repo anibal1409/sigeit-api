@@ -2810,6 +2810,396 @@
         ]
       }
     },
+    "/statistics/period-comparison": {
+      "get": {
+        "operationId": "StatisticsController_periodComparison",
+        "summary": "Comparar períodos: secciones, cupo y horas-materia",
+        "parameters": [
+          {
+            "name": "periodIds",
+            "required": true,
+            "in": "query",
+            "description": "IDs de períodos separados por coma (mínimo uno).",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeriodComparisonResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/teachers-by-day": {
+      "get": {
+        "operationId": "StatisticsController_teachersByDay",
+        "summary": "Profesores distintos con clase por día de la semana",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeachersByDayResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/by-department": {
+      "get": {
+        "operationId": "StatisticsController_byDepartment",
+        "summary": "Secciones y cupo por departamento",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DepartmentStatItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/by-subject": {
+      "get": {
+        "operationId": "StatisticsController_bySubject",
+        "summary": "Secciones y cupo por materia",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectStatItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/teacher-workload": {
+      "get": {
+        "operationId": "StatisticsController_teacherWorkload",
+        "summary": "Carga docente: secciones, bloques horario y horas-materia",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TeacherWorkloadItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/classroom-usage": {
+      "get": {
+        "operationId": "StatisticsController_classroomUsage",
+        "summary": "Bloques planificados por aula",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 3,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClassroomUsageItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/start-time-distribution": {
+      "get": {
+        "operationId": "StatisticsController_startTimeDistribution",
+        "summary": "Distribución de bloques por hora de inicio",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "classroomId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 3,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StartTimeSlotItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/section-open-distribution": {
+      "get": {
+        "operationId": "StatisticsController_sectionOpenDistribution",
+        "summary": "Secciones abiertas a todas las carreras vs restringidas",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectionOpenDistributionItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/timeline": {
+      "get": {
+        "operationId": "StatisticsController_timeline",
+        "summary": "Evolución por período (todos los períodos activos)",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimelineItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/by-career": {
+      "get": {
+        "operationId": "StatisticsController_byCareer",
+        "summary": "Secciones por carrera (vía materias vinculadas)",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CareerSectionStatItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
+    "/statistics/by-curriculum-semester": {
+      "get": {
+        "operationId": "StatisticsController_byCurriculumSemester",
+        "summary": "Oferta por semestre del pensum (materia.semester)",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CurriculumSemesterStatItemDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "statistics"
+        ]
+      }
+    },
     "/auth/login": {
       "post": {
         "operationId": "AuthController_login",
@@ -3009,113 +3399,104 @@
         ]
       }
     },
-    "/activities": {
-      "post": {
-        "operationId": "ActivitiesController_create",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateActivityDto"
+    "/audit/logs": {
+      "get": {
+        "operationId": "AuditController_findLogs",
+        "summary": "Listar registros de auditoría (paginado)",
+        "description": "Incluye userAgent, clientSummary y propertyChanges (diff en updates, campos en creaciones).",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista paginada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLogsPageDto"
+                }
               }
             }
           }
         },
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        }
-      },
-      "get": {
-        "operationId": "ActivitiesController_findAll",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+        "tags": [
+          "audit"
+        ]
       }
     },
-    "/activities/{id}": {
+    "/audit/entity/{resource}/{entityId}": {
       "get": {
-        "operationId": "ActivitiesController_findOne",
+        "operationId": "AuditController_findByEntity",
+        "summary": "Historial de cambios de un registro",
+        "description": "Devuelve todos los eventos de auditoría donde resource y resourceId coinciden con el tipo de entidad y el id (p. ej. period / 12).",
         "parameters": [
           {
-            "name": "id",
+            "name": "resource",
             "required": true,
             "in": "path",
             "schema": {
+              "example": "period",
               "type": "string"
+            }
+          },
+          {
+            "name": "entityId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "example": 12,
+              "type": "number"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
-          }
-        }
-      },
-      "patch": {
-        "operationId": "ActivitiesController_update",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateActivityDto"
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntityAuditHistoryDto"
+                }
               }
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
-      },
-      "delete": {
-        "operationId": "ActivitiesController_remove",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+        "tags": [
+          "audit"
+        ]
       }
     }
   },
   "info": {
     "title": "SIGEIT-API Documentation",
-    "description": "API completa para el Sistema de Gestión de Información Educativa y Tecnológica",
+    "description": "API completa para el Sistema de Gestión de Información Educativa y Tecnológica. Módulo **statistics** (`/statistics/*`): métricas en camelCase para dashboards (comparación de períodos, docentes por día, carga, aulas, etc.); no usa datos de inscripciones.",
     "version": "1.0",
     "contact": {}
   },
   "tags": [
     {
-      "name": "activities",
-      "description": "Gestión de actividades y logs del sistema"
+      "name": "audit",
+      "description": "Auditoría de acciones en el sistema"
     },
     {
       "name": "auth",
@@ -3156,6 +3537,10 @@
     {
       "name": "schools",
       "description": "Gestión de escuelas y facultades"
+    },
+    {
+      "name": "statistics",
+      "description": "Estadísticas y métricas para reportes"
     },
     {
       "name": "sections",
@@ -3803,6 +4188,11 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Marcar como período activo (solo uno puede estarlo)"
           }
         },
         "required": [
@@ -3855,6 +4245,10 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Indica si este período es el activo actualmente"
           }
         },
         "required": [
@@ -3867,7 +4261,8 @@
           "stage",
           "interval",
           "duration",
-          "status"
+          "status",
+          "isActive"
         ]
       },
       "UpdatePeriodDto": {
@@ -3907,6 +4302,11 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Marcar como período activo (solo uno puede estarlo)"
           }
         }
       },
@@ -4638,6 +5038,333 @@
           }
         }
       },
+      "PeriodMetricResponseDto": {
+        "type": "object",
+        "properties": {
+          "periodId": {
+            "type": "number"
+          },
+          "periodName": {
+            "type": "string"
+          },
+          "periodStart": {
+            "type": "string",
+            "description": "Fecha de inicio del período (ISO)."
+          },
+          "sectionCount": {
+            "type": "number"
+          },
+          "totalCapacity": {
+            "type": "number",
+            "description": "Suma de capacidades de las secciones."
+          },
+          "totalSubjectHours": {
+            "type": "number",
+            "description": "Suma de horas de materia por sección (carga académica ofertada)."
+          }
+        },
+        "required": [
+          "periodId",
+          "periodName",
+          "periodStart",
+          "sectionCount",
+          "totalCapacity",
+          "totalSubjectHours"
+        ]
+      },
+      "PeriodComparisonDeltaDto": {
+        "type": "object",
+        "properties": {
+          "periodId": {
+            "type": "number"
+          },
+          "sectionDeltaFromFirst": {
+            "type": "number"
+          },
+          "capacityDeltaFromFirst": {
+            "type": "number"
+          },
+          "subjectHoursDeltaFromFirst": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "periodId",
+          "sectionDeltaFromFirst",
+          "capacityDeltaFromFirst",
+          "subjectHoursDeltaFromFirst"
+        ]
+      },
+      "PeriodComparisonResponseDto": {
+        "type": "object",
+        "properties": {
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeriodMetricResponseDto"
+            }
+          },
+          "deltasFromFirst": {
+            "description": "El primer elemento corresponde al primer periodId enviado (deltas en 0).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeriodComparisonDeltaDto"
+            }
+          }
+        },
+        "required": [
+          "metrics",
+          "deltasFromFirst"
+        ]
+      },
+      "TeachersByDayItemDto": {
+        "type": "object",
+        "properties": {
+          "dayId": {
+            "type": "number"
+          },
+          "dayName": {
+            "type": "string"
+          },
+          "dayAbbreviation": {
+            "type": "string"
+          },
+          "teacherCount": {
+            "type": "number",
+            "description": "Profesores distintos con al menos un bloque planificado ese día."
+          }
+        },
+        "required": [
+          "dayId",
+          "dayName",
+          "dayAbbreviation",
+          "teacherCount"
+        ]
+      },
+      "TeachersByDayResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeachersByDayItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "DepartmentStatItemDto": {
+        "type": "object",
+        "properties": {
+          "departmentId": {
+            "type": "number"
+          },
+          "departmentName": {
+            "type": "string"
+          },
+          "sectionCount": {
+            "type": "number"
+          },
+          "totalCapacity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "departmentId",
+          "departmentName",
+          "sectionCount",
+          "totalCapacity"
+        ]
+      },
+      "SubjectStatItemDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "number"
+          },
+          "subjectCode": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "sectionCount": {
+            "type": "number"
+          },
+          "totalCapacity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "subjectId",
+          "subjectCode",
+          "subjectName",
+          "sectionCount",
+          "totalCapacity"
+        ]
+      },
+      "TeacherWorkloadItemDto": {
+        "type": "object",
+        "properties": {
+          "teacherId": {
+            "type": "number"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "sectionCount": {
+            "type": "number"
+          },
+          "scheduleBlockCount": {
+            "type": "number",
+            "description": "Bloques de horario (filas en planificación)."
+          },
+          "totalSubjectHours": {
+            "type": "number",
+            "description": "Suma de horas de materia de sus secciones."
+          }
+        },
+        "required": [
+          "teacherId",
+          "firstName",
+          "lastName",
+          "sectionCount",
+          "scheduleBlockCount",
+          "totalSubjectHours"
+        ]
+      },
+      "ClassroomUsageItemDto": {
+        "type": "object",
+        "properties": {
+          "classroomId": {
+            "type": "number"
+          },
+          "classroomName": {
+            "type": "string"
+          },
+          "scheduleBlockCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "classroomId",
+          "classroomName",
+          "scheduleBlockCount"
+        ]
+      },
+      "StartTimeSlotItemDto": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "string",
+            "example": "07:00"
+          },
+          "blockCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "startTime",
+          "blockCount"
+        ]
+      },
+      "SectionOpenDistributionItemDto": {
+        "type": "object",
+        "properties": {
+          "openToAll": {
+            "type": "boolean",
+            "description": "true = abierta a todas las carreras (campo all de la sección)."
+          },
+          "sectionCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "openToAll",
+          "sectionCount"
+        ]
+      },
+      "TimelineItemDto": {
+        "type": "object",
+        "properties": {
+          "periodId": {
+            "type": "number"
+          },
+          "periodName": {
+            "type": "string"
+          },
+          "periodStart": {
+            "type": "string"
+          },
+          "sectionCount": {
+            "type": "number"
+          },
+          "totalCapacity": {
+            "type": "number"
+          },
+          "totalSubjectHours": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "periodId",
+          "periodName",
+          "periodStart",
+          "sectionCount",
+          "totalCapacity",
+          "totalSubjectHours"
+        ]
+      },
+      "CareerSectionStatItemDto": {
+        "type": "object",
+        "properties": {
+          "careerId": {
+            "type": "number"
+          },
+          "careerName": {
+            "type": "string"
+          },
+          "careerAbbreviation": {
+            "type": "string"
+          },
+          "sectionCount": {
+            "type": "number",
+            "description": "Secciones cuya materia incluye esta carrera (una sección puede contar en varias carreras)."
+          }
+        },
+        "required": [
+          "careerId",
+          "careerName",
+          "careerAbbreviation",
+          "sectionCount"
+        ]
+      },
+      "CurriculumSemesterStatItemDto": {
+        "type": "object",
+        "properties": {
+          "curriculumSemester": {
+            "type": "number",
+            "description": "Semestre del pensum (campo semester de la materia)."
+          },
+          "sectionCount": {
+            "type": "number"
+          },
+          "totalCapacity": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "curriculumSemester",
+          "sectionCount",
+          "totalCapacity"
+        ]
+      },
       "LoginDto": {
         "type": "object",
         "properties": {
@@ -4740,13 +5467,139 @@
           "message"
         ]
       },
-      "CreateActivityDto": {
+      "ResponseAuditLogDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "userEmail": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "CREATE",
+              "UPDATE",
+              "DELETE",
+              "OTHER",
+              "AUTH_LOGIN",
+              "AUTH_LOGOUT",
+              "AUTH_RECOVERY_REQUEST",
+              "AUTH_RECOVERY_VALIDATE",
+              "AUTH_RECOVERY_COMPLETE",
+              "AUTH_CHANGE_PASSWORD",
+              "AUTH_REGISTER_PUBLIC",
+              "AUTH_OTHER"
+            ]
+          },
+          "resource": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          },
+          "httpMethod": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "ipAddress": {
+            "type": "string"
+          },
+          "userAgent": {
+            "type": "string",
+            "description": "User-Agent enviado por el navegador (truncado)"
+          },
+          "clientSummary": {
+            "type": "string",
+            "description": "Resumen navegador/SO derivado del User-Agent"
+          },
+          "payloadSnippet": {
+            "type": "string"
+          },
+          "propertyChanges": {
+            "type": "object",
+            "description": "En updates: mapa campo → { previous, current }. En CREATE: fieldsSubmitted.",
+            "additionalProperties": true
+          },
+          "statusCode": {
+            "type": "number"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "action",
+          "resource",
+          "httpMethod",
+          "path",
+          "statusCode",
+          "success",
+          "createdAt"
+        ]
       },
-      "UpdateActivityDto": {
+      "AuditLogsPageDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseAuditLogDto"
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "page": {
+            "type": "number"
+          },
+          "limit": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "limit"
+        ]
+      },
+      "EntityAuditHistoryDto": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string",
+            "example": "period",
+            "description": "Segmento de API / tabla lógica"
+          },
+          "entityId": {
+            "type": "number",
+            "example": 5
+          },
+          "records": {
+            "description": "Registros ordenados del más reciente al más antiguo (mutaciones sobre ese id)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseAuditLogDto"
+            }
+          }
+        },
+        "required": [
+          "resource",
+          "entityId",
+          "records"
+        ]
       }
     }
   }
