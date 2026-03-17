@@ -31,4 +31,7 @@ export class Period extends IdEntity {
 
   @Column({ nullable: false })
   stage!: StagePeriod;
+
+  @Column({ nullable: false, default: false })
+  isActive!: boolean;
 }

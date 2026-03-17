@@ -68,6 +68,11 @@ export class ResponsePeriodDto {
   @IsBoolean()
   status!: boolean;
 
+  @ApiProperty({ description: 'Indica si este período es el activo actualmente' })
+  @IsNotEmpty()
+  @IsBoolean()
+  isActive!: boolean;
+
   constructor(data: Period) {
     this.id = data.id;
     this.name = data.name;
@@ -80,5 +85,6 @@ export class ResponsePeriodDto {
     this.endTime = data.endTime;
     this.interval = data.interval;
     this.stage = data.stage;
+    this.isActive = data.isActive ?? false;
   }
 }

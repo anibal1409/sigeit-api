@@ -64,17 +64,47 @@ export class PeriodService implements CrudRepository<Period> {
     return item;
   }
 
+  /** Obtiene el período marcado como activo (isActive = true). */
   async findPeriodActive() {
-    const item = await this.findByStage([
-      StagePeriod.Planned,
-      StagePeriod.toPlan,
-    ]);
+    const item = await this.repository.findOne({
+      where: {
+        deleted: false,
+        status: true,
+        isActive: true,
+      },
+    });
 
     if (!item) {
       throw new NotFoundException('Period not found');
     }
 
     return item;
+  }
+
+  /**
+   * Obtiene el período del cual copiar secciones y horarios:
+   * primero uno en etapa Planned (excluyendo excludePeriodId); si no hay, el más reciente por fecha fin.
+   */
+  private async findPeriodToCopyFrom(
+    excludePeriodId?: number,
+  ): Promise<Period | null> {
+    const planned = await this.repository.findOne({
+      where: {
+        deleted: false,
+        status: true,
+        stage: StagePeriod.Planned,
+        ...(excludePeriodId ? { id: Not(excludePeriodId) } : {}),
+      },
+    });
+    if (planned) return planned;
+    const latest = await this.repository.findOne({
+      where: {
+        deleted: false,
+        ...(excludePeriodId ? { id: Not(excludePeriodId) } : {}),
+      },
+      order: { end: 'DESC' },
+    });
+    return latest ?? null;
   }
 
   async create(createDto: CreatePeriodDto): Promise<ResponsePeriodDto> {
@@ -88,11 +118,24 @@ export class PeriodService implements CrudRepository<Period> {
       );
     }
 
-    const periodActive = await this.findByStage([StagePeriod.Planned]);
-    const item = await this.repository.save(createDto);
+    const { copyPrevious, ...periodData } = createDto;
+    const isActive = periodData.isActive ?? false;
+    if (isActive) {
+      await this.repository.update(
+        { deleted: false, isActive: true },
+        { isActive: false },
+      );
+    }
+    const item = await this.repository.save({
+      ...periodData,
+      isActive,
+    });
 
-    if (createDto.copyPrevious && periodActive) {
-      this.copySchedulesPeriod(periodActive.id, item.id);
+    if (copyPrevious) {
+      const sourcePeriod = await this.findPeriodToCopyFrom(item.id);
+      if (sourcePeriod) {
+        await this.copySchedulesPeriod(sourcePeriod.id, item.id);
+      }
     }
 
     return await this.findOne(item.id);
@@ -121,6 +164,12 @@ export class PeriodService implements CrudRepository<Period> {
     if (await this.findByName(updateDto.name, id)) {
       throw new BadRequestException('Period already exists.');
     }
+    if (updateDto.isActive === true) {
+      await this.repository.update(
+        { deleted: false, isActive: true },
+        { isActive: false },
+      );
+    }
     const item = await this.repository.save({
       id,
       name: updateDto.name,
@@ -133,6 +182,7 @@ export class PeriodService implements CrudRepository<Period> {
       startTime: updateDto?.startTime,
       endTime: updateDto?.endTime,
       interval: updateDto?.interval,
+      ...(updateDto.isActive !== undefined && { isActive: updateDto.isActive }),
     });
 
     return this.findOne(item.id);

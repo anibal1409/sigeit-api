@@ -74,4 +74,9 @@ export class CreatePeriodDto extends PartialType(
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
+
+  @ApiPropertyOptional({ default: false, description: 'Marcar como período activo (solo uno puede estarlo)' })
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
 }
