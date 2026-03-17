@@ -3,3 +3,9 @@ description: Reglas de desarrollo para el proyecto Sigeit
 globs:
 alwaysApply: true
 ---
+
+rules:
+  - "Ningún método puede tener más de 50 líneas de código efectivas."
+  - "No puede existir código duplicado ni código muerto; cualquier lógica no usada debe eliminarse."
+  - "Todo código nuevo debe estar documentado (clases, métodos y bloques de lógica no triviales)."
+  - "Todo módulo expuesto vía API debe tener la documentación necesaria para Swagger (decoradores de NestJS/Swagger actualizados)."

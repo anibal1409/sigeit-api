@@ -11,6 +11,7 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { SchoolModule } from './school/school.module';
 import { SectionModule } from './section/section.module';
 import { SubjectModule } from './subject/subject.module';
+import { StatisticsModule } from './statistics/statistics.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { UserModule } from './user/user.module';
 
@@ -29,6 +30,7 @@ import { UserModule } from './user/user.module';
     ClassroomModule,
     DocumentModule,
     InscriptionModule,
+    StatisticsModule,
   ],
   exports: [UserModule],
 })

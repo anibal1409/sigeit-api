@@ -1,18 +1,12 @@
 import { getConnectionOptions } from 'typeorm';
 
-// eslint-disable-next-line prettier/prettier
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ActivitiesModule } from './activities/activities.module';
-import { ActivityLoggerMiddleware } from './activities/activity-logger';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuditModule } from './audit/audit.module';
 import { AuthModule } from './auth/auth.module';
 import { RepositoriesModule } from './repositories/repositories.module';
 
@@ -42,13 +36,9 @@ import { RepositoriesModule } from './repositories/repositories.module';
     }),
     RepositoriesModule,
     AuthModule,
-    ActivitiesModule,
+    AuditModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ActivityLoggerMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}

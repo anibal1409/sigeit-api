@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { InscriptionModule } from '../inscription/inscription.module';
@@ -11,7 +11,7 @@ import { SectionService } from './section.service';
   imports: [
     TypeOrmModule.forFeature([Section]),
     ScheduleModule,
-    InscriptionModule,
+    forwardRef(() => InscriptionModule),
   ],
   controllers: [SectionController],
   providers: [SectionService],

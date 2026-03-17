@@ -15,7 +15,7 @@ async function generateSwagger() {
       'API completa para el Sistema de Gestión de Información Educativa y Tecnológica',
     )
     .setVersion('1.0')
-    .addTag('activities', 'Gestión de actividades y logs del sistema')
+    .addTag('audit', 'Auditoría de acciones en el sistema')
     .addTag('auth', 'Autenticación y autorización')
     .addTag('careers', 'Gestión de carreras universitarias')
     .addTag('classrooms', 'Gestión de aulas y salones')
