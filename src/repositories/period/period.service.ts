@@ -120,6 +120,7 @@ export class PeriodService implements CrudRepository<Period> {
 
     const { copyPrevious, ...periodData } = createDto;
     const isActive = periodData.isActive ?? false;
+    const isVacationCourse = periodData.isVacationCourse ?? false;
     if (isActive) {
       await this.repository.update(
         { deleted: false, isActive: true },
@@ -129,6 +130,7 @@ export class PeriodService implements CrudRepository<Period> {
     const item = await this.repository.save({
       ...periodData,
       isActive,
+      isVacationCourse,
     });
 
     if (copyPrevious) {
@@ -180,6 +182,9 @@ export class PeriodService implements CrudRepository<Period> {
       endTime: updateDto?.endTime,
       interval: updateDto?.interval,
       ...(updateDto.isActive !== undefined && { isActive: updateDto.isActive }),
+      ...(updateDto.isVacationCourse !== undefined && {
+        isVacationCourse: updateDto.isVacationCourse,
+      }),
     });
 
     return this.findOne(item.id);

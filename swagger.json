@@ -4193,6 +4193,11 @@
             "type": "boolean",
             "default": false,
             "description": "Marcar como período activo (solo uno puede estarlo)"
+          },
+          "isVacationCourse": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indica si el período académico es un curso vacacional"
           }
         },
         "required": [
@@ -4249,6 +4254,10 @@
           "isActive": {
             "type": "boolean",
             "description": "Indica si este período es el activo actualmente"
+          },
+          "isVacationCourse": {
+            "type": "boolean",
+            "description": "Indica si el período académico es un curso vacacional"
           }
         },
         "required": [
@@ -4262,7 +4271,8 @@
           "interval",
           "duration",
           "status",
-          "isActive"
+          "isActive",
+          "isVacationCourse"
         ]
       },
       "UpdatePeriodDto": {
@@ -4307,6 +4317,11 @@
             "type": "boolean",
             "default": false,
             "description": "Marcar como período activo (solo uno puede estarlo)"
+          },
+          "isVacationCourse": {
+            "type": "boolean",
+            "default": false,
+            "description": "Indica si el período académico es un curso vacacional"
           }
         }
       },

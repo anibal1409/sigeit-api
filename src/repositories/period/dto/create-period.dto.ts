@@ -79,4 +79,12 @@ export class CreatePeriodDto extends PartialType(
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Indica si el período académico es un curso vacacional',
+  })
+  @IsOptional()
+  @IsBoolean()
+  isVacationCourse?: boolean;
 }

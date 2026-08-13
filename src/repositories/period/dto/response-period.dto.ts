@@ -73,6 +73,13 @@ export class ResponsePeriodDto {
   @IsBoolean()
   isActive!: boolean;
 
+  @ApiProperty({
+    description: 'Indica si el período académico es un curso vacacional',
+  })
+  @IsNotEmpty()
+  @IsBoolean()
+  isVacationCourse!: boolean;
+
   constructor(data: Period) {
     this.id = data.id;
     this.name = data.name;
@@ -86,5 +93,6 @@ export class ResponsePeriodDto {
     this.interval = data.interval;
     this.stage = data.stage;
     this.isActive = data.isActive ?? false;
+    this.isVacationCourse = data.isVacationCourse ?? false;
   }
 }

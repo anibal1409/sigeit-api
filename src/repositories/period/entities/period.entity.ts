@@ -34,4 +34,8 @@ export class Period extends IdEntity {
 
   @Column({ nullable: false, default: false })
   isActive!: boolean;
+
+  /** Indica si el período académico es un curso vacacional. */
+  @Column({ nullable: false, default: false })
+  isVacationCourse!: boolean;
 }
