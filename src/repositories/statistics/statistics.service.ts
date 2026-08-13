@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 
+import { Classroom } from '../classroom/entities';
 import { Period } from '../period/entities';
 import { Schedule } from '../schedule/entities';
 import { Section } from '../section/entities';
@@ -17,6 +18,7 @@ import {
   SectionOpenDistributionItemDto,
   StartTimeSlotItemDto,
   SubjectStatItemDto,
+  SubjectDemandIncreaseItemDto,
   TeacherWorkloadItemDto,
   TeachersByDayItemDto,
   TeachersByDayResponseDto,
@@ -49,6 +51,10 @@ export class StatisticsService {
     return {
       metrics,
       deltasFromFirst: this.buildDeltasFromFirst(metrics),
+      subjectDemandIncreases: await this.subjectDemandIncreases(
+        ordered[0].id,
+        ordered[ordered.length - 1].id,
+      ),
     };
   }
 
@@ -154,27 +160,30 @@ export class StatisticsService {
     classroomId?: number,
   ): Promise<ClassroomUsageItemDto[]> {
     await this.ensurePeriodExists(periodId);
-    const qb = this.scheduleRepo
-      .createQueryBuilder('sch')
-      .innerJoin('sch.classroom', 'room')
-      .where('sch.periodId = :pid', { pid: periodId })
-      .andWhere('sch.deleted = :df', { df: false })
-      .andWhere('room.deleted = :df', { df: false })
-      .select('room.id', 'classroomId')
-      .addSelect('room.name', 'classroomName')
-      .addSelect('COUNT(sch.id)', 'scheduleBlockCount')
-      .groupBy('room.id')
-      .addGroupBy('room.name')
-      .orderBy('scheduleBlockCount', 'DESC');
-    if (classroomId != null) {
-      qb.andWhere('room.id = :cid', { cid: classroomId });
+    const schedules = await this.scheduleRepo.find({
+      where: {
+        deleted: false,
+        period: { id: periodId },
+      },
+      relations: {
+        classroom: true,
+      },
+    });
+    const map = new Map<number, ClassroomUsageItemDto>();
+    for (const schedule of schedules) {
+      const room = schedule.classroom;
+      if (!room || (classroomId != null && room.id !== classroomId)) {
+        continue;
+      }
+      const current = map.get(room.id) ?? {
+        classroomId: room.id,
+        classroomName: room.name,
+        scheduleBlockCount: 0,
+      };
+      current.scheduleBlockCount += 1;
+      map.set(room.id, current);
     }
-    const rows = await qb.getRawMany();
-    return rows.map((r) => ({
-      classroomId: Number(r.classroomId),
-      classroomName: r.classroomName,
-      scheduleBlockCount: Number(r.scheduleBlockCount),
-    }));
+    return [...map.values()].sort((a, b) => b.scheduleBlockCount - a.scheduleBlockCount);
   }
 
   /** Distribución de bloques por hora de inicio (picos de planificación). */
@@ -363,6 +372,74 @@ export class StatisticsService {
     }));
   }
 
+  /** Asignaturas que crecieron en capacidad o secciones entre dos períodos. */
+  private async subjectDemandIncreases(
+    basePeriodId: number,
+    referencePeriodId: number,
+  ): Promise<SubjectDemandIncreaseItemDto[]> {
+    if (basePeriodId === referencePeriodId) {
+      return [];
+    }
+    const [baseRows, referenceRows] = await Promise.all([
+      this.subjectAggregateRows(basePeriodId),
+      this.subjectAggregateRows(referencePeriodId),
+    ]);
+    const referenceMap = new Map(referenceRows.map((r) => [r.subjectId, r]));
+    return baseRows
+      .map((base) => {
+        const ref = referenceMap.get(base.subjectId);
+        if (!ref) {
+          return null;
+        }
+        const capacityDelta = ref.totalCapacity - base.totalCapacity;
+        const sectionDelta = ref.sectionCount - base.sectionCount;
+        if (capacityDelta <= 0 && sectionDelta <= 0) {
+          return null;
+        }
+        return {
+          subjectId: base.subjectId,
+          subjectCode: base.subjectCode,
+          subjectName: base.subjectName,
+          baseTotalCapacity: base.totalCapacity,
+          referenceTotalCapacity: ref.totalCapacity,
+          capacityDelta,
+          baseSectionCount: base.sectionCount,
+          referenceSectionCount: ref.sectionCount,
+          sectionDelta,
+        };
+      })
+      .filter((item): item is SubjectDemandIncreaseItemDto => item !== null)
+      .sort((a, b) => b.capacityDelta - a.capacityDelta || b.sectionDelta - a.sectionDelta);
+  }
+
+  /** Agregación base por asignatura usada para comparación entre períodos. */
+  private async subjectAggregateRows(periodId: number) {
+    return this.sectionRepo
+      .createQueryBuilder('sec')
+      .innerJoin('sec.subject', 'sub')
+      .where('sec.periodId = :pid', { pid: periodId })
+      .andWhere('sec.deleted = :df', { df: false })
+      .andWhere('sub.deleted = :df', { df: false })
+      .select('sub.id', 'subjectId')
+      .addSelect('sub.code', 'subjectCode')
+      .addSelect('sub.name', 'subjectName')
+      .addSelect('COUNT(sec.id)', 'sectionCount')
+      .addSelect('COALESCE(SUM(sec.capacity), 0)', 'totalCapacity')
+      .groupBy('sub.id')
+      .addGroupBy('sub.code')
+      .addGroupBy('sub.name')
+      .getRawMany()
+      .then((rows) =>
+        rows.map((r) => ({
+          subjectId: Number(r.subjectId),
+          subjectCode: r.subjectCode,
+          subjectName: r.subjectName,
+          sectionCount: Number(r.sectionCount),
+          totalCapacity: Number(r.totalCapacity),
+        })),
+      );
+  }
+
   private async sectionWorkloadRows(periodId: number) {
     const rows = await this.sectionRepo
       .createQueryBuilder('sec')
@@ -409,4 +486,5 @@ export class StatisticsService {
     }
     return map;
   }
+
 }

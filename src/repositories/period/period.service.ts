@@ -146,10 +146,7 @@ export class PeriodService implements CrudRepository<Period> {
       where: {
         deleted: false,
       },
-      order: {
-        name: 'ASC',
-      },
-    });
+    }).then((items) => items.sort((a, b) => this.comparePeriodNames(a.name, b.name)));
   }
 
   async findOne(id: number): Promise<ResponsePeriodDto> {
@@ -240,5 +237,26 @@ export class PeriodService implements CrudRepository<Period> {
         await this.scheduleService.createMany(schedulesN);
       }
     }
+  }
+
+  /**
+   * Ordena períodos como I-2026, II-2025, I-2025, etc.
+   * Primero por año descendente y luego por número de período ascendente.
+   */
+  private comparePeriodNames(left: string, right: string): number {
+    const leftKey = this.parsePeriodName(left);
+    const rightKey = this.parsePeriodName(right);
+    if (leftKey.year !== rightKey.year) {
+      return rightKey.year - leftKey.year;
+    }
+    return rightKey.term - leftKey.term;
+  }
+
+  private parsePeriodName(name: string): { year: number; term: number } {
+    const [termRaw = '', yearRaw = '0'] = String(name).split('-');
+    const normalizedTerm = termRaw.trim().toUpperCase();
+    const term = normalizedTerm === 'II' ? 2 : 1;
+    const year = parseInt(yearRaw.trim(), 10) || 0;
+    return { year, term };
   }
 }

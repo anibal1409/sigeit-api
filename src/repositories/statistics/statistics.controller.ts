@@ -1,4 +1,10 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import {
@@ -26,18 +32,29 @@ import { StatisticsService } from './statistics.service';
  */
 @ApiTags('statistics')
 @Controller('statistics')
+@UsePipes(
+  new ValidationPipe({
+    transform: true,
+    transformOptions: { enableImplicitConversion: true },
+  }),
+)
 export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
 
   @Get('period-comparison')
-  @ApiOperation({ summary: 'Comparar períodos: secciones, cupo y horas-materia' })
+  @ApiOperation({
+    summary:
+      'Comparar períodos: secciones, cupo, horas-materia y aumento de demanda por asignatura',
+  })
   @ApiResponse({ type: PeriodComparisonResponseDto })
   periodComparison(@Query() q: PeriodComparisonQueryDto) {
     return this.statisticsService.getPeriodComparison(q.periodIds);
   }
 
   @Get('teachers-by-day')
-  @ApiOperation({ summary: 'Profesores distintos con clase por día de la semana' })
+  @ApiOperation({
+    summary: 'Profesores distintos con clase por día de la semana',
+  })
   @ApiResponse({ type: TeachersByDayResponseDto })
   teachersByDay(@Query() q: SinglePeriodQueryDto) {
     return this.statisticsService.getTeachersByDay(q.periodId);
@@ -58,7 +75,9 @@ export class StatisticsController {
   }
 
   @Get('teacher-workload')
-  @ApiOperation({ summary: 'Carga docente: secciones, bloques horario y horas-materia' })
+  @ApiOperation({
+    summary: 'Carga docente: secciones, bloques horario y horas-materia',
+  })
   @ApiResponse({ type: [TeacherWorkloadItemDto] })
   teacherWorkload(@Query() q: SinglePeriodQueryDto) {
     return this.statisticsService.getTeacherWorkload(q.periodId);
@@ -68,10 +87,7 @@ export class StatisticsController {
   @ApiOperation({ summary: 'Bloques planificados por aula' })
   @ApiResponse({ type: [ClassroomUsageItemDto] })
   classroomUsage(@Query() q: PeriodAndOptionalClassroomQueryDto) {
-    return this.statisticsService.getClassroomUsage(
-      q.periodId,
-      q.classroomId,
-    );
+    return this.statisticsService.getClassroomUsage(q.periodId, q.classroomId);
   }
 
   @Get('start-time-distribution')
@@ -94,7 +110,9 @@ export class StatisticsController {
   }
 
   @Get('timeline')
-  @ApiOperation({ summary: 'Evolución por período (todos los períodos activos)' })
+  @ApiOperation({
+    summary: 'Evolución por período (todos los períodos activos)',
+  })
   @ApiResponse({ type: [TimelineItemDto] })
   timeline() {
     return this.statisticsService.getTimeline();
@@ -110,7 +128,9 @@ export class StatisticsController {
   }
 
   @Get('by-curriculum-semester')
-  @ApiOperation({ summary: 'Oferta por semestre del pensum (materia.semester)' })
+  @ApiOperation({
+    summary: 'Oferta por semestre del pensum (materia.semester)',
+  })
   @ApiResponse({ type: [CurriculumSemesterStatItemDto] })
   byCurriculumSemester(@Query() q: SinglePeriodQueryDto) {
     return this.statisticsService.getByCurriculumSemester(q.periodId);

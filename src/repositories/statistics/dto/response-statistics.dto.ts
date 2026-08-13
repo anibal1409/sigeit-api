@@ -38,6 +38,47 @@ export class PeriodComparisonDeltaDto {
   subjectHoursDeltaFromFirst!: number;
 }
 
+export class SubjectDemandIncreaseItemDto {
+  @ApiProperty()
+  subjectId!: number;
+
+  @ApiProperty()
+  subjectCode!: string;
+
+  @ApiProperty()
+  subjectName!: string;
+
+  @ApiProperty({
+    description: 'Capacidad total en el período base.',
+  })
+  baseTotalCapacity!: number;
+
+  @ApiProperty({
+    description: 'Capacidad total en el período de referencia (último de la comparación).',
+  })
+  referenceTotalCapacity!: number;
+
+  @ApiProperty({
+    description: 'Diferencia de capacidad entre el período de referencia y el base.',
+  })
+  capacityDelta!: number;
+
+  @ApiProperty({
+    description: 'Cantidad de secciones en el período base.',
+  })
+  baseSectionCount!: number;
+
+  @ApiProperty({
+    description: 'Cantidad de secciones en el período de referencia.',
+  })
+  referenceSectionCount!: number;
+
+  @ApiProperty({
+    description: 'Diferencia de secciones entre el período de referencia y el base.',
+  })
+  sectionDelta!: number;
+}
+
 export class PeriodComparisonResponseDto {
   @ApiProperty({ type: [PeriodMetricResponseDto] })
   metrics!: PeriodMetricResponseDto[];
@@ -47,6 +88,13 @@ export class PeriodComparisonResponseDto {
     description: 'El primer elemento corresponde al primer periodId enviado (deltas en 0).',
   })
   deltasFromFirst!: PeriodComparisonDeltaDto[];
+
+  @ApiProperty({
+    type: [SubjectDemandIncreaseItemDto],
+    description:
+      'Asignaturas cuyo cupo o número de secciones aumentó entre el primer y el último período comparado.',
+  })
+  subjectDemandIncreases!: SubjectDemandIncreaseItemDto[];
 }
 
 export class TeachersByDayItemDto {

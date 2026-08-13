@@ -5,9 +5,18 @@ import {
   IsArray,
   IsInt,
   IsOptional,
-  IsString,
   Min,
 } from 'class-validator';
+
+/** Normaliza query `periodIds=1,2` o `periodIds=1&periodIds=2` a número[]. */
+function parsePeriodIdsQuery(value: unknown): number[] {
+  const parts: string[] = Array.isArray(value)
+    ? value.flatMap((v) => String(v).split(','))
+    : String(value ?? '').split(',');
+  return parts
+    .map((s) => parseInt(s.trim(), 10))
+    .filter((n) => !Number.isNaN(n));
+}
 
 /**
  * Query para comparar varios períodos: lista de IDs separados por coma.
@@ -15,17 +24,11 @@ import {
 export class PeriodComparisonQueryDto {
   @ApiProperty({
     example: '1,2,5',
-    description: 'IDs de períodos separados por coma (mínimo uno).',
+    description: 'IDs separados por coma, o repetidos (?periodIds=1&periodIds=2).',
   })
-  @IsString()
-  @Transform(({ value }) =>
-    String(value ?? '')
-      .split(',')
-      .map((s: string) => parseInt(s.trim(), 10))
-      .filter((n: number) => !Number.isNaN(n)),
-  )
+  @Transform(({ value }) => parsePeriodIdsQuery(value))
   @IsArray()
-  @ArrayMinSize(1)
+  @ArrayMinSize(1, { message: 'Indica al menos un periodId válido.' })
   @IsInt({ each: true })
   periodIds!: number[];
 }

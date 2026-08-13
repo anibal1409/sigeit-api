@@ -2813,13 +2813,13 @@
     "/statistics/period-comparison": {
       "get": {
         "operationId": "StatisticsController_periodComparison",
-        "summary": "Comparar períodos: secciones, cupo y horas-materia",
+        "summary": "Comparar períodos: secciones, cupo, horas-materia y aumento de demanda por asignatura",
         "parameters": [
           {
             "name": "periodIds",
             "required": true,
             "in": "query",
-            "description": "IDs de períodos separados por coma (mínimo uno).",
+            "description": "IDs separados por coma, o repetidos (?periodIds=1&periodIds=2).",
             "schema": {
               "type": "array",
               "items": {
@@ -5095,6 +5095,55 @@
           "subjectHoursDeltaFromFirst"
         ]
       },
+      "SubjectDemandIncreaseItemDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "number"
+          },
+          "subjectCode": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "baseTotalCapacity": {
+            "type": "number",
+            "description": "Capacidad total en el período base."
+          },
+          "referenceTotalCapacity": {
+            "type": "number",
+            "description": "Capacidad total en el período de referencia (último de la comparación)."
+          },
+          "capacityDelta": {
+            "type": "number",
+            "description": "Diferencia de capacidad entre el período de referencia y el base."
+          },
+          "baseSectionCount": {
+            "type": "number",
+            "description": "Cantidad de secciones en el período base."
+          },
+          "referenceSectionCount": {
+            "type": "number",
+            "description": "Cantidad de secciones en el período de referencia."
+          },
+          "sectionDelta": {
+            "type": "number",
+            "description": "Diferencia de secciones entre el período de referencia y el base."
+          }
+        },
+        "required": [
+          "subjectId",
+          "subjectCode",
+          "subjectName",
+          "baseTotalCapacity",
+          "referenceTotalCapacity",
+          "capacityDelta",
+          "baseSectionCount",
+          "referenceSectionCount",
+          "sectionDelta"
+        ]
+      },
       "PeriodComparisonResponseDto": {
         "type": "object",
         "properties": {
@@ -5110,11 +5159,19 @@
             "items": {
               "$ref": "#/components/schemas/PeriodComparisonDeltaDto"
             }
+          },
+          "subjectDemandIncreases": {
+            "description": "Asignaturas cuyo cupo o número de secciones aumentó entre el primer y el último período comparado.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubjectDemandIncreaseItemDto"
+            }
           }
         },
         "required": [
           "metrics",
-          "deltasFromFirst"
+          "deltasFromFirst",
+          "subjectDemandIncreases"
         ]
       },
       "TeachersByDayItemDto": {
