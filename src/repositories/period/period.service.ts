@@ -122,10 +122,7 @@ export class PeriodService implements CrudRepository<Period> {
     const isActive = periodData.isActive ?? false;
     const isVacationCourse = periodData.isVacationCourse ?? false;
     if (isActive) {
-      await this.repository.update(
-        { deleted: false, isActive: true },
-        { isActive: false },
-      );
+      await this.clearActiveFlags();
     }
     const item = await this.repository.save({
       ...periodData,
@@ -144,11 +141,15 @@ export class PeriodService implements CrudRepository<Period> {
   }
 
   findAll() {
-    return this.repository.find({
-      where: {
-        deleted: false,
-      },
-    }).then((items) => items.sort((a, b) => this.comparePeriodNames(a.name, b.name)));
+    return this.repository
+      .find({
+        where: {
+          deleted: false,
+        },
+      })
+      .then((items) =>
+        items.sort((a, b) => this.comparePeriodNames(a.name, b.name)),
+      );
   }
 
   async findOne(id: number): Promise<ResponsePeriodDto> {
@@ -164,10 +165,7 @@ export class PeriodService implements CrudRepository<Period> {
       throw new BadRequestException('Period already exists.');
     }
     if (updateDto.isActive === true) {
-      await this.repository.update(
-        { deleted: false, isActive: true },
-        { isActive: false },
-      );
+      await this.clearActiveFlags();
     }
     const item = await this.repository.save({
       id,
@@ -194,6 +192,28 @@ export class PeriodService implements CrudRepository<Period> {
     const item = await this.findValid(id);
     item.deleted = true;
     return new ResponsePeriodDto(await this.repository.save(item));
+  }
+
+  /**
+   * Define el período académico activo y desactiva cualquier otro.
+   */
+  async setActive(id: number): Promise<ResponsePeriodDto> {
+    const item = await this.findValid(id);
+    if (item.isActive) {
+      return this.findOne(id);
+    }
+    await this.clearActiveFlags();
+    item.isActive = true;
+    await this.repository.save(item);
+    return this.findOne(id);
+  }
+
+  /** Desactiva todos los períodos actualmente activos. */
+  private async clearActiveFlags(): Promise<void> {
+    await this.repository.update(
+      { deleted: false, isActive: true },
+      { isActive: false },
+    );
   }
 
   private async copySchedulesPeriod(lastPeriodId: number, periodId: number) {

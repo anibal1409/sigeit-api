@@ -8,7 +8,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Public } from '../../auth/login';
 import { ResponsePeriodDto } from './dto';
@@ -41,6 +41,7 @@ export class PeriodController {
 
   @Public()
   @Get('active')
+  @ApiOperation({ summary: 'Obtiene el período académico activo' })
   @ApiResponse({
     type: ResponsePeriodDto,
   })
@@ -65,6 +66,20 @@ export class PeriodController {
   })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.periodService.findOne(+id);
+  }
+
+  /**
+   * Define el período académico activo. Desactiva cualquier otro que estuviera activo.
+   */
+  @Patch(':id/activate')
+  @ApiOperation({
+    summary: 'Define el período académico activo',
+    description:
+      'Marca el período indicado como activo y desactiva el resto. Solo puede haber un período activo.',
+  })
+  @ApiResponse({ type: ResponsePeriodDto })
+  setActive(@Param('id', ParseIntPipe) id: number) {
+    return this.periodService.setActive(id);
   }
 
   @Patch(':id')
