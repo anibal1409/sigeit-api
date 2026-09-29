@@ -1339,7 +1339,7 @@
     "/schedule/planning/conflicts": {
       "get": {
         "operationId": "ScheduleController_findConflicts",
-        "summary": "Choques de aula, profesor y nivel de un bloque candidato",
+        "summary": "Choques de aula, profesor y nivel de un bloque candidato en cada día pedido",
         "parameters": [
           {
             "name": "periodId",
@@ -1350,11 +1350,15 @@
             }
           },
           {
-            "name": "dayId",
+            "name": "dayIds",
             "required": true,
             "in": "query",
+            "description": "Días a evaluar (se repite el parámetro por cada día)",
             "schema": {
-              "type": "number"
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
             }
           },
           {
@@ -1409,7 +1413,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ScheduleConflictsDto"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DayConflictsDto"
+                  }
                 }
               }
             }
@@ -4974,7 +4981,7 @@
           "subjectName"
         ]
       },
-      "ScheduleConflictsDto": {
+      "DayConflictsDto": {
         "type": "object",
         "properties": {
           "blocking": {
@@ -5005,6 +5012,9 @@
             "items": {
               "$ref": "#/components/schemas/ScheduleLiteDto"
             }
+          },
+          "dayId": {
+            "type": "number"
           }
         },
         "required": [
@@ -5012,7 +5022,8 @@
           "peakLevel",
           "classroom",
           "teacher",
-          "level"
+          "level",
+          "dayId"
         ]
       },
       "FreeClassroomDto": {
