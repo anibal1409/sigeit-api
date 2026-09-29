@@ -84,7 +84,8 @@ export class PeriodService implements CrudRepository<Period> {
   /**
    * Período del cual copiar secciones y horarios. Sin copyPrevious no se copia
    * nada (período vacío); con copyPrevious se usa copyFromPeriodId o, si se
-   * omite, uno en etapa Planned y si no hay, el más reciente por fecha fin.
+   * omite, uno en etapa Planned y si no hay, el más reciente por fecha fin,
+   * ignorando los cursos vacacionales (no incluyen todas las asignaturas).
    * Se resuelve antes de crear el nuevo período para no dejarlo creado si el
    * origen no existe.
    */
@@ -98,12 +99,13 @@ export class PeriodService implements CrudRepository<Period> {
     if (copyFromPeriodId) {
       return this.findValid(copyFromPeriodId);
     }
+    const regular = { deleted: false, isVacationCourse: false };
     const planned = await this.repository.findOne({
-      where: { deleted: false, status: true, stage: StagePeriod.Planned },
+      where: { ...regular, status: true, stage: StagePeriod.Planned },
     });
     if (planned) return planned;
     return this.repository.findOne({
-      where: { deleted: false },
+      where: regular,
       order: { end: 'DESC' },
     });
   }
