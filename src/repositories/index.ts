@@ -9,5 +9,6 @@ export * from './schedule';
 export * from './school';
 export * from './section';
 export * from './subject';
+export * from './subject-demand';
 export * from './teacher';
 export * from './user';
