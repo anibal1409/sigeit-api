@@ -30,6 +30,10 @@ async function generateSwagger() {
     .addTag('statistics', 'Estadísticas y métricas para reportes')
     .addTag('sections', 'Gestión de secciones de clases')
     .addTag('subjects', 'Gestión de materias y asignaturas')
+    .addTag(
+      'subject-demand',
+      'Demanda potencial por asignatura y nivel (reporte de Control de Estudios)',
+    )
     .addTag('teachers', 'Gestión de profesores')
     .addTag('users', 'Gestión de usuarios del sistema')
     .addBearerAuth()
