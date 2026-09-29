@@ -1264,6 +1264,8 @@
     "/schedule": {
       "post": {
         "operationId": "ScheduleController_create",
+        "summary": "Crea un horario",
+        "description": "Valida horas HH:mm, franja del período y sección. Responde 409 con `conflicts` si choca en aula o profesor, salvo `force: true`.",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -1276,12 +1278,303 @@
           }
         },
         "responses": {
+          "409": {
+            "description": "Choques de aula o profesor (detalle en `conflicts`)"
+          },
           "default": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseScheduleDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/bulk": {
+      "post": {
+        "operationId": "ScheduleController_createBulk",
+        "summary": "Crea el mismo bloque en varios días",
+        "description": "Valida todos los días y guarda todos o ninguno. 409 con `conflicts` por día.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSchedulesBulkDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "409": {
+            "description": "Choques de aula o profesor en algún día"
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseScheduleDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/planning/conflicts": {
+      "get": {
+        "operationId": "ScheduleController_findConflicts",
+        "summary": "Choques de aula, profesor y nivel de un bloque candidato",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "start",
+            "required": true,
+            "in": "query",
+            "description": "Hora de inicio HH:mm",
+            "schema": {
+              "example": "07:00",
+              "type": "string"
+            }
+          },
+          {
+            "name": "end",
+            "required": true,
+            "in": "query",
+            "description": "Hora de fin HH:mm",
+            "schema": {
+              "example": "08:30",
+              "type": "string"
+            }
+          },
+          {
+            "name": "classroomId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "excludeId",
+            "required": false,
+            "in": "query",
+            "description": "Horario que se está editando (se ignora)",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScheduleConflictsDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/planning/free-slots": {
+      "get": {
+        "operationId": "ScheduleController_findFreeSlots",
+        "summary": "Bloques libres para una sección, con las aulas disponibles",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "sectionId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "hours",
+            "required": false,
+            "in": "query",
+            "description": "Horas académicas seguidas del bloque",
+            "schema": {
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "dayId",
+            "required": false,
+            "in": "query",
+            "description": "Limita la búsqueda a un día",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "allClassrooms",
+            "required": false,
+            "in": "query",
+            "description": "Incluye aulas de otros departamentos",
+            "schema": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "excludeId",
+            "required": false,
+            "in": "query",
+            "description": "Horario que se está editando (se ignora)",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FreeSlotDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/planning/hours-coverage": {
+      "get": {
+        "operationId": "ScheduleController_findHoursCoverage",
+        "summary": "Horas académicas asignadas vs. requeridas por sección",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "description": "Período académico",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "description": "Filtra por departamento de la asignatura",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectionCoverageDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "schedule"
+        ]
+      }
+    },
+    "/schedule/planning/audit": {
+      "get": {
+        "operationId": "ScheduleController_audit",
+        "summary": "Auditoría completa de la planificación de un período",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "query",
+            "description": "Período académico",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "description": "Filtra por departamento de la asignatura",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeriodAuditDto"
                 }
               }
             }
@@ -1554,6 +1847,9 @@
           }
         },
         "responses": {
+          "409": {
+            "description": "Choques de aula o profesor (detalle en `conflicts`)"
+          },
           "default": {
             "description": "",
             "content": {
@@ -4487,6 +4783,11 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "force": {
+            "type": "boolean",
+            "default": false,
+            "description": "Guarda aunque existan choques de aula o profesor"
           }
         },
         "required": [
@@ -4570,6 +4871,355 @@
           "status"
         ]
       },
+      "CreateSchedulesBulkDto": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroom": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "section": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "period": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "force": {
+            "type": "boolean",
+            "default": false,
+            "description": "Guarda aunque existan choques de aula o profesor"
+          },
+          "dayIds": {
+            "description": "Días en los que se repite el bloque",
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "start",
+          "end",
+          "classroom",
+          "section",
+          "period",
+          "status",
+          "dayIds"
+        ]
+      },
+      "ScheduleLiteDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "dayId": {
+            "type": "number"
+          },
+          "dayName": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "classroomId": {
+            "type": "number"
+          },
+          "classroomName": {
+            "type": "string"
+          },
+          "sectionId": {
+            "type": "number"
+          },
+          "sectionName": {
+            "type": "string"
+          },
+          "subjectId": {
+            "type": "number"
+          },
+          "subjectCode": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "teacherName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "dayId",
+          "dayName",
+          "start",
+          "end",
+          "classroomId",
+          "classroomName",
+          "sectionId",
+          "sectionName",
+          "subjectId",
+          "subjectCode",
+          "subjectName"
+        ]
+      },
+      "ScheduleConflictsDto": {
+        "type": "object",
+        "properties": {
+          "blocking": {
+            "type": "boolean",
+            "description": "true si hay choques de aula o profesor (bloquean el guardado)"
+          },
+          "peakLevel": {
+            "type": "number",
+            "description": "Nivel de mayor demanda de la asignatura (0 = sin demanda)"
+          },
+          "classroom": {
+            "description": "Aula ocupada",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleLiteDto"
+            }
+          },
+          "teacher": {
+            "description": "Mismo profesor en el bloque (no aplica a \"Profesor por Asignar\")",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleLiteDto"
+            }
+          },
+          "level": {
+            "description": "Otras asignaturas con el mismo nivel pico (solo advertencia)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleLiteDto"
+            }
+          }
+        },
+        "required": [
+          "blocking",
+          "peakLevel",
+          "classroom",
+          "teacher",
+          "level"
+        ]
+      },
+      "FreeClassroomDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type"
+        ]
+      },
+      "FreeSlotDto": {
+        "type": "object",
+        "properties": {
+          "dayId": {
+            "type": "number"
+          },
+          "dayName": {
+            "type": "string"
+          },
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          },
+          "levelConflict": {
+            "type": "boolean",
+            "description": "true si coincide con otra asignatura del mismo nivel pico"
+          },
+          "classrooms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FreeClassroomDto"
+            }
+          }
+        },
+        "required": [
+          "dayId",
+          "dayName",
+          "start",
+          "end",
+          "levelConflict",
+          "classrooms"
+        ]
+      },
+      "CoverageStatus": {
+        "type": "string",
+        "enum": [
+          "EMPTY",
+          "INCOMPLETE",
+          "COMPLETE",
+          "EXCEEDED"
+        ]
+      },
+      "SectionCoverageDto": {
+        "type": "object",
+        "properties": {
+          "sectionId": {
+            "type": "number"
+          },
+          "sectionName": {
+            "type": "string"
+          },
+          "subjectId": {
+            "type": "number"
+          },
+          "subjectCode": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "semester": {
+            "type": "number"
+          },
+          "teacherName": {
+            "type": "string",
+            "nullable": true
+          },
+          "requiredHours": {
+            "type": "number",
+            "description": "Horas semanales de la asignatura"
+          },
+          "assignedHours": {
+            "type": "number",
+            "description": "Horas académicas programadas"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CoverageStatus"
+          }
+        },
+        "required": [
+          "sectionId",
+          "sectionName",
+          "subjectId",
+          "subjectCode",
+          "subjectName",
+          "semester",
+          "requiredHours",
+          "assignedHours",
+          "status"
+        ]
+      },
+      "AuditSummaryDto": {
+        "type": "object",
+        "properties": {
+          "classroom": {
+            "type": "number"
+          },
+          "teacher": {
+            "type": "number"
+          },
+          "level": {
+            "type": "number"
+          },
+          "outOfRange": {
+            "type": "number"
+          },
+          "incompleteSections": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "classroom",
+          "teacher",
+          "level",
+          "outOfRange",
+          "incompleteSections"
+        ]
+      },
+      "ConflictPairDto": {
+        "type": "object",
+        "properties": {
+          "first": {
+            "$ref": "#/components/schemas/ScheduleLiteDto"
+          },
+          "second": {
+            "$ref": "#/components/schemas/ScheduleLiteDto"
+          }
+        },
+        "required": [
+          "first",
+          "second"
+        ]
+      },
+      "PeriodAuditDto": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "$ref": "#/components/schemas/AuditSummaryDto"
+          },
+          "classroom": {
+            "description": "Aula física ocupada dos veces",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConflictPairDto"
+            }
+          },
+          "teacher": {
+            "description": "Mismo profesor en dos bloques a la vez",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConflictPairDto"
+            }
+          },
+          "level": {
+            "description": "Asignaturas del mismo nivel pico a la vez",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ConflictPairDto"
+            }
+          },
+          "outOfRange": {
+            "description": "Bloques fuera de la franja del período o con horas inválidas",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScheduleLiteDto"
+            }
+          },
+          "incompleteSections": {
+            "description": "Secciones sin horas completas (vacías, incompletas o excedidas)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SectionCoverageDto"
+            }
+          }
+        },
+        "required": [
+          "summary",
+          "classroom",
+          "teacher",
+          "level",
+          "outOfRange",
+          "incompleteSections"
+        ]
+      },
       "UpdateScheduleDto": {
         "type": "object",
         "properties": {
@@ -4593,6 +5243,11 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "force": {
+            "type": "boolean",
+            "default": false,
+            "description": "Guarda aunque existan choques de aula o profesor"
           }
         }
       },
