@@ -68,7 +68,9 @@ export class ResponsePeriodDto {
   @IsBoolean()
   status!: boolean;
 
-  @ApiProperty({ description: 'Indica si este período es el activo actualmente' })
+  @ApiProperty({
+    description: 'Indica si este período es el activo actualmente',
+  })
   @IsNotEmpty()
   @IsBoolean()
   isActive!: boolean;

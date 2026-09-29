@@ -82,29 +82,30 @@ export class PeriodService implements CrudRepository<Period> {
   }
 
   /**
-   * Obtiene el período del cual copiar secciones y horarios:
-   * primero uno en etapa Planned (excluyendo excludePeriodId); si no hay, el más reciente por fecha fin.
+   * Período del cual copiar secciones y horarios. Sin copyPrevious no se copia
+   * nada (período vacío); con copyPrevious se usa copyFromPeriodId o, si se
+   * omite, uno en etapa Planned y si no hay, el más reciente por fecha fin.
+   * Se resuelve antes de crear el nuevo período para no dejarlo creado si el
+   * origen no existe.
    */
-  private async findPeriodToCopyFrom(
-    excludePeriodId?: number,
+  private async resolveCopySource(
+    copyPrevious?: boolean,
+    copyFromPeriodId?: number,
   ): Promise<Period | null> {
+    if (!copyPrevious) {
+      return null;
+    }
+    if (copyFromPeriodId) {
+      return this.findValid(copyFromPeriodId);
+    }
     const planned = await this.repository.findOne({
-      where: {
-        deleted: false,
-        status: true,
-        stage: StagePeriod.Planned,
-        ...(excludePeriodId ? { id: Not(excludePeriodId) } : {}),
-      },
+      where: { deleted: false, status: true, stage: StagePeriod.Planned },
     });
     if (planned) return planned;
-    const latest = await this.repository.findOne({
-      where: {
-        deleted: false,
-        ...(excludePeriodId ? { id: Not(excludePeriodId) } : {}),
-      },
+    return this.repository.findOne({
+      where: { deleted: false },
       order: { end: 'DESC' },
     });
-    return latest ?? null;
   }
 
   async create(createDto: CreatePeriodDto): Promise<ResponsePeriodDto> {
@@ -118,7 +119,11 @@ export class PeriodService implements CrudRepository<Period> {
       );
     }
 
-    const { copyPrevious, ...periodData } = createDto;
+    const { copyPrevious, copyFromPeriodId, ...periodData } = createDto;
+    const sourcePeriod = await this.resolveCopySource(
+      copyPrevious,
+      copyFromPeriodId,
+    );
     const isActive = periodData.isActive ?? false;
     const isVacationCourse = periodData.isVacationCourse ?? false;
     if (isActive) {
@@ -130,11 +135,8 @@ export class PeriodService implements CrudRepository<Period> {
       isVacationCourse,
     });
 
-    if (copyPrevious) {
-      const sourcePeriod = await this.findPeriodToCopyFrom(item.id);
-      if (sourcePeriod) {
-        await this.copySchedulesPeriod(sourcePeriod.id, item.id);
-      }
+    if (sourcePeriod) {
+      await this.copySchedulesPeriod(sourcePeriod.id, item.id);
     }
 
     return await this.findOne(item.id);

@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import {
   IsBoolean,
   IsDateString,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -65,17 +66,31 @@ export class CreatePeriodDto extends PartialType(
   @Type(() => Number)
   duration: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    description:
+      'Copiar secciones y horarios de otro período. false = período vacío. Sin copyFromPeriodId se usa el último período planificado o, en su defecto, el más reciente.',
+  })
   @IsNotEmpty()
   @IsBoolean()
   copyPrevious!: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Período del cual copiar secciones y horarios (opcional). Solo aplica si copyPrevious es true.',
+  })
+  @IsOptional()
+  @IsInt()
+  copyFromPeriodId?: number;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
 
-  @ApiPropertyOptional({ default: false, description: 'Marcar como período activo (solo uno puede estarlo)' })
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Marcar como período activo (solo uno puede estarlo)',
+  })
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
