@@ -16,18 +16,24 @@ import * as ExcelJS from 'exceljs';
 import { CrudRepository } from '../../common/use-case';
 import {
   CreateScheduleDto,
+  CreateSchedulesBulkDto,
   DownloadPlannedSchedulesDto,
   GetSchedulesDto,
   ResponseScheduleDto,
   UpdateScheduleDto,
 } from './dto';
 import { Schedule } from './entities';
+import {
+  ScheduleCandidate,
+  ScheduleConflictService,
+} from './schedule-conflict.service';
 
 @Injectable()
 export class ScheduleService implements CrudRepository<Schedule> {
   constructor(
     @InjectRepository(Schedule)
     private repository: Repository<Schedule>,
+    private conflictService: ScheduleConflictService,
   ) {}
 
   async findValid(id: number): Promise<Schedule> {
@@ -76,21 +82,37 @@ export class ScheduleService implements CrudRepository<Schedule> {
   }
 
   async create(createDto: CreateScheduleDto): Promise<ResponseScheduleDto> {
+    const { force, ...data } = createDto;
+    await this.conflictService.assertSchedulable([toCandidate(data)], force);
     if (
       await this.findBySchedule(
-        createDto.start,
-        createDto.end,
-        createDto.classroom.id,
-        createDto.section.id,
-        createDto.day.id,
-        createDto.period.id,
+        data.start,
+        data.end,
+        data.classroom.id,
+        data.section.id,
+        data.day.id,
+        data.period.id,
       )
     ) {
       throw new BadRequestException('Schedule already exists.');
     }
 
-    const item = await this.repository.save(createDto);
+    const item = await this.repository.save(data);
     return await this.findOne(item.id);
+  }
+
+  /**
+   * Repite el mismo bloque en varios días. Valida todos los días antes de
+   * guardar y los inserta en una sola operación: se guardan todos o ninguno.
+   */
+  async createBulk(
+    dto: CreateSchedulesBulkDto,
+  ): Promise<ResponseScheduleDto[]> {
+    const { force, dayIds, ...data } = dto;
+    const items = [...new Set(dayIds)].map((id) => ({ ...data, day: { id } }));
+    await this.conflictService.assertSchedulable(items.map(toCandidate), force);
+    const saved = await this.repository.save(items);
+    return Promise.all(saved.map((item) => this.findOne(item.id)));
   }
 
   findAllPeriod(periodId: number, query?: GetSchedulesDto, students = false) {
@@ -157,6 +179,10 @@ export class ScheduleService implements CrudRepository<Schedule> {
     id: number,
     updateDto: UpdateScheduleDto,
   ): Promise<ResponseScheduleDto> {
+    await this.conflictService.assertSchedulable(
+      [{ ...toCandidate(updateDto as CreateScheduleDto), excludeId: id }],
+      updateDto.force,
+    );
     if (
       await this.findBySchedule(
         updateDto.start,
@@ -194,14 +220,19 @@ export class ScheduleService implements CrudRepository<Schedule> {
     return this.repository.save(createDto);
   }
 
-  async downloadPlannedSchedules(dto: DownloadPlannedSchedulesDto): Promise<Buffer> {
+  async downloadPlannedSchedules(
+    dto: DownloadPlannedSchedulesDto,
+  ): Promise<Buffer> {
     const schedules = await this.findAllPeriod(dto.periodId, {
       departmentId: dto.departmentId,
       status: dto.status !== undefined ? dto.status === 1 : true,
     });
 
     // Agrupar datos por el campo especificado
-    const groupedData = this.groupSchedules(schedules, dto.groupBy || 'semester');
+    const groupedData = this.groupSchedules(
+      schedules,
+      dto.groupBy || 'semester',
+    );
 
     // Crear workbook de Excel
     const workbook = new ExcelJS.Workbook();
@@ -215,7 +246,8 @@ export class ScheduleService implements CrudRepository<Schedule> {
 
     // Título principal
     worksheet.mergeCells(`B${rowCount}:K${rowCount}`);
-    worksheet.getCell(`B${rowCount}`).value = `PLANIFICACION ACADEMICA ${department?.abbreviation}-${period?.name}`;
+    worksheet.getCell(`B${rowCount}`).value =
+      `PLANIFICACION ACADEMICA ${department?.abbreviation}-${period?.name}`;
     worksheet.getCell(`B${rowCount}`).font = { bold: true, size: 14 };
     worksheet.getCell(`B${rowCount}`).alignment = { horizontal: 'center' };
     rowCount += 2;
@@ -227,7 +259,9 @@ export class ScheduleService implements CrudRepository<Schedule> {
       // Calcular horas totales si es por profesor
       let groupTitle = `${groupText} ${groupKey}`;
       if (dto.groupBy === 'teacherName') {
-        const totalHours = this.calculateTeacherTotalHoursFromSchedules(groupedData[groupKey]);
+        const totalHours = this.calculateTeacherTotalHoursFromSchedules(
+          groupedData[groupKey],
+        );
         groupTitle = `${groupText} ${groupKey} (${totalHours})`;
       }
 
@@ -274,7 +308,9 @@ export class ScheduleService implements CrudRepository<Schedule> {
           schedule.start || '',
           schedule.end || '',
           schedule.section?.teacher?.idDocument || '',
-          schedule.section?.teacher ? `${schedule.section.teacher.firstName} ${schedule.section.teacher.lastName}` : '',
+          schedule.section?.teacher
+            ? `${schedule.section.teacher.firstName} ${schedule.section.teacher.lastName}`
+            : '',
           schedule.section?.capacity || '',
         ];
 
@@ -299,16 +335,22 @@ export class ScheduleService implements CrudRepository<Schedule> {
     return Buffer.from(buffer);
   }
 
-  private groupSchedules(schedules: Schedule[], groupBy: string): Record<string, Schedule[]> {
+  private groupSchedules(
+    schedules: Schedule[],
+    groupBy: string,
+  ): Record<string, Schedule[]> {
     const grouped: Record<string, Schedule[]> = {};
 
     schedules.forEach((schedule) => {
       let groupKey: string;
 
       if (groupBy === 'teacherName') {
-        groupKey = schedule.section?.teacher ? `${schedule.section.teacher.firstName} ${schedule.section.teacher.lastName}` : 'Sin profesor';
+        groupKey = schedule.section?.teacher
+          ? `${schedule.section.teacher.firstName} ${schedule.section.teacher.lastName}`
+          : 'Sin profesor';
       } else {
-        groupKey = schedule.section?.subject?.semester?.toString() || 'Sin semestre';
+        groupKey =
+          schedule.section?.subject?.semester?.toString() || 'Sin semestre';
       }
 
       if (!grouped[groupKey]) {
@@ -320,10 +362,12 @@ export class ScheduleService implements CrudRepository<Schedule> {
     return grouped;
   }
 
-  private calculateTeacherTotalHoursFromSchedules(schedules: Schedule[]): number {
+  private calculateTeacherTotalHoursFromSchedules(
+    schedules: Schedule[],
+  ): number {
     // Obtener secciones únicas para evitar duplicar horas
     const uniqueSections = new Map();
-    schedules.forEach(schedule => {
+    schedules.forEach((schedule) => {
       if (schedule.section?.id) {
         uniqueSections.set(schedule.section.id, schedule.section);
       }
@@ -334,4 +378,16 @@ export class ScheduleService implements CrudRepository<Schedule> {
       return totalHours + (section.subject?.hours || 0);
     }, 0);
   }
+}
+
+/** Datos del bloque que se evalúan para detectar choques. */
+function toCandidate(dto: Omit<CreateScheduleDto, 'force'>): ScheduleCandidate {
+  return {
+    periodId: dto.period.id,
+    dayId: dto.day.id,
+    classroomId: dto.classroom.id,
+    sectionId: dto.section.id,
+    start: dto.start,
+    end: dto.end,
+  };
 }

@@ -1,7 +1,20 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  IsArray,
+  IsBoolean,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
-import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
+import {
+  ApiProperty,
+  ApiPropertyOptional,
+  OmitType,
+  PartialType,
+} from '@nestjs/swagger';
 
 import { IdCreateEntity } from '../../base';
 import { Schedule } from '../entities';
@@ -51,4 +64,26 @@ export class CreateScheduleDto extends PartialType(
   @IsNotEmpty()
   @IsBoolean()
   status!: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Guarda aunque existan choques de aula o profesor',
+  })
+  @IsOptional()
+  @IsBoolean()
+  force?: boolean;
+}
+
+/** Mismo bloque repetido en varios días; se guarda todo o nada. */
+export class CreateSchedulesBulkDto extends OmitType(CreateScheduleDto, [
+  'day',
+] as const) {
+  @ApiProperty({
+    type: [Number],
+    description: 'Días en los que se repite el bloque',
+  })
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsInt({ each: true })
+  dayIds: number[];
 }
