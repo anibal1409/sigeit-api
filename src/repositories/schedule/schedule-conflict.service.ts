@@ -11,7 +11,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Period } from '../period/entities';
 import { Section } from '../section/entities';
 import { SubjectDemand } from '../subject-demand/entities';
-import { DayConflictsDto, ScheduleConflictsDto, ScheduleLiteDto } from './dto';
+import {
+  DayConflictsDto,
+  ScheduleConflictsDto,
+  ScheduleConflictsQueryDto,
+  ScheduleLiteDto,
+} from './dto';
 import { Schedule } from './entities';
 import {
   ConflictContext,
@@ -51,17 +56,20 @@ export class ScheduleConflictService {
     private demands: Repository<SubjectDemand>,
   ) {}
 
-  /** Choques de un bloque candidato, sin lanzar errores por ellos. */
+  /** Choques del bloque en cada día pedido, sin lanzar errores por ellos. */
   async findConflicts(
-    candidate: ScheduleCandidate,
-  ): Promise<ScheduleConflictsDto> {
-    const [period, section, schedules] = await Promise.all([
-      this.findPeriod(candidate.periodId),
-      this.findSection(candidate.sectionId),
-      this.findPeriodSchedules(candidate.periodId, [candidate.dayId]),
+    query: ScheduleConflictsQueryDto,
+  ): Promise<DayConflictsDto[]> {
+    const { dayIds, ...block } = query;
+    const [period, section] = await Promise.all([
+      this.findPeriod(block.periodId),
+      this.findSection(block.sectionId),
     ]);
-    const peaks = await this.findPeakLevels(period);
-    return this.classify(candidate, schedules, this.contextOf(section, peaks));
+    const candidates = [...new Set(dayIds)].map((dayId) => ({
+      ...block,
+      dayId,
+    }));
+    return this.dayConflicts(candidates, section, period);
   }
 
   /**
@@ -92,7 +100,16 @@ export class ScheduleConflictService {
       throw new BadRequestException('La sección no pertenece al período.');
     }
     if (force) return;
-    await this.assertNoBlockingConflicts(candidates, section);
+    const conflicts = (
+      await this.dayConflicts(candidates, section, period)
+    ).filter((day) => day.blocking);
+    if (conflicts.length) {
+      throw new ConflictException({
+        statusCode: 409,
+        message: 'El horario choca con otros bloques de aula o profesor.',
+        conflicts,
+      });
+    }
   }
 
   /** Período vigente (no eliminado) o 404. */
@@ -182,32 +199,24 @@ export class ScheduleConflictService {
     };
   }
 
-  /** Lanza 409 con los choques bloqueantes de cada día, si los hay. */
-  private async assertNoBlockingConflicts(
+  /** Choques de cada candidato (uno por día) con una sola carga de horarios y demanda. */
+  private async dayConflicts(
     candidates: ScheduleCandidate[],
     section: Section,
-  ): Promise<void> {
+    period: Period,
+  ): Promise<DayConflictsDto[]> {
     const [schedules, peaks] = await Promise.all([
       this.findPeriodSchedules(
-        section.period.id,
+        period.id,
         candidates.map(({ dayId }) => dayId),
       ),
-      this.findPeakLevels(section.period),
+      this.findPeakLevels(period),
     ]);
     const context = this.contextOf(section, peaks);
-    const conflicts: DayConflictsDto[] = candidates
-      .map((candidate) => ({
-        dayId: candidate.dayId,
-        ...this.classify(candidate, schedules, context),
-      }))
-      .filter((day) => day.blocking);
-    if (conflicts.length) {
-      throw new ConflictException({
-        statusCode: 409,
-        message: 'El horario choca con otros bloques de aula o profesor.',
-        conflicts,
-      });
-    }
+    return candidates.map((candidate) => ({
+      dayId: candidate.dayId,
+      ...this.classify(candidate, schedules, context),
+    }));
   }
 
   /** Clasifica los choques del candidato contra los horarios del período. */

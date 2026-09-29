@@ -84,21 +84,32 @@ export class ScheduleService implements CrudRepository<Schedule> {
   async create(createDto: CreateScheduleDto): Promise<ResponseScheduleDto> {
     const { force, ...data } = createDto;
     await this.conflictService.assertSchedulable([toCandidate(data)], force);
-    if (
-      await this.findBySchedule(
-        data.start,
-        data.end,
-        data.classroom.id,
-        data.section.id,
-        data.day.id,
-        data.period.id,
-      )
-    ) {
-      throw new BadRequestException('Schedule already exists.');
-    }
-
+    await this.assertUnique([data]);
     const item = await this.repository.save(data);
     return await this.findOne(item.id);
+  }
+
+  /** 400 si alguno de los bloques ya existe idéntico (misma aula, sección, día y horas). */
+  private async assertUnique(
+    items: Array<Omit<CreateScheduleDto, 'force'>>,
+    id?: number,
+  ): Promise<void> {
+    const found = await Promise.all(
+      items.map((item) =>
+        this.findBySchedule(
+          item.start,
+          item.end,
+          item.classroom.id,
+          item.section.id,
+          item.day.id,
+          item.period.id,
+          id,
+        ),
+      ),
+    );
+    if (found.some(Boolean)) {
+      throw new BadRequestException('Schedule already exists.');
+    }
   }
 
   /**
@@ -111,6 +122,7 @@ export class ScheduleService implements CrudRepository<Schedule> {
     const { force, dayIds, ...data } = dto;
     const items = [...new Set(dayIds)].map((id) => ({ ...data, day: { id } }));
     await this.conflictService.assertSchedulable(items.map(toCandidate), force);
+    await this.assertUnique(items);
     const saved = await this.repository.save(items);
     return Promise.all(saved.map((item) => this.findOne(item.id)));
   }
@@ -175,38 +187,24 @@ export class ScheduleService implements CrudRepository<Schedule> {
     return new ResponseScheduleDto(item);
   }
 
+  /** Los campos omitidos conservan su valor actual antes de validar choques. */
   async update(
     id: number,
     updateDto: UpdateScheduleDto,
   ): Promise<ResponseScheduleDto> {
-    await this.conflictService.assertSchedulable(
-      [{ ...toCandidate(updateDto as CreateScheduleDto), excludeId: id }],
-      updateDto.force,
-    );
-    if (
-      await this.findBySchedule(
-        updateDto.start,
-        updateDto.end,
-        updateDto.classroom.id,
-        updateDto.section.id,
-        updateDto.day.id,
-        updateDto.period.id,
-        id,
-      )
-    ) {
-      throw new BadRequestException('Schedule already exists.');
-    }
-    const item = await this.repository.save({
-      id,
-      status: updateDto.status,
-      period: updateDto.period,
-      start: updateDto.start,
-      end: updateDto.end,
-      classroom: updateDto.classroom,
-      section: updateDto.section,
-      day: updateDto.day,
+    const { force, ...changes } = updateDto;
+    const { status, start, end, period, classroom, section, day } =
+      await this.findValid(id);
+    const data = { status, start, end, period, classroom, section, day };
+    Object.entries(changes).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) data[key] = value;
     });
-
+    await this.conflictService.assertSchedulable(
+      [{ ...toCandidate(data), excludeId: id }],
+      force,
+    );
+    await this.assertUnique([data], id);
+    const item = await this.repository.save({ id, ...data });
     return this.findOne(item.id);
   }
 

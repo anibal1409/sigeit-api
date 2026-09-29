@@ -15,9 +15,10 @@ export class DownloadPlannedSchedulesDto {
   @IsNumber()
   status?: number;
 
-  @ApiProperty({ description: 'Campo por el cual agrupar (semester, teacherName)', required: false })
+  @ApiProperty({
+    description: 'Campo por el cual agrupar (semester, teacherName)',
+    required: false,
+  })
   @IsOptional()
   groupBy?: string;
 }
-
-

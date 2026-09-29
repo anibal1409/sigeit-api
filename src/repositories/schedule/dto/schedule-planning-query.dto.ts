@@ -1,5 +1,6 @@
 import { Transform, Type } from 'class-transformer';
 import {
+  ArrayNotEmpty,
   IsBoolean,
   IsInt,
   IsNotEmpty,
@@ -39,10 +40,14 @@ export class ScheduleConflictsQueryDto {
   @IsInt()
   periodId: number;
 
-  @ApiProperty()
-  @Type(() => Number)
-  @IsInt()
-  dayId: number;
+  @ApiProperty({
+    type: [Number],
+    description: 'Días a evaluar (se repite el parámetro por cada día)',
+  })
+  @Transform(({ value }) => [].concat(value).map(Number))
+  @ArrayNotEmpty()
+  @IsInt({ each: true })
+  dayIds: number[];
 
   @ApiProperty({ example: '07:00', description: 'Hora de inicio HH:mm' })
   @IsNotEmpty()

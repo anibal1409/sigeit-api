@@ -31,7 +31,7 @@ import {
   PeriodAuditDto,
   PlanningPeriodQueryDto,
   ResponseScheduleDto,
-  ScheduleConflictsDto,
+  DayConflictsDto,
   ScheduleConflictsQueryDto,
   SectionCoverageDto,
 } from './dto';
@@ -85,9 +85,10 @@ export class ScheduleController {
 
   @Get('planning/conflicts')
   @ApiOperation({
-    summary: 'Choques de aula, profesor y nivel de un bloque candidato',
+    summary:
+      'Choques de aula, profesor y nivel de un bloque candidato en cada día pedido',
   })
-  @ApiOkResponse({ type: ScheduleConflictsDto })
+  @ApiOkResponse({ type: DayConflictsDto, isArray: true })
   findConflicts(@Query(QueryTransform) query: ScheduleConflictsQueryDto) {
     return this.conflictService.findConflicts(query);
   }
