@@ -15,6 +15,7 @@ import {
 } from './dto';
 import { ResponseSubjectDto } from './dto/response-subject.dto';
 import { Subject } from './entities';
+import { normalizeSubjectCode } from './subject-code';
 
 @Injectable()
 export class SubjectService implements CrudRepository<Subject> {
@@ -58,11 +59,12 @@ export class SubjectService implements CrudRepository<Subject> {
   }
 
   async create(createDto: CreateSubjectDto): Promise<ResponseSubjectDto> {
-    if (await this.findByCode(createDto.code)) {
+    const code = normalizeSubjectCode(createDto.code);
+    if (await this.findByCode(code)) {
       throw new BadRequestException('Code subject already exists.');
     }
 
-    const item = await this.repository.save(createDto);
+    const item = await this.repository.save({ ...createDto, code });
 
     return await this.findOne(item.id);
   }
@@ -100,14 +102,15 @@ export class SubjectService implements CrudRepository<Subject> {
     id: number,
     updateDto: UpdateSubjectDto,
   ): Promise<ResponseSubjectDto> {
-    if (await this.findByCode(updateDto.code, id)) {
+    const code = updateDto.code && normalizeSubjectCode(updateDto.code);
+    if (await this.findByCode(code, id)) {
       throw new BadRequestException('Subject already exists.');
     }
     const item = await this.repository.save({
       id,
       name: updateDto.name,
       description: updateDto?.description,
-      code: updateDto?.code,
+      code,
       department: updateDto.department,
       semester: updateDto.semester,
       credits: updateDto.credits,
