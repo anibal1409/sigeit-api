@@ -24,10 +24,12 @@ import {
   ImportSubjectDemandResultDto,
   ResponseSubjectDemandDto,
 } from './dto';
-import { UploadedDemandFile } from './subject-demand.parser';
+import {
+  FILE_UPLOAD_BODY,
+  MAX_UPLOAD_SIZE,
+  UploadedFileData,
+} from '../../common/upload';
 import { SubjectDemandService } from './subject-demand.service';
-
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 @ApiTags('subject-demand')
 @Controller('subject-demand')
@@ -40,20 +42,14 @@ export class SubjectDemandController {
       'Importar reporte de demanda (.xlsx/.csv/.tsv con columnas CODIGO, NIVEL, CANTIDAD); reemplaza la demanda del período',
   })
   @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    schema: {
-      type: 'object',
-      required: ['file'],
-      properties: { file: { type: 'string', format: 'binary' } },
-    },
-  })
+  @ApiBody(FILE_UPLOAD_BODY)
   @ApiResponse({ type: ImportSubjectDemandResultDto })
   @UseInterceptors(
-    FileInterceptor('file', { limits: { fileSize: MAX_FILE_SIZE } }),
+    FileInterceptor('file', { limits: { fileSize: MAX_UPLOAD_SIZE } }),
   )
   import(
     @Param('periodId', ParseIntPipe) periodId: number,
-    @UploadedFile() file: UploadedDemandFile,
+    @UploadedFile() file: UploadedFileData,
   ) {
     if (!file) {
       throw new BadRequestException('Debe adjuntar el archivo en "file".');

@@ -3,6 +3,7 @@ import { DeepPartial, Repository } from 'typeorm';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
+import { UploadedFileData } from '../../common/upload';
 import { PeriodService } from '../period/period.service';
 import { Subject } from '../subject/entities';
 import { normalizeSubjectCode } from '../subject/subject-code';
@@ -13,11 +14,7 @@ import {
   ResponseSubjectDemandDto,
 } from './dto';
 import { SubjectDemand } from './entities';
-import {
-  DemandRow,
-  parseDemandFile,
-  UploadedDemandFile,
-} from './subject-demand.parser';
+import { DemandRow, parseDemandFile } from './subject-demand.parser';
 
 @Injectable()
 export class SubjectDemandService {
@@ -36,7 +33,7 @@ export class SubjectDemandService {
    */
   async import(
     periodId: number,
-    file: UploadedDemandFile,
+    file: UploadedFileData,
   ): Promise<ImportSubjectDemandResultDto> {
     await this.periodService.findValid(periodId);
     const { rows, invalidRows } = await parseDemandFile(file);

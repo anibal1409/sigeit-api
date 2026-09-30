@@ -3,13 +3,9 @@ import { Readable } from 'stream';
 
 import { BadRequestException } from '@nestjs/common';
 
+import { stripAccents } from '../../common/text';
+import { UploadedFileData } from '../../common/upload';
 import { normalizeSubjectCode } from '../subject/subject-code';
-
-/** Archivo recibido vía multipart (subconjunto de `Express.Multer.File`). */
-export interface UploadedDemandFile {
-  buffer: Buffer;
-  originalname: string;
-}
 
 /** Fila válida del reporte de demanda. */
 export interface DemandRow {
@@ -33,7 +29,7 @@ type RequiredColumn = (typeof REQUIRED_COLUMNS)[number];
  * asignatura ya determina departamento y dirección.
  */
 export async function parseDemandFile(
-  file: UploadedDemandFile,
+  file: UploadedFileData,
 ): Promise<ParsedDemand> {
   const sheet = await readFirstSheet(file);
   const columns = locateColumns(sheet.getRow(1));
@@ -56,7 +52,7 @@ export async function parseDemandFile(
 }
 
 async function readFirstSheet(
-  file: UploadedDemandFile,
+  file: UploadedFileData,
 ): Promise<ExcelJS.Worksheet> {
   const workbook = new ExcelJS.Workbook();
   if (/\.xlsx$/i.test(file.originalname)) {
@@ -105,10 +101,7 @@ function locateColumns(header: ExcelJS.Row): Record<RequiredColumn, number> {
 
 /** Normaliza cabeceras: sin BOM, tildes ni espacios, en mayúsculas ("Código" → "CODIGO"). */
 function normalizeHeader(text: string): string {
-  return text
-    .replace(/^\uFEFF/, '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+  return stripAccents(text.replace(/^\uFEFF/, ''))
     .trim()
     .toUpperCase();
 }
