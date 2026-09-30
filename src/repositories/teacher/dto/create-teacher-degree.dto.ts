@@ -1,8 +1,10 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
   IsDateString,
   IsEnum,
+  IsInt,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -68,6 +70,79 @@ export class TeacherGradeDto {
   @ValidateNested()
   @Type(() => SubjectRefDto)
   subject?: SubjectRefDto;
+
+  @ApiPropertyOptional({
+    description: 'Créditos o unidades de crédito (UC) de la asignatura',
+    example: 4,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  credits?: number;
+
+  @ApiPropertyOptional({
+    description: 'Aprobada en examen de reparación (tipo de examen "R")',
+  })
+  @IsOptional()
+  @IsBoolean()
+  makeup?: boolean;
+}
+
+/** Período académico cursado, con el resumen que indique el documento. */
+export class TeacherDegreePeriodDto {
+  @ApiProperty({ description: 'Código del período', example: '2013-1' })
+  @IsNotEmpty()
+  @IsString()
+  code!: string;
+
+  @ApiPropertyOptional({
+    description: 'Fechas o descripción del período',
+    example: 'Mar - Dic 2013',
+  })
+  @IsOptional()
+  @IsString()
+  label?: string;
+
+  @ApiPropertyOptional({ description: 'Promedio del período', example: 8 })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  average?: number;
+
+  @ApiPropertyOptional({ description: 'Créditos aprobados en el período' })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  approvedCredits?: number;
+}
+
+/** Campos propios del título que se guardan y se devuelven tal cual. */
+const DEGREE_FIELDS = [
+  'level',
+  'title',
+  'institution',
+  'graduationDate',
+  'maxGrade',
+  'minPassingGrade',
+  'average',
+  'approvedCredits',
+  'classRank',
+  'classSize',
+  'classAverage',
+  'onlyPassingGrades',
+  'periods',
+] as const;
+
+/** Campos del título presentes en `source`, sin propiedades ajenas (id, deleted, teacher...). */
+export function pickDegreeFields(
+  source: object,
+): Partial<Pick<CreateTeacherDegreeDto, (typeof DEGREE_FIELDS)[number]>> {
+  return Object.fromEntries(
+    DEGREE_FIELDS.filter((field) => field in source).map((field) => [
+      field,
+      source[field],
+    ]),
+  );
 }
 
 /** Datos para registrar un título de un profesor junto con sus notas. */
@@ -100,6 +175,64 @@ export class CreateTeacherDegreeDto {
   @IsNumber()
   @IsPositive()
   maxGrade!: number;
+
+  @ApiPropertyOptional({
+    description:
+      'Nota mínima aprobatoria; si no se indica, se asume la mitad de la escala',
+    example: 5,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  minPassingGrade?: number;
+
+  @ApiPropertyOptional({
+    description: 'Promedio general de la carrera según el documento',
+    example: 7.66,
+  })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  average?: number;
+
+  @ApiPropertyOptional({ description: 'Créditos (UC) aprobados en total' })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  approvedCredits?: number;
+
+  @ApiPropertyOptional({ description: 'Puesto en su promoción de egresados' })
+  @IsOptional()
+  @IsInt()
+  @IsPositive()
+  classRank?: number;
+
+  @ApiPropertyOptional({ description: 'Cantidad de egresados de la promoción' })
+  @IsOptional()
+  @IsInt()
+  @IsPositive()
+  classSize?: number;
+
+  @ApiPropertyOptional({ description: 'Promedio de la promoción' })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  classAverage?: number;
+
+  @ApiPropertyOptional({
+    description:
+      'El documento solo incluye notas aprobatorias (no muestra retiros ni reprobadas)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  onlyPassingGrades?: boolean;
+
+  @ApiPropertyOptional({ type: [TeacherDegreePeriodDto] })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TeacherDegreePeriodDto)
+  periods?: TeacherDegreePeriodDto[];
 
   @ApiPropertyOptional({
     type: [TeacherGradeDto],

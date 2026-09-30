@@ -1,12 +1,21 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, OmitType } from '@nestjs/swagger';
 
-import { TeacherGradeDto } from './create-teacher-degree.dto';
+import {
+  CreateTeacherDegreeDto,
+  TeacherGradeDto,
+} from './create-teacher-degree.dto';
 
 /**
- * Datos extraídos de un récord de notas. No se guardan: el cliente los revisa y
- * los envía a `POST /teacher-degree` para confirmarlos.
+ * Datos extraídos de un récord de notas. No se guardan: el cliente los revisa,
+ * elige el nivel y los envía a `POST /teacher-degree` para confirmarlos.
  */
-export class TranscriptPreviewDto {
+export class TranscriptPreviewDto extends OmitType(CreateTeacherDegreeDto, [
+  'teacher',
+  'level',
+  'title',
+  'maxGrade',
+  'grades',
+]) {
   @ApiPropertyOptional({
     description: 'Cédula del estudiante, solo dígitos',
     example: '23539583',
@@ -21,9 +30,6 @@ export class TranscriptPreviewDto {
     example: 'Ingeniería de Sistemas',
   })
   title?: string;
-
-  @ApiPropertyOptional({ example: 'Universidad de Oriente' })
-  institution?: string;
 
   @ApiProperty({
     description:

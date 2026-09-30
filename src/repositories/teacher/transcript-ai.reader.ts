@@ -4,7 +4,11 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 
-import { TranscriptPreviewDto } from './dto';
+import {
+  TeacherDegreePeriodDto,
+  TeacherGradeDto,
+  TranscriptPreviewDto,
+} from './dto';
 import { detectMaxGrade } from './transcript.parser';
 
 const DEFAULT_MODEL = 'gemini-3.1-flash-lite';
@@ -19,12 +23,21 @@ const LOG_CONTEXT = 'TranscriptAiReader';
 const FALLBACK_STATUS = new Set([404, 429, 500, 502, 503, 504]);
 
 /** Instrucciones de extracción; el formato exacto lo impone `RESPONSE_SCHEMA`. */
-const PROMPT = `Extrae los datos de este récord o constancia de notas académicas.
-- Una entrada en "grades" por cada asignatura cursada, en el orden del documento.
+const PROMPT = `Extrae los datos de este récord, historial o certificación de notas académicas.
+- Una entrada en "grades" por cada asignatura cursada, en el orden del documento; si una asignatura aparece varias veces (repitencia), incluye cada vez.
 - "grade": nota definitiva numérica. Si el resultado no es numérico (retirada, aprobado, en ejecución, equivalencia...), deja "grade" en null y escribe el resultado en "remark".
-- "period": solo el código del período académico, sin rango de fechas ni descripción (p. ej. "2015-1", no "2015-1 (Mar - Jul 2015)").
+- "period": solo el código del período o lapso académico, sin fechas ni descripción (p. ej. "2015-1" o "2019-A", no "2015-1 (Mar - Jul 2015)").
+- "credits": créditos o unidades de crédito (UC) de la asignatura, si hay esa columna.
+- "makeup": true si la nota se obtuvo en examen de reparación (tipo de examen "R" o "Reparación").
+- "periods": un elemento por período, con "code" (mismo formato que "period"), "label" (fechas o descripción, p. ej. "Mar - Dic 2013" o "Intensivo 2015"), "average" (promedio del período) y "approvedCredits" (créditos aprobados en el período), si aparecen.
 - "title": carrera, especialidad o programa; "institution": universidad o instituto.
 - "maxGrade": nota máxima de la escala; si el documento no la indica, usa 10 si todas las notas son 10 o menos, y 20 en caso contrario.
+- "minPassingGrade": nota mínima aprobatoria general, si el documento la indica.
+- "average": promedio general de la carrera (promedio de calificaciones, índice académico o IRA general).
+- "approvedCredits": créditos o UC aprobados en total, si aparecen.
+- "classRank", "classSize" y "classAverage": puesto en la promoción, cantidad de egresados y promedio de la promoción, si aparecen.
+- "graduationDate": fecha de grado en formato AAAA-MM-DD, si aparece.
+- "onlyPassingGrades": true si el documento declara que solo incluye notas aprobatorias.
 - No inventes datos: deja en null lo que no aparezca o no se lea con claridad.`;
 
 /** Esquema de salida estructurada de Gemini (subconjunto OpenAPI); refleja `TranscriptPreviewDto`. */
@@ -36,6 +49,27 @@ const RESPONSE_SCHEMA = {
     title: { type: 'STRING', nullable: true },
     institution: { type: 'STRING', nullable: true },
     maxGrade: { type: 'NUMBER' },
+    minPassingGrade: { type: 'NUMBER', nullable: true },
+    average: { type: 'NUMBER', nullable: true },
+    approvedCredits: { type: 'NUMBER', nullable: true },
+    classRank: { type: 'INTEGER', nullable: true },
+    classSize: { type: 'INTEGER', nullable: true },
+    classAverage: { type: 'NUMBER', nullable: true },
+    graduationDate: { type: 'STRING', nullable: true },
+    onlyPassingGrades: { type: 'BOOLEAN', nullable: true },
+    periods: {
+      type: 'ARRAY',
+      items: {
+        type: 'OBJECT',
+        properties: {
+          code: { type: 'STRING' },
+          label: { type: 'STRING', nullable: true },
+          average: { type: 'NUMBER', nullable: true },
+          approvedCredits: { type: 'NUMBER', nullable: true },
+        },
+        required: ['code'],
+      },
+    },
     grades: {
       type: 'ARRAY',
       items: {
@@ -46,6 +80,8 @@ const RESPONSE_SCHEMA = {
           period: { type: 'STRING', nullable: true },
           grade: { type: 'NUMBER', nullable: true },
           remark: { type: 'STRING', nullable: true },
+          credits: { type: 'NUMBER', nullable: true },
+          makeup: { type: 'BOOLEAN', nullable: true },
         },
         required: ['subjectName'],
       },
@@ -146,15 +182,7 @@ function parseModelJson(body: any): any {
  * escala que indique el modelo si alguna nota la supera.
  */
 function toPreview(raw: any): TranscriptPreviewDto {
-  const grades = (raw?.grades ?? [])
-    .filter((grade: any) => grade?.subjectName?.trim())
-    .map((grade: any) => ({
-      code: grade.code?.trim() || undefined,
-      subjectName: grade.subjectName.trim(),
-      period: grade.period?.trim() || undefined,
-      grade: typeof grade.grade === 'number' ? grade.grade : undefined,
-      remark: grade.remark?.trim() || undefined,
-    }));
+  const grades = toGrades(raw?.grades);
   if (!grades.length) {
     throw new BadRequestException(
       'No se reconocieron asignaturas en el documento.',
@@ -164,12 +192,60 @@ function toPreview(raw: any): TranscriptPreviewDto {
   const validScale = raw.maxGrade > 0 && raw.maxGrade >= highest;
   return {
     idDocument: raw.idDocument?.replace(/\D/g, '') || undefined,
-    studentName: raw.studentName?.trim() || undefined,
-    title: raw.title?.trim() || undefined,
-    institution: raw.institution?.trim() || undefined,
+    studentName: text(raw.studentName),
+    title: text(raw.title),
+    institution: text(raw.institution),
     maxGrade: validScale ? raw.maxGrade : detectMaxGrade(grades),
+    minPassingGrade: positive(raw.minPassingGrade),
+    average: positive(raw.average),
+    approvedCredits: positive(raw.approvedCredits),
+    classRank: positive(raw.classRank),
+    classSize: positive(raw.classSize),
+    classAverage: positive(raw.classAverage),
+    graduationDate: /^\d{4}-\d{2}-\d{2}$/.test(raw.graduationDate)
+      ? raw.graduationDate
+      : undefined,
+    onlyPassingGrades: raw.onlyPassingGrades === true || undefined,
+    periods: toPeriods(raw.periods),
     grades,
   };
+}
+
+/** Asignaturas con nombre, con los textos recortados y los valores inválidos descartados. */
+function toGrades(items: any[] = []): TeacherGradeDto[] {
+  return items
+    .filter((grade) => text(grade?.subjectName))
+    .map((grade) => ({
+      code: text(grade.code),
+      subjectName: text(grade.subjectName),
+      period: text(grade.period),
+      grade: typeof grade.grade === 'number' ? grade.grade : undefined,
+      remark: text(grade.remark),
+      credits: positive(grade.credits),
+      makeup: grade.makeup === true,
+    }));
+}
+
+/** Períodos con código y su resumen (fechas, promedio y créditos) si el modelo lo leyó. */
+function toPeriods(items: any[] = []): TeacherDegreePeriodDto[] {
+  return items
+    .filter((period) => text(period?.code))
+    .map((period) => ({
+      code: text(period.code),
+      label: text(period.label),
+      average: positive(period.average),
+      approvedCredits: positive(period.approvedCredits),
+    }));
+}
+
+/** Texto recortado; `undefined` si no es texto o queda vacío. */
+function text(value: unknown): string | undefined {
+  return typeof value === 'string' ? value.trim() || undefined : undefined;
+}
+
+/** Número mayor que cero; `undefined` en otro caso. */
+function positive(value: unknown): number | undefined {
+  return typeof value === 'number' && value > 0 ? value : undefined;
 }
 
 /** Registra el detalle técnico y responde al cliente con un mensaje genérico (503). */

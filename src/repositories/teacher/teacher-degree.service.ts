@@ -13,6 +13,7 @@ import { Subject } from '../subject/entities';
 import { normalizeSubjectCode } from '../subject/subject-code';
 import {
   CreateTeacherDegreeDto,
+  pickDegreeFields,
   ResponseTeacherDegreeDto,
   ResponseTeacherDto,
   ResponseTeacherGradeSearchDto,
@@ -77,9 +78,10 @@ export class TeacherDegreeService {
   async create(dto: CreateTeacherDegreeDto): Promise<ResponseTeacherDegreeDto> {
     await this.teacherService.findValid(dto.teacher.id);
     const grades = dto.grades ?? [];
-    assertGradesInScale(grades, dto.maxGrade);
+    assertInScale(dto, dto.maxGrade);
     const item = await this.repository.save({
-      ...dto,
+      ...pickDegreeFields(dto),
+      teacher: { id: dto.teacher.id },
       grades: grades.map(toGradeEntity),
     });
     return this.findOne(item.id);
@@ -91,20 +93,14 @@ export class TeacherDegreeService {
     dto: UpdateTeacherDegreeDto,
   ): Promise<ResponseTeacherDegreeDto> {
     const current = await this.findValid(id);
-    assertGradesInScale(
-      dto.grades ?? current.grades,
-      dto.maxGrade ?? current.maxGrade,
+    const fields = pickDegreeFields(dto);
+    const { grades } = dto;
+    assertInScale(
+      { ...current, ...fields, grades: grades ?? current.grades },
+      fields.maxGrade ?? current.maxGrade,
     );
-    const { grades, level, title, institution, graduationDate, maxGrade } = dto;
     await this.repository.manager.transaction(async (manager) => {
-      await manager.save(TeacherDegree, {
-        id,
-        level,
-        title,
-        institution,
-        graduationDate,
-        maxGrade,
-      });
+      await manager.save(TeacherDegree, { id, ...fields });
       if (!grades) return;
       await manager.delete(TeacherGrade, { degree: { id } });
       await manager.save(
@@ -241,20 +237,39 @@ export class TeacherDegreeService {
 /** Entidad de nota con el nombre normalizado que usa la búsqueda y la equivalencia por id. */
 function toGradeEntity(grade: TeacherGradeDto): DeepPartial<TeacherGrade> {
   return {
-    ...grade,
+    code: grade.code,
+    subjectName: grade.subjectName,
     normalizedName: normalizeText(grade.subjectName),
+    period: grade.period,
+    grade: grade.grade,
+    remark: grade.remark,
+    credits: grade.credits,
+    makeup: !!grade.makeup,
     subject: grade.subject ? { id: grade.subject.id } : null,
   };
 }
 
-/** Rechaza (400) las notas que superan la nota máxima de la escala del título. */
-function assertGradesInScale(
-  grades: { grade?: number }[],
+/** Rechaza (400) notas o promedios mayores que la nota máxima de la escala del título. */
+function assertInScale(
+  record: {
+    grades?: { grade?: number }[];
+    periods?: { average?: number }[];
+    average?: number;
+    minPassingGrade?: number;
+    classAverage?: number;
+  },
   maxGrade: number,
 ): void {
-  if (grades.some((item) => item.grade > maxGrade)) {
+  const values = [
+    ...(record.grades ?? []).map((item) => item.grade),
+    ...(record.periods ?? []).map((item) => item.average),
+    record.average,
+    record.minPassingGrade,
+    record.classAverage,
+  ];
+  if (values.some((value) => value > maxGrade)) {
     throw new BadRequestException(
-      `Hay notas mayores que la nota máxima de la escala (${maxGrade}).`,
+      `Hay notas o promedios mayores que la nota máxima de la escala (${maxGrade}).`,
     );
   }
 }

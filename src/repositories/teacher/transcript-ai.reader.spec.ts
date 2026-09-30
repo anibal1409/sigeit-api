@@ -18,8 +18,26 @@ describe('readTranscriptWithAi', () => {
       idDocument: 'V-12.345.678',
       title: ' Licenciatura en Matemáticas ',
       maxGrade: 5,
+      minPassingGrade: 10,
+      average: 17.5,
+      approvedCredits: 0,
+      classRank: 5,
+      classSize: 24,
+      graduationDate: '11/12/2014',
+      onlyPassingGrades: true,
+      periods: [
+        { code: ' 2010-1 ', label: 'Mar - Jul 2010', average: 18 },
+        { code: '' },
+      ],
       grades: [
-        { code: '001', subjectName: 'Álgebra', period: '2010-1', grade: 18 },
+        {
+          code: '001',
+          subjectName: 'Álgebra',
+          period: '2010-1',
+          grade: 18,
+          credits: 4,
+          makeup: true,
+        },
         { subjectName: 'Pasantía', grade: null, remark: 'APROBADO' },
         { subjectName: '  ' },
       ],
@@ -55,6 +73,22 @@ describe('readTranscriptWithAi', () => {
       title: 'Licenciatura en Matemáticas',
       institution: undefined,
       maxGrade: 20,
+      minPassingGrade: 10,
+      average: 17.5,
+      approvedCredits: undefined,
+      classRank: 5,
+      classSize: 24,
+      classAverage: undefined,
+      graduationDate: undefined,
+      onlyPassingGrades: true,
+      periods: [
+        {
+          code: '2010-1',
+          label: 'Mar - Jul 2010',
+          average: 18,
+          approvedCredits: undefined,
+        },
+      ],
       grades: [
         {
           code: '001',
@@ -62,6 +96,8 @@ describe('readTranscriptWithAi', () => {
           period: '2010-1',
           grade: 18,
           remark: undefined,
+          credits: 4,
+          makeup: true,
         },
         {
           code: undefined,
@@ -69,6 +105,8 @@ describe('readTranscriptWithAi', () => {
           period: undefined,
           grade: undefined,
           remark: 'APROBADO',
+          credits: undefined,
+          makeup: false,
         },
       ],
     });

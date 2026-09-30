@@ -35,6 +35,14 @@ export class TeacherGrade extends IdEntity {
   @Column({ nullable: true })
   remark?: string;
 
+  /** Créditos o unidades de crédito (UC) de la asignatura. */
+  @Column('float', { nullable: true })
+  credits?: number;
+
+  /** Aprobada en examen de reparación. */
+  @Column({ default: false })
+  makeup!: boolean;
+
   /** Asignatura equivalente del pensum; nula si no se ha indicado. */
   @ManyToOne(() => Subject, { nullable: true, onDelete: 'SET NULL' })
   subject?: Subject;

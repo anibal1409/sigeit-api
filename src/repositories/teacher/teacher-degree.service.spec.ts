@@ -44,7 +44,10 @@ describe('TeacherDegreeService', () => {
     const module = await Test.createTestingModule({
       providers: [
         TeacherDegreeService,
-        { provide: getRepositoryToken(TeacherDegree), useValue: degreeRepository },
+        {
+          provide: getRepositoryToken(TeacherDegree),
+          useValue: degreeRepository,
+        },
         {
           provide: getRepositoryToken(TeacherGrade),
           useValue: { find: jest.fn().mockResolvedValue(previousGrades) },
@@ -145,5 +148,43 @@ describe('TeacherDegreeService', () => {
     expect(degreeRepository.save).toHaveBeenCalledWith(
       expect.objectContaining({ title: 'Maestría en Informática', grades: [] }),
     );
+  });
+
+  it('guarda los datos del récord y descarta campos ajenos al DTO', async () => {
+    await service.create({
+      teacher: { id: 1 },
+      level: DegreeLevel.Undergraduate,
+      title: 'Ingeniería',
+      maxGrade: 10,
+      average: 7.66,
+      periods: [{ code: '2013-1', average: 8 }],
+      grades: [
+        { subjectName: 'Física I', grade: 5, makeup: true, id: 9 } as never,
+      ],
+      id: 99,
+      deleted: true,
+    } as never);
+
+    const [saved] = degreeRepository.save.mock.lastCall;
+    expect(saved).toMatchObject({
+      average: 7.66,
+      periods: [{ code: '2013-1' }],
+    });
+    expect(saved).not.toHaveProperty('id');
+    expect(saved).not.toHaveProperty('deleted');
+    expect(saved.grades[0]).toMatchObject({ grade: 5, makeup: true });
+    expect(saved.grades[0]).not.toHaveProperty('id');
+  });
+
+  it('rechaza promedios mayores que la escala del título', async () => {
+    await expect(
+      service.create({
+        teacher: { id: 1 },
+        level: DegreeLevel.Undergraduate,
+        title: 'Ingeniería',
+        maxGrade: 10,
+        average: 16,
+      }),
+    ).rejects.toMatchObject({ status: 400 });
   });
 });

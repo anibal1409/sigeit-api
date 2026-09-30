@@ -37,6 +37,14 @@ export enum HiringEvaluationStatus {
   Rejected = 'REJECTED',
 }
 
+/** Resultado de una asignatura cursada, deducido de la nota o del resultado escrito. */
+export enum GradeStatus {
+  Approved = 'APPROVED',
+  Failed = 'FAILED',
+  Withdrawn = 'WITHDRAWN',
+  InProgress = 'IN_PROGRESS',
+}
+
 /** Nivel académico de un título. */
 export enum DegreeLevel {
   Undergraduate = 'UNDERGRADUATE',
