@@ -73,13 +73,14 @@ export class TeacherDegreeService {
     return new ResponseTeacherDegreeDto(await this.findValid(id));
   }
 
-  /** Registra un título con sus notas; valida el profesor y que las notas quepan en la escala. */
+  /** Registra un título, con o sin notas; valida el profesor y que las notas quepan en la escala. */
   async create(dto: CreateTeacherDegreeDto): Promise<ResponseTeacherDegreeDto> {
     await this.teacherService.findValid(dto.teacher.id);
-    assertGradesInScale(dto.grades, dto.maxGrade);
+    const grades = dto.grades ?? [];
+    assertGradesInScale(grades, dto.maxGrade);
     const item = await this.repository.save({
       ...dto,
-      grades: dto.grades.map(toGradeEntity),
+      grades: grades.map(toGradeEntity),
     });
     return this.findOne(item.id);
   }

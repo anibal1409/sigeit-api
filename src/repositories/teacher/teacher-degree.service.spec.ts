@@ -34,13 +34,17 @@ describe('TeacherDegreeService', () => {
     { id: 3, code: '0071234', name: 'Física I' },
   ];
   const previousGrades = [{ normalizedName: 'programacion i', subject: poo }];
+  const degreeRepository = {
+    save: jest.fn(async (item) => ({ id: 1, ...item })),
+    findOne: jest.fn(async () => ({ id: 1, grades: [] })),
+  };
 
   beforeEach(async () => {
     jest.mocked(readTranscriptWithAi).mockReset().mockResolvedValue(aiPreview);
     const module = await Test.createTestingModule({
       providers: [
         TeacherDegreeService,
-        { provide: getRepositoryToken(TeacherDegree), useValue: {} },
+        { provide: getRepositoryToken(TeacherDegree), useValue: degreeRepository },
         {
           provide: getRepositoryToken(TeacherGrade),
           useValue: { find: jest.fn().mockResolvedValue(previousGrades) },
@@ -128,5 +132,18 @@ describe('TeacherDegreeService', () => {
         grades: [{ subjectName: 'Física I', grade: 15 }],
       }),
     ).rejects.toMatchObject({ status: 400 });
+  });
+
+  it('registra solo el título cuando no se envían notas', async () => {
+    await service.create({
+      teacher: { id: 1 },
+      level: DegreeLevel.Master,
+      title: 'Maestría en Informática',
+      maxGrade: 20,
+    });
+
+    expect(degreeRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({ title: 'Maestría en Informática', grades: [] }),
+    );
   });
 });

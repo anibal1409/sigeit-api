@@ -101,9 +101,15 @@ export class CreateTeacherDegreeDto {
   @IsPositive()
   maxGrade!: number;
 
-  @ApiProperty({ type: [TeacherGradeDto] })
+  @ApiPropertyOptional({
+    type: [TeacherGradeDto],
+    default: [],
+    description:
+      'Notas del título; se puede registrar solo el título y agregarlas después',
+  })
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => TeacherGradeDto)
-  grades!: TeacherGradeDto[];
+  grades?: TeacherGradeDto[];
 }
