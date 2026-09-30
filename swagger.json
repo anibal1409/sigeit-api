@@ -5036,6 +5036,33 @@
           "OTHER"
         ]
       },
+      "TeacherDegreePeriodDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Código del período",
+            "example": "2013-1"
+          },
+          "label": {
+            "type": "string",
+            "description": "Fechas o descripción del período",
+            "example": "Mar - Dic 2013"
+          },
+          "average": {
+            "type": "number",
+            "description": "Promedio del período",
+            "example": 8
+          },
+          "approvedCredits": {
+            "type": "number",
+            "description": "Créditos aprobados en el período"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
       "SubjectRefDto": {
         "type": "object",
         "properties": {
@@ -5086,6 +5113,15 @@
                 "$ref": "#/components/schemas/SubjectRefDto"
               }
             ]
+          },
+          "credits": {
+            "type": "number",
+            "description": "Créditos o unidades de crédito (UC) de la asignatura",
+            "example": 4
+          },
+          "makeup": {
+            "type": "boolean",
+            "description": "Aprobada en examen de reparación (tipo de examen \"R\")"
           }
         },
         "required": [
@@ -5118,6 +5154,42 @@
             "description": "Nota máxima de la escala",
             "example": 10
           },
+          "minPassingGrade": {
+            "type": "number",
+            "description": "Nota mínima aprobatoria; si no se indica, se asume la mitad de la escala",
+            "example": 5
+          },
+          "average": {
+            "type": "number",
+            "description": "Promedio general de la carrera según el documento",
+            "example": 7.66
+          },
+          "approvedCredits": {
+            "type": "number",
+            "description": "Créditos (UC) aprobados en total"
+          },
+          "classRank": {
+            "type": "number",
+            "description": "Puesto en su promoción de egresados"
+          },
+          "classSize": {
+            "type": "number",
+            "description": "Cantidad de egresados de la promoción"
+          },
+          "classAverage": {
+            "type": "number",
+            "description": "Promedio de la promoción"
+          },
+          "onlyPassingGrades": {
+            "type": "boolean",
+            "description": "El documento solo incluye notas aprobatorias (no muestra retiros ni reprobadas)"
+          },
+          "periods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherDegreePeriodDto"
+            }
+          },
           "grades": {
             "default": [],
             "description": "Notas del título; se puede registrar solo el título y agregarlas después",
@@ -5132,6 +5204,16 @@
           "level",
           "title",
           "maxGrade"
+        ]
+      },
+      "GradeStatus": {
+        "type": "string",
+        "description": "Deducido de la nota (según la mínima aprobatoria) o del resultado",
+        "enum": [
+          "APPROVED",
+          "FAILED",
+          "WITHDRAWN",
+          "IN_PROGRESS"
         ]
       },
       "ResponseTeacherGradeDto": {
@@ -5166,34 +5248,140 @@
               }
             ]
           },
+          "credits": {
+            "type": "number",
+            "description": "Créditos o unidades de crédito (UC) de la asignatura",
+            "example": 4
+          },
+          "makeup": {
+            "type": "boolean",
+            "description": "Aprobada en examen de reparación (tipo de examen \"R\")"
+          },
           "id": {
             "type": "number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/GradeStatus"
+          },
+          "attempt": {
+            "type": "number",
+            "description": "Vez que cursa la asignatura (1 = primera; 2 o más = repitencia)"
           }
         },
         "required": [
           "subjectName",
-          "id"
+          "id",
+          "attempt"
+        ]
+      },
+      "TeacherDegreeSummaryDto": {
+        "type": "object",
+        "properties": {
+          "periods": {
+            "type": "number",
+            "description": "Períodos académicos cursados"
+          },
+          "subjects": {
+            "type": "number",
+            "description": "Asignaturas distintas cursadas"
+          },
+          "approved": {
+            "type": "number",
+            "description": "Notas aprobadas (incluye equivalencias)"
+          },
+          "failed": {
+            "type": "number"
+          },
+          "withdrawn": {
+            "type": "number"
+          },
+          "inProgress": {
+            "type": "number"
+          },
+          "repeated": {
+            "type": "number",
+            "description": "Asignaturas cursadas más de una vez"
+          },
+          "equivalences": {
+            "type": "number",
+            "description": "Notas con asignatura equivalente del pensum"
+          },
+          "gradeAverage": {
+            "type": "number",
+            "description": "Promedio simple de las notas numéricas (sin retiros); el oficial está en `average`"
+          }
+        },
+        "required": [
+          "periods",
+          "subjects",
+          "approved",
+          "failed",
+          "withdrawn",
+          "inProgress",
+          "repeated",
+          "equivalences"
         ]
       },
       "ResponseTeacherDegreeDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "number"
-          },
           "level": {
             "$ref": "#/components/schemas/DegreeLevel"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "example": "Ingeniería de Sistemas"
           },
           "institution": {
-            "type": "string"
+            "type": "string",
+            "example": "Universidad de Oriente"
           },
           "graduationDate": {
-            "type": "string"
+            "type": "string",
+            "example": "2019-06-15"
           },
           "maxGrade": {
+            "type": "number",
+            "description": "Nota máxima de la escala",
+            "example": 10
+          },
+          "minPassingGrade": {
+            "type": "number",
+            "description": "Nota mínima aprobatoria; si no se indica, se asume la mitad de la escala",
+            "example": 5
+          },
+          "average": {
+            "type": "number",
+            "description": "Promedio general de la carrera según el documento",
+            "example": 7.66
+          },
+          "approvedCredits": {
+            "type": "number",
+            "description": "Créditos (UC) aprobados en total"
+          },
+          "classRank": {
+            "type": "number",
+            "description": "Puesto en su promoción de egresados"
+          },
+          "classSize": {
+            "type": "number",
+            "description": "Cantidad de egresados de la promoción"
+          },
+          "classAverage": {
+            "type": "number",
+            "description": "Promedio de la promoción"
+          },
+          "onlyPassingGrades": {
+            "type": "boolean",
+            "description": "El documento solo incluye notas aprobatorias (no muestra retiros ni reprobadas)"
+          },
+          "periods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherDegreePeriodDto"
+            }
+          },
+          "id": {
             "type": "number"
           },
           "grades": {
@@ -5201,19 +5389,67 @@
             "items": {
               "$ref": "#/components/schemas/ResponseTeacherGradeDto"
             }
+          },
+          "summary": {
+            "$ref": "#/components/schemas/TeacherDegreeSummaryDto"
           }
         },
         "required": [
-          "id",
           "level",
           "title",
           "maxGrade",
-          "grades"
+          "id",
+          "grades",
+          "summary"
         ]
       },
       "TranscriptPreviewDto": {
         "type": "object",
         "properties": {
+          "institution": {
+            "type": "string",
+            "example": "Universidad de Oriente"
+          },
+          "graduationDate": {
+            "type": "string",
+            "example": "2019-06-15"
+          },
+          "minPassingGrade": {
+            "type": "number",
+            "description": "Nota mínima aprobatoria; si no se indica, se asume la mitad de la escala",
+            "example": 5
+          },
+          "average": {
+            "type": "number",
+            "description": "Promedio general de la carrera según el documento",
+            "example": 7.66
+          },
+          "approvedCredits": {
+            "type": "number",
+            "description": "Créditos (UC) aprobados en total"
+          },
+          "classRank": {
+            "type": "number",
+            "description": "Puesto en su promoción de egresados"
+          },
+          "classSize": {
+            "type": "number",
+            "description": "Cantidad de egresados de la promoción"
+          },
+          "classAverage": {
+            "type": "number",
+            "description": "Promedio de la promoción"
+          },
+          "onlyPassingGrades": {
+            "type": "boolean",
+            "description": "El documento solo incluye notas aprobatorias (no muestra retiros ni reprobadas)"
+          },
+          "periods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherDegreePeriodDto"
+            }
+          },
           "idDocument": {
             "type": "string",
             "description": "Cédula del estudiante, solo dígitos",
@@ -5227,10 +5463,6 @@
             "type": "string",
             "description": "Carrera o programa",
             "example": "Ingeniería de Sistemas"
-          },
-          "institution": {
-            "type": "string",
-            "example": "Universidad de Oriente"
           },
           "maxGrade": {
             "type": "number",
@@ -5336,6 +5568,42 @@
             "type": "number",
             "description": "Nota máxima de la escala",
             "example": 10
+          },
+          "minPassingGrade": {
+            "type": "number",
+            "description": "Nota mínima aprobatoria; si no se indica, se asume la mitad de la escala",
+            "example": 5
+          },
+          "average": {
+            "type": "number",
+            "description": "Promedio general de la carrera según el documento",
+            "example": 7.66
+          },
+          "approvedCredits": {
+            "type": "number",
+            "description": "Créditos (UC) aprobados en total"
+          },
+          "classRank": {
+            "type": "number",
+            "description": "Puesto en su promoción de egresados"
+          },
+          "classSize": {
+            "type": "number",
+            "description": "Cantidad de egresados de la promoción"
+          },
+          "classAverage": {
+            "type": "number",
+            "description": "Promedio de la promoción"
+          },
+          "onlyPassingGrades": {
+            "type": "boolean",
+            "description": "El documento solo incluye notas aprobatorias (no muestra retiros ni reprobadas)"
+          },
+          "periods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherDegreePeriodDto"
+            }
           },
           "grades": {
             "default": [],
