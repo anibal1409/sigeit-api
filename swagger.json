@@ -737,6 +737,30 @@
             "schema": {
               "type": "boolean"
             }
+          },
+          {
+            "name": "category",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TeacherCategory"
+            }
+          },
+          {
+            "name": "employmentStatus",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/EmploymentStatus"
+            }
+          },
+          {
+            "name": "hiringEvaluationStatus",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/HiringEvaluationStatus"
+            }
           }
         ],
         "responses": {
@@ -885,6 +909,293 @@
         },
         "tags": [
           "teacher"
+        ]
+      }
+    },
+    "/teacher/{id}/subjects-history": {
+      "get": {
+        "operationId": "TeacherController_findSubjectsHistory",
+        "summary": "Historial de asignaturas impartidas por el profesor",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSubjectHistoryDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/teacher-degree": {
+      "post": {
+        "operationId": "TeacherDegreeController_create",
+        "summary": "Registrar un título con sus notas",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTeacherDegreeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDegreeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher-degree"
+        ]
+      }
+    },
+    "/teacher-degree/parse-transcript": {
+      "post": {
+        "operationId": "TeacherDegreeController_parseTranscript",
+        "summary": "Extraer las notas de un récord sin guardarlas, para revisarlas antes de registrar el título",
+        "description": "Acepta PDF, JPG, PNG, WEBP o HEIC (máx. 5 MB). Los PDF con texto en formato UDO se leen localmente; imágenes, PDF escaneados y otros formatos se leen con Gemini (requiere GEMINI_API_KEY; responde 503 si no está configurada o falla).",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "file"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TranscriptPreviewDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher-degree"
+        ]
+      }
+    },
+    "/teacher-degree/search": {
+      "get": {
+        "operationId": "TeacherDegreeController_search",
+        "summary": "Buscar profesores con nota en una asignatura (o similar)",
+        "parameters": [
+          {
+            "name": "subject",
+            "required": true,
+            "in": "query",
+            "description": "Texto de la asignatura; ignora mayúsculas y tildes, y exige todas las palabras",
+            "schema": {
+              "example": "programacion objetos",
+              "type": "string"
+            }
+          },
+          {
+            "name": "minPercent",
+            "required": false,
+            "in": "query",
+            "description": "Nota mínima en porcentaje de la escala (0–100); excluye asignaturas sin nota numérica",
+            "schema": {
+              "example": 70,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseTeacherGradeSearchDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher-degree"
+        ]
+      }
+    },
+    "/teacher-degree/teacher/{teacherId}": {
+      "get": {
+        "operationId": "TeacherDegreeController_findAllTeacher",
+        "summary": "Títulos de un profesor con sus notas",
+        "parameters": [
+          {
+            "name": "teacherId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseTeacherDegreeDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher-degree"
+        ]
+      }
+    },
+    "/teacher-degree/{id}": {
+      "get": {
+        "operationId": "TeacherDegreeController_findOne",
+        "summary": "Obtener un título con sus notas",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDegreeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher-degree"
+        ]
+      },
+      "patch": {
+        "operationId": "TeacherDegreeController_update",
+        "summary": "Actualizar un título; si envía grades, reemplaza todas sus notas",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTeacherDegreeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDegreeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher-degree"
+        ]
+      },
+      "delete": {
+        "operationId": "TeacherDegreeController_remove",
+        "summary": "Eliminar un título y sus notas (eliminación lógica)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTeacherDegreeDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "teacher-degree"
         ]
       }
     },
@@ -4438,6 +4749,40 @@
           }
         }
       },
+      "TeacherCategory": {
+        "type": "string",
+        "enum": [
+          "INSTRUCTOR",
+          "ASSISTANT",
+          "AGGREGATE",
+          "ASSOCIATE",
+          "FULL"
+        ]
+      },
+      "EmploymentStatus": {
+        "type": "string",
+        "enum": [
+          "CONTRACTED",
+          "PERMANENT"
+        ]
+      },
+      "TeacherDedication": {
+        "type": "string",
+        "enum": [
+          "EXCLUSIVE",
+          "FULL_TIME",
+          "HALF_TIME",
+          "CONVENTIONAL"
+        ]
+      },
+      "HiringEvaluationStatus": {
+        "type": "string",
+        "enum": [
+          "IN_EVALUATION",
+          "APPROVED",
+          "REJECTED"
+        ]
+      },
       "CreateTeacherDto": {
         "type": "object",
         "properties": {
@@ -4458,6 +4803,28 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "category": {
+            "$ref": "#/components/schemas/TeacherCategory"
+          },
+          "employmentStatus": {
+            "$ref": "#/components/schemas/EmploymentStatus"
+          },
+          "dedication": {
+            "$ref": "#/components/schemas/TeacherDedication"
+          },
+          "hiringEvaluationStatus": {
+            "nullable": true,
+            "$ref": "#/components/schemas/HiringEvaluationStatus"
+          },
+          "hiringEvaluationDate": {
+            "type": "string",
+            "nullable": true,
+            "example": "2026-09-30"
+          },
+          "hiringEvaluationNotes": {
+            "type": "string",
+            "nullable": true
           }
         },
         "required": [
@@ -4493,6 +4860,29 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "category": {
+            "$ref": "#/components/schemas/TeacherCategory"
+          },
+          "categoryLevel": {
+            "type": "string",
+            "description": "Nivel del escalafón (I–V) derivado de la categoría",
+            "example": "IV"
+          },
+          "employmentStatus": {
+            "$ref": "#/components/schemas/EmploymentStatus"
+          },
+          "dedication": {
+            "$ref": "#/components/schemas/TeacherDedication"
+          },
+          "hiringEvaluationStatus": {
+            "$ref": "#/components/schemas/HiringEvaluationStatus"
+          },
+          "hiringEvaluationDate": {
+            "type": "string"
+          },
+          "hiringEvaluationNotes": {
+            "type": "string"
           }
         },
         "required": [
@@ -4502,6 +4892,41 @@
           "departmentId",
           "department",
           "status"
+        ]
+      },
+      "ResponseSubjectHistoryDto": {
+        "type": "object",
+        "properties": {
+          "sectionId": {
+            "type": "number"
+          },
+          "sectionName": {
+            "type": "string"
+          },
+          "periodId": {
+            "type": "number"
+          },
+          "periodName": {
+            "type": "string"
+          },
+          "subjectId": {
+            "type": "number"
+          },
+          "subjectCode": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sectionId",
+          "sectionName",
+          "periodId",
+          "periodName",
+          "subjectId",
+          "subjectCode",
+          "subjectName"
         ]
       },
       "UpdateTeacherDto": {
@@ -4524,6 +4949,303 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "category": {
+            "$ref": "#/components/schemas/TeacherCategory"
+          },
+          "employmentStatus": {
+            "$ref": "#/components/schemas/EmploymentStatus"
+          },
+          "dedication": {
+            "$ref": "#/components/schemas/TeacherDedication"
+          },
+          "hiringEvaluationStatus": {
+            "nullable": true,
+            "$ref": "#/components/schemas/HiringEvaluationStatus"
+          },
+          "hiringEvaluationDate": {
+            "type": "string",
+            "nullable": true,
+            "example": "2026-09-30"
+          },
+          "hiringEvaluationNotes": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "DegreeLevel": {
+        "type": "string",
+        "enum": [
+          "UNDERGRADUATE",
+          "SPECIALIZATION",
+          "MASTER",
+          "DOCTORATE",
+          "OTHER"
+        ]
+      },
+      "TeacherGradeDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "0081814"
+          },
+          "subjectName": {
+            "type": "string",
+            "example": "Matemáticas I"
+          },
+          "period": {
+            "type": "string",
+            "example": "2013-1"
+          },
+          "grade": {
+            "type": "number",
+            "description": "Nota numérica en la escala del título (maxGrade)",
+            "example": 9
+          },
+          "remark": {
+            "type": "string",
+            "description": "Resultado no numérico (RETIRADA, APROBADO, EN EJECUCIÓN)"
+          }
+        },
+        "required": [
+          "subjectName"
+        ]
+      },
+      "CreateTeacherDegreeDto": {
+        "type": "object",
+        "properties": {
+          "teacher": {
+            "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "level": {
+            "$ref": "#/components/schemas/DegreeLevel"
+          },
+          "title": {
+            "type": "string",
+            "example": "Ingeniería de Sistemas"
+          },
+          "institution": {
+            "type": "string",
+            "example": "Universidad de Oriente"
+          },
+          "graduationDate": {
+            "type": "string",
+            "example": "2019-06-15"
+          },
+          "maxGrade": {
+            "type": "number",
+            "description": "Nota máxima de la escala",
+            "example": 10
+          },
+          "grades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherGradeDto"
+            }
+          }
+        },
+        "required": [
+          "teacher",
+          "level",
+          "title",
+          "maxGrade",
+          "grades"
+        ]
+      },
+      "ResponseTeacherGradeDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "0081814"
+          },
+          "subjectName": {
+            "type": "string",
+            "example": "Matemáticas I"
+          },
+          "period": {
+            "type": "string",
+            "example": "2013-1"
+          },
+          "grade": {
+            "type": "number",
+            "description": "Nota numérica en la escala del título (maxGrade)",
+            "example": 9
+          },
+          "remark": {
+            "type": "string",
+            "description": "Resultado no numérico (RETIRADA, APROBADO, EN EJECUCIÓN)"
+          },
+          "id": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "subjectName",
+          "id"
+        ]
+      },
+      "ResponseTeacherDegreeDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "level": {
+            "$ref": "#/components/schemas/DegreeLevel"
+          },
+          "title": {
+            "type": "string"
+          },
+          "institution": {
+            "type": "string"
+          },
+          "graduationDate": {
+            "type": "string"
+          },
+          "maxGrade": {
+            "type": "number"
+          },
+          "grades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseTeacherGradeDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "level",
+          "title",
+          "maxGrade",
+          "grades"
+        ]
+      },
+      "TranscriptPreviewDto": {
+        "type": "object",
+        "properties": {
+          "idDocument": {
+            "type": "string",
+            "description": "Cédula del estudiante, solo dígitos",
+            "example": "23539583"
+          },
+          "studentName": {
+            "type": "string",
+            "example": "FARIÑAS BARRERA, ANIBAL ANTONIO"
+          },
+          "title": {
+            "type": "string",
+            "description": "Carrera o programa",
+            "example": "Ingeniería de Sistemas"
+          },
+          "institution": {
+            "type": "string",
+            "example": "Universidad de Oriente"
+          },
+          "maxGrade": {
+            "type": "number",
+            "description": "Nota máxima de la escala: la del documento, o 10/20 según las notas si no la indica",
+            "example": 10
+          },
+          "grades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherGradeDto"
+            }
+          }
+        },
+        "required": [
+          "maxGrade",
+          "grades"
+        ]
+      },
+      "TeacherGradeMatchDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "grade": {
+            "type": "number"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "maxGrade": {
+            "type": "number"
+          },
+          "percent": {
+            "type": "number",
+            "description": "Nota en porcentaje de la escala"
+          },
+          "degreeTitle": {
+            "type": "string"
+          },
+          "degreeLevel": {
+            "$ref": "#/components/schemas/DegreeLevel"
+          }
+        },
+        "required": [
+          "subjectName",
+          "maxGrade",
+          "degreeTitle",
+          "degreeLevel"
+        ]
+      },
+      "ResponseTeacherGradeSearchDto": {
+        "type": "object",
+        "properties": {
+          "teacher": {
+            "$ref": "#/components/schemas/ResponseTeacherDto"
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherGradeMatchDto"
+            }
+          }
+        },
+        "required": [
+          "teacher",
+          "matches"
+        ]
+      },
+      "UpdateTeacherDegreeDto": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "$ref": "#/components/schemas/DegreeLevel"
+          },
+          "title": {
+            "type": "string",
+            "example": "Ingeniería de Sistemas"
+          },
+          "institution": {
+            "type": "string",
+            "example": "Universidad de Oriente"
+          },
+          "graduationDate": {
+            "type": "string",
+            "example": "2019-06-15"
+          },
+          "maxGrade": {
+            "type": "number",
+            "description": "Nota máxima de la escala",
+            "example": 10
+          },
+          "grades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherGradeDto"
+            }
           }
         }
       },
