@@ -5119,6 +5119,8 @@
             "example": 10
           },
           "grades": {
+            "default": [],
+            "description": "Notas del título; se puede registrar solo el título y agregarlas después",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TeacherGradeDto"
@@ -5129,8 +5131,7 @@
           "teacher",
           "level",
           "title",
-          "maxGrade",
-          "grades"
+          "maxGrade"
         ]
       },
       "ResponseTeacherGradeDto": {
@@ -5337,6 +5338,8 @@
             "example": 10
           },
           "grades": {
+            "default": [],
+            "description": "Notas del título; se puede registrar solo el título y agregarlas después",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TeacherGradeDto"
