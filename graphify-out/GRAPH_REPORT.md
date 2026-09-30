@@ -1,7 +1,7 @@
 # Graph Report - sigeit-api  (2026-09-30)
 
 ## Corpus Check
-- 337 files · ~73,225 words
+- 337 files · ~73,341 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 2, .mdc 1, .example 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `33c7ad21`
+- Built from commit: `900ecb22`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -448,11 +448,11 @@ Nodes (3): QueryBaseDto, ApiPropertyOptional, Type
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `@nestjs/common` connect `@nestjs/common` to `statistics.service.ts`, `Classroom`, `document.service.ts`, `@nestjs/testing`, `CrudRepository`, `career.service.ts`, `period.service.ts`, `schedule-conflict.service.ts`, `package.json`, `schedule-planning.service.ts`, `user.service.ts`, `inscription.service.ts`, `subject-demand.service.ts`, `subject-demand.parser.ts`, `section.service.ts`, `TestService`, `teacher-degree.service.ts`, `audit.service.ts`, `app.module.ts`, `change-password.service.ts`, `auth.module.ts`, `audit.module.ts`, `subject.service.ts`, `Public`, `audit-capture.service.ts`, `mail.service.ts`, `department.service.ts`, `Section`, `schedule.service.ts`, `auth.controller.ts`, `transcript-ai.reader.ts`, `teacher.service.ts`?**
-  _High betweenness centrality (0.291) - this node is a cross-community bridge._
+  _High betweenness centrality (0.294) - this node is a cross-community bridge._
 - **Why does `@nestjs/swagger` connect `@nestjs/swagger` to `statistics.service.ts`, `Classroom`, `document.service.ts`, `@nestjs/testing`, `CrudRepository`, `career.service.ts`, `period.service.ts`, `package.json`, `schedule-planning.service.ts`, `user.service.ts`, `inscription.service.ts`, `subject-demand.service.ts`, `section.service.ts`, `TestService`, `teacher-degree.service.ts`, `response-teacher.dto.ts`, `audit.service.ts`, `app.module.ts`, `subject.service.ts`, `Public`, `teacher/dto/index.ts`, `typeorm`, `department.service.ts`, `Section`, `auth.controller.ts`, `teacher.service.ts`?**
-  _High betweenness centrality (0.133) - this node is a cross-community bridge._
+  _High betweenness centrality (0.130) - this node is a cross-community bridge._
 - **Why does `@nestjs/typeorm` connect `@nestjs/common` to `statistics.service.ts`, `Classroom`, `document.service.ts`, `@nestjs/testing`, `CrudRepository`, `career.service.ts`, `period.service.ts`, `schedule-conflict.service.ts`, `package.json`, `schedule-planning.service.ts`, `user.service.ts`, `inscription.service.ts`, `subject-demand.service.ts`, `section.service.ts`, `teacher-degree.service.ts`, `audit.service.ts`, `app.module.ts`, `audit.module.ts`, `subject.service.ts`, `department.service.ts`, `Section`, `schedule.service.ts`, `teacher.service.ts`?**
-  _High betweenness centrality (0.052) - this node is a cross-community bridge._
+  _High betweenness centrality (0.053) - this node is a cross-community bridge._
 - **What connects `$schema`, `collection`, `sourceRoot` to the rest of the system?**
   _253 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `statistics.service.ts` be split into smaller, more focused modules?**

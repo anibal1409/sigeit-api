@@ -1350,9 +1350,9 @@
     "semantic_hash": ""
   },
   "src/repositories/section/section.controller.spec.ts": {
-    "mtime": 1758411241.2026327,
-    "seen": 1790715876.2783248,
-    "ast_hash": "ccc1f12c3fa9d0d6b335cbfe8ed32d9f",
+    "mtime": 1790799855.163353,
+    "seen": 1790800011.200097,
+    "ast_hash": "c303faa290fd3d1a54a6a38b826f05fe",
     "semantic_hash": ""
   },
   "src/repositories/section/section.controller.ts": {
@@ -1368,9 +1368,9 @@
     "semantic_hash": ""
   },
   "src/repositories/section/section.service.spec.ts": {
-    "mtime": 1758411241.2026327,
-    "seen": 1790715876.2783275,
-    "ast_hash": "18d3987fce39c52e4a067a2728959b54",
+    "mtime": 1790799891.4806502,
+    "seen": 1790800011.2001889,
+    "ast_hash": "c86154aba7b8263f03901dbd199a95ed",
     "semantic_hash": ""
   },
   "src/repositories/section/section.service.ts": {
@@ -1794,9 +1794,9 @@
     "semantic_hash": ""
   },
   "swagger.json": {
-    "mtime": 1790799311.6367865,
-    "seen": 1790799333.0794373,
-    "ast_hash": "3e99ae8e98d46e73a14aa0b4632cce52",
+    "mtime": 1790799962.0104094,
+    "seen": 1790800011.2041674,
+    "ast_hash": "2a29cf0646fdd34addf30aecfdd57485",
     "semantic_hash": ""
   },
   "test/app.e2e-spec.ts": {
@@ -1866,9 +1866,9 @@
     "semantic_hash": ""
   },
   "src/common/text/strip-accents.ts": {
-    "mtime": 1790794947.9463859,
-    "seen": 1790795398.421962,
-    "ast_hash": "f2668f35c67b7355ee5e45911f7a5c93",
+    "mtime": 1790799812.4982395,
+    "seen": 1790800011.1926994,
+    "ast_hash": "522969937a33274fb7b06e710914b9ef",
     "semantic_hash": ""
   },
   "src/repositories/teacher/dto/create-teacher-degree.dto.ts": {
@@ -1938,9 +1938,9 @@
     "semantic_hash": ""
   },
   "src/repositories/teacher/teacher-degree.service.ts": {
-    "mtime": 1790799311.6358767,
-    "seen": 1790799333.0780377,
-    "ast_hash": "9bf1ef3acf4e0538a897e835aafb6480",
+    "mtime": 1790799821.6680431,
+    "seen": 1790800011.202752,
+    "ast_hash": "10043cab63895d14813e555744111722",
     "semantic_hash": ""
   },
   "src/repositories/teacher/transcript.parser.spec.ts": {
@@ -1986,15 +1986,27 @@
     "semantic_hash": ""
   },
   "src/repositories/section/dto/section-teacher.dto.ts": {
-    "mtime": 1790799191.2163284,
-    "seen": 1790799333.0751517,
-    "ast_hash": "1df3f8ef16faf13043a3da43d785b5c5",
+    "mtime": 1790799826.017951,
+    "seen": 1790800011.19989,
+    "ast_hash": "90a9197d3505e0012b139a94385be52a",
     "semantic_hash": ""
   },
   "src/repositories/section/section-teacher.service.ts": {
-    "mtime": 1790799271.7156818,
-    "seen": 1790799333.0753398,
-    "ast_hash": "24eeddc7133fe390813bad5cf47cd9f5",
+    "mtime": 1790799870.0060601,
+    "seen": 1790800011.2000957,
+    "ast_hash": "23a545965e28a1cf686eb03a77d2d1aa",
+    "semantic_hash": ""
+  },
+  "src/repositories/section/section-teacher.service.spec.ts": {
+    "mtime": 1790799862.614205,
+    "seen": 1790800011.2000933,
+    "ast_hash": "7ba3715740cabf8c830688aa60abd920",
+    "semantic_hash": ""
+  },
+  "src/repositories/teacher/grade-match.ts": {
+    "mtime": 1790799812.5659125,
+    "seen": 1790800011.2026184,
+    "ast_hash": "135e0b4b8eb222929d9d70170ba64832",
     "semantic_hash": ""
   }
 }

@@ -4378,7 +4378,7 @@
       "file_type": "code",
       "norm_label": "groupbyteacher()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L262"
+      "source_location": "L263"
     },
     {
       "id": "src_repositories_period_period_service_periodservice_constructor",
@@ -6322,7 +6322,7 @@
       "file_type": "code",
       "norm_label": ".searchbygrade()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L155"
+      "source_location": "L156"
     },
     {
       "id": "src_audit_audit_capture_service_auditcaptureservice_persistaudit",
@@ -7270,7 +7270,7 @@
       "file_type": "code",
       "norm_label": "assertgradesinscale()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L250"
+      "source_location": "L251"
     },
     {
       "id": "src_repositories_teacher_teacher_degree_service_teacherdegreeservice_create",
@@ -7318,7 +7318,7 @@
       "file_type": "code",
       "norm_label": ".findvalid()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L227"
+      "source_location": "L228"
     },
     {
       "id": "src_repositories_teacher_teacher_degree_service_teacherdegreeservice_remove",
@@ -7330,7 +7330,7 @@
       "file_type": "code",
       "norm_label": ".remove()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L118"
+      "source_location": "L119"
     },
     {
       "id": "src_repositories_teacher_teacher_degree_service_teacherdegreeservice_update",
@@ -7342,7 +7342,7 @@
       "file_type": "code",
       "norm_label": ".update()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L88"
+      "source_location": "L89"
     },
     {
       "id": "src_repositories_teacher_teacher_degree_service_togradeentity",
@@ -7354,7 +7354,7 @@
       "file_type": "code",
       "norm_label": "togradeentity()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L241"
+      "source_location": "L242"
     },
     {
       "id": "src_repositories_inscription_inscription_service_inscriptionservice_constructor",
@@ -7858,7 +7858,7 @@
       "file_type": "code",
       "norm_label": ".parsetranscript()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L130"
+      "source_location": "L131"
     },
     {
       "id": "src_repositories_teacher_teacher_degree_service_teacherdegreeservice_suggestequivalences",
@@ -7870,7 +7870,7 @@
       "file_type": "code",
       "norm_label": ".suggestequivalences()",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L188"
+      "source_location": "L189"
     },
     {
       "id": "src_repositories_teacher_transcript_ai_reader_buildrequest",
@@ -23441,6 +23441,18 @@
       "type": "external"
     },
     {
+      "id": "src_common_text_index_normalizetext",
+      "label": "src_common_text_index_normalizetext",
+      "_origin": "semantic",
+      "community": 24,
+      "community_name": "teacher-degree.service.ts",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "src_common_text_index_normalizetext",
+      "source_file": "",
+      "type": "external"
+    },
+    {
       "id": "src_repositories_subject_entities_index_subject",
       "label": "src_repositories_subject_entities_index_subject",
       "_origin": "semantic",
@@ -24625,17 +24637,6 @@
       "external": true,
       "file_type": "concept",
       "norm_label": "src_repositories_schedule_entities_index_schedule",
-      "source_file": "",
-      "type": "external"
-    },
-    {
-      "id": "src_common_text_index_normalizetext",
-      "label": "src_common_text_index_normalizetext",
-      "community": 24,
-      "community_name": "teacher-degree.service.ts",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "src_common_text_index_normalizetext",
       "source_file": "",
       "type": "external"
     }
@@ -27350,7 +27351,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L269",
+      "source_location": "L270",
       "weight": 1.0
     },
     {
@@ -27362,7 +27363,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L272",
+      "source_location": "L273",
       "weight": 1.0
     },
     {
@@ -27374,7 +27375,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L277",
+      "source_location": "L278",
       "weight": 1.0
     },
     {
@@ -27386,7 +27387,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L79",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -27398,7 +27399,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L84",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -27422,7 +27423,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L140",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -27434,7 +27435,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L140",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -27446,7 +27447,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L143",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -27458,7 +27459,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L145",
+      "source_location": "L146",
       "weight": 1.0
     },
     {
@@ -27470,7 +27471,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L119",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -27482,7 +27483,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L165",
+      "source_location": "L166",
       "weight": 1.0
     },
     {
@@ -27494,7 +27495,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L179",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
@@ -27506,7 +27507,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L192",
+      "source_location": "L193",
       "weight": 1.0
     },
     {
@@ -27518,7 +27519,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L218",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -27530,7 +27531,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L221",
+      "source_location": "L222",
       "weight": 1.0
     },
     {
@@ -27542,7 +27543,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L111",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -27554,7 +27555,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L114",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -27566,7 +27567,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L92",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -27578,7 +27579,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L93",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -27590,7 +27591,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L244",
+      "source_location": "L245",
       "weight": 1.0
     },
     {
@@ -37375,7 +37376,7 @@
     },
     {
       "source": "src_repositories_teacher_dto_create_teacher_degree_dto_createteacherdegreedto",
-      "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_apiproperty",
+      "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_apipropertyoptional",
       "relation": "references",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -37387,6 +37388,18 @@
     },
     {
       "source": "src_repositories_teacher_dto_create_teacher_degree_dto_createteacherdegreedto",
+      "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_isoptional",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "src_repositories_teacher_dto_create_teacher_degree_dto_createteacherdegreedto",
       "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_isarray",
       "relation": "references",
       "_origin": "ast",
@@ -37394,7 +37407,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
-      "source_location": "L105",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -37406,7 +37419,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
-      "source_location": "L106",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -37418,7 +37431,7 @@
       "confidence_score": 1.0,
       "context": "decorator",
       "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
-      "source_location": "L107",
+      "source_location": "L113",
       "weight": 1.0
     },
     {
@@ -37459,30 +37472,6 @@
     },
     {
       "source": "src_repositories_teacher_dto_create_teacher_degree_dto_createteacherdegreedto",
-      "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_apipropertyoptional",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "decorator",
-      "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
-      "source_location": "L94",
-      "weight": 1.0
-    },
-    {
-      "source": "src_repositories_teacher_dto_create_teacher_degree_dto_createteacherdegreedto",
-      "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_isoptional",
-      "relation": "references",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "decorator",
-      "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
-      "source_location": "L95",
-      "weight": 1.0
-    },
-    {
-      "source": "src_repositories_teacher_dto_create_teacher_degree_dto_createteacherdegreedto",
       "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_isdatestring",
       "relation": "references",
       "_origin": "ast",
@@ -37491,6 +37480,18 @@
       "context": "decorator",
       "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
       "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "src_repositories_teacher_dto_create_teacher_degree_dto_createteacherdegreedto",
+      "target": "src_repositories_teacher_dto_create_teacher_degree_dto_ts_apiproperty",
+      "relation": "references",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "decorator",
+      "source_file": "src/repositories/teacher/dto/create-teacher-degree.dto.ts",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -45770,7 +45771,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L227",
+      "source_location": "L228",
       "weight": 1.0
     },
     {
@@ -45782,7 +45783,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L130",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -45794,7 +45795,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L118",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -45806,7 +45807,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L155",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -45818,7 +45819,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L188",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -45830,7 +45831,7 @@
       "confidence_score": 1.0,
       "context": "generic_arg",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -75638,7 +75639,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L130",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -75650,7 +75651,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L155",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -75662,7 +75663,7 @@
       "confidence_score": 1.0,
       "context": "parameter_type",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -81724,7 +81725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L241",
+      "source_location": "L242",
       "weight": 1.0
     },
     {
@@ -81735,7 +81736,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L250",
+      "source_location": "L251",
       "weight": 1.0
     },
     {
@@ -81746,7 +81747,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L262",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -86179,7 +86180,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L118",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -86190,7 +86191,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L130",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -86201,7 +86202,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L155",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -86212,7 +86213,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L188",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -86223,7 +86224,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L227",
+      "source_location": "L228",
       "weight": 1.0
     },
     {
@@ -86278,7 +86279,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -88841,7 +88842,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "src/repositories/teacher/teacher-degree.service.spec.ts",
-      "source_location": "L39",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -88853,7 +88854,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "src/repositories/teacher/teacher-degree.service.spec.ts",
-      "source_location": "L61",
+      "source_location": "L65",
       "weight": 1.0
     },
     {
@@ -88865,7 +88866,7 @@
       "confidence_score": 0.85,
       "context": "argument",
       "source_file": "src/repositories/teacher/teacher-degree.service.ts",
-      "source_location": "L82",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -88882,5 +88883,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "33c7ad21bb7cca4f13bd01833e02f67a7c16b787"
+  "built_at_commit": "900ecb22665476ef149aba6590505bcb946aa202"
 }
