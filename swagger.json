@@ -1029,7 +1029,7 @@
             "name": "subject",
             "required": true,
             "in": "query",
-            "description": "Texto de la asignatura; ignora mayúsculas y tildes, y exige todas las palabras",
+            "description": "Texto de la asignatura; ignora mayúsculas y tildes, exige todas las palabras y también busca en el nombre de la asignatura equivalente del pensum",
             "schema": {
               "example": "programacion objetos",
               "type": "string"
@@ -2514,6 +2514,58 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/ResponseSectionDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "section"
+        ]
+      }
+    },
+    "/section/period/{periodId}/teachers": {
+      "get": {
+        "operationId": "SectionController_findTeachers",
+        "summary": "Profesores para asignar a secciones: carga del período y, con subjectId, historial y notas en la asignatura",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "description": "Departamento de los profesores; por defecto, el de la asignatura",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "description": "Asignatura a asignar: agrega el historial y las notas de cada profesor en ella",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseSectionTeacherDto"
                   }
                 }
               }
@@ -4984,6 +5036,25 @@
           "OTHER"
         ]
       },
+      "SubjectRefDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "code": {
+            "type": "string",
+            "example": "0715963"
+          },
+          "name": {
+            "type": "string",
+            "example": "Programación Orientada a Objetos"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
       "TeacherGradeDto": {
         "type": "object",
         "properties": {
@@ -5007,6 +5078,14 @@
           "remark": {
             "type": "string",
             "description": "Resultado no numérico (RETIRADA, APROBADO, EN EJECUCIÓN)"
+          },
+          "subject": {
+            "description": "Asignatura del pensum a la que equivale; en la vista previa es una sugerencia",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SubjectRefDto"
+              }
+            ]
           }
         },
         "required": [
@@ -5077,6 +5156,14 @@
           "remark": {
             "type": "string",
             "description": "Resultado no numérico (RETIRADA, APROBADO, EN EJECUCIÓN)"
+          },
+          "subject": {
+            "description": "Asignatura del pensum a la que equivale; en la vista previa es una sugerencia",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SubjectRefDto"
+              }
+            ]
           },
           "id": {
             "type": "number"
@@ -5191,6 +5278,14 @@
           },
           "degreeLevel": {
             "$ref": "#/components/schemas/DegreeLevel"
+          },
+          "subject": {
+            "description": "Asignatura del pensum a la que equivale la nota",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SubjectRefDto"
+              }
+            ]
           }
         },
         "required": [
@@ -6000,7 +6095,13 @@
             "$ref": "#/components/schemas/IdCreateEntity"
           },
           "teacher": {
-            "$ref": "#/components/schemas/IdCreateEntity"
+            "nullable": true,
+            "description": "Nulo mientras la sección no tenga profesor asignado",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IdCreateEntity"
+              }
+            ]
           },
           "status": {
             "type": "boolean"
@@ -6014,7 +6115,6 @@
           "name",
           "subject",
           "period",
-          "teacher",
           "status"
         ]
       },
@@ -6050,10 +6150,16 @@
             "$ref": "#/components/schemas/Period"
           },
           "teacherId": {
-            "type": "number"
+            "type": "number",
+            "nullable": true
           },
           "teacher": {
-            "$ref": "#/components/schemas/Teacher"
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Teacher"
+              }
+            ]
           },
           "status": {
             "type": "boolean"
@@ -6077,6 +6183,51 @@
           "all"
         ]
       },
+      "ResponseSectionTeacherDto": {
+        "type": "object",
+        "properties": {
+          "teacher": {
+            "$ref": "#/components/schemas/ResponseTeacherDto"
+          },
+          "hours": {
+            "type": "number",
+            "description": "Horas semanales asignadas en el período (suma de las horas de la asignatura de cada sección activa)"
+          },
+          "sections": {
+            "type": "number",
+            "description": "Secciones activas asignadas en el período"
+          },
+          "timesTaught": {
+            "type": "number",
+            "description": "Períodos anteriores en que dictó la asignatura"
+          },
+          "lastPeriodName": {
+            "type": "string",
+            "description": "Último período en que dictó la asignatura"
+          },
+          "grade": {
+            "description": "Mejor nota en la misma asignatura (equivalencia indicada, mismo código o mismo nombre)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TeacherGradeMatchDto"
+              }
+            ]
+          },
+          "similarGrade": {
+            "description": "Mejor nota en una asignatura parecida (comparte una palabra clave del nombre)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TeacherGradeMatchDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "teacher",
+          "hours",
+          "sections"
+        ]
+      },
       "UpdateSectionDto": {
         "type": "object",
         "properties": {
@@ -6093,7 +6244,13 @@
             "$ref": "#/components/schemas/IdCreateEntity"
           },
           "teacher": {
-            "$ref": "#/components/schemas/IdCreateEntity"
+            "nullable": true,
+            "description": "Nulo mientras la sección no tenga profesor asignado",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/IdCreateEntity"
+              }
+            ]
           },
           "status": {
             "type": "boolean"
