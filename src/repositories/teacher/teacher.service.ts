@@ -8,7 +8,13 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CrudRepository } from '../../common/use-case';
-import { CreateTeacherDto, GetTeachersDto, UpdateTeacherDto } from './dto';
+import { Section } from '../section/entities';
+import {
+  CreateTeacherDto,
+  GetTeachersDto,
+  ResponseSubjectHistoryDto,
+  UpdateTeacherDto,
+} from './dto';
 import { ResponseTeacherDto } from './dto/response-teacher.dto';
 import { Teacher } from './entities';
 
@@ -17,6 +23,8 @@ export class TeacherService implements CrudRepository<Teacher> {
   constructor(
     @InjectRepository(Teacher)
     private repository: Repository<Teacher>,
+    @InjectRepository(Section)
+    private sectionRepository: Repository<Section>,
   ) {}
 
   async findValid(id: number): Promise<Teacher> {
@@ -64,6 +72,9 @@ export class TeacherService implements CrudRepository<Teacher> {
           },
         },
         status: data?.status,
+        category: data?.category,
+        employmentStatus: data?.employmentStatus,
+        hiringEvaluationStatus: data?.hiringEvaluationStatus,
       },
       order: {
         lastName: 'ASC',
@@ -95,7 +106,10 @@ export class TeacherService implements CrudRepository<Teacher> {
     id: number,
     updateDto: UpdateTeacherDto,
   ): Promise<ResponseTeacherDto> {
-    if (await this.findByIdDocument(updateDto.idDocument, id)) {
+    const duplicated =
+      updateDto.idDocument &&
+      (await this.findByIdDocument(updateDto.idDocument, id));
+    if (duplicated) {
       throw new BadRequestException('Teacher already exists.');
     }
 
@@ -107,9 +121,26 @@ export class TeacherService implements CrudRepository<Teacher> {
       status: updateDto.status,
       email: updateDto.email,
       department: updateDto.department,
+      category: updateDto.category,
+      employmentStatus: updateDto.employmentStatus,
+      dedication: updateDto.dedication,
+      hiringEvaluationStatus: updateDto.hiringEvaluationStatus,
+      hiringEvaluationDate: updateDto.hiringEvaluationDate,
+      hiringEvaluationNotes: updateDto.hiringEvaluationNotes,
     });
 
     return this.findOne(item.id);
+  }
+
+  /** Secciones que el profesor ha impartido, del período más reciente al más antiguo. */
+  async findSubjectsHistory(id: number): Promise<ResponseSubjectHistoryDto[]> {
+    await this.findValid(id);
+    const sections = await this.sectionRepository.find({
+      where: { deleted: false, teacher: { id } },
+      relations: ['subject', 'period'],
+      order: { period: { start: 'DESC' }, subject: { name: 'ASC' } },
+    });
+    return sections.map((section) => new ResponseSubjectHistoryDto(section));
   }
 
   async remove(id: number): Promise<ResponseTeacherDto> {

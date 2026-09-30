@@ -9,9 +9,9 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { GetTeachersDto } from './dto';
+import { GetTeachersDto, ResponseSubjectHistoryDto } from './dto';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { ResponseTeacherDto } from './dto/response-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
@@ -55,6 +55,15 @@ export class TeacherController {
   })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.teacherService.findOne(+id);
+  }
+
+  @Get(':id/subjects-history')
+  @ApiOperation({
+    summary: 'Historial de asignaturas impartidas por el profesor',
+  })
+  @ApiResponse({ type: ResponseSubjectHistoryDto, isArray: true })
+  findSubjectsHistory(@Param('id', ParseIntPipe) id: number) {
+    return this.teacherService.findSubjectsHistory(id);
   }
 
   @Patch(':id')

@@ -11,6 +11,13 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Department } from '../../department/entities';
 import { Teacher } from '../entities';
+import {
+  EmploymentStatus,
+  HiringEvaluationStatus,
+  TEACHER_CATEGORY_LEVEL,
+  TeacherCategory,
+  TeacherDedication,
+} from '../enum';
 
 export class ResponseTeacherDto {
   @ApiProperty()
@@ -53,14 +60,54 @@ export class ResponseTeacherDto {
   @IsBoolean()
   status!: boolean;
 
+  @ApiPropertyOptional({ enum: TeacherCategory, enumName: 'TeacherCategory' })
+  category?: TeacherCategory;
+
+  @ApiPropertyOptional({
+    description: 'Nivel del escalafón (I–V) derivado de la categoría',
+    example: 'IV',
+  })
+  categoryLevel?: string;
+
+  @ApiPropertyOptional({
+    enum: EmploymentStatus,
+    enumName: 'EmploymentStatus',
+  })
+  employmentStatus?: EmploymentStatus;
+
+  @ApiPropertyOptional({
+    enum: TeacherDedication,
+    enumName: 'TeacherDedication',
+  })
+  dedication?: TeacherDedication;
+
+  @ApiPropertyOptional({
+    enum: HiringEvaluationStatus,
+    enumName: 'HiringEvaluationStatus',
+  })
+  hiringEvaluationStatus?: HiringEvaluationStatus;
+
+  @ApiPropertyOptional()
+  hiringEvaluationDate?: string;
+
+  @ApiPropertyOptional()
+  hiringEvaluationNotes?: string;
+
   constructor(data: Teacher) {
     this.id = data.id;
     this.firstName = data.firstName;
-    this.departmentId = data.department.id;
+    this.departmentId = data.department?.id;
     this.department = data.department;
     this.status = data.status;
     this.idDocument = data.idDocument;
     this.lastName = data.lastName;
     this.email = data.email;
+    this.category = data.category;
+    this.categoryLevel = TEACHER_CATEGORY_LEVEL[data.category];
+    this.employmentStatus = data.employmentStatus;
+    this.dedication = data.dedication;
+    this.hiringEvaluationStatus = data.hiringEvaluationStatus;
+    this.hiringEvaluationDate = data.hiringEvaluationDate;
+    this.hiringEvaluationNotes = data.hiringEvaluationNotes;
   }
 }
