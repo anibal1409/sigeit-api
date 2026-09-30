@@ -96,9 +96,7 @@ export class SectionService implements CrudRepository<Section> {
           },
           semester: query?.semester || Not(0),
         },
-        teacher: {
-          id: query?.teacherId || Not(0),
-        },
+        teacher: query?.teacherId ? { id: query.teacherId } : undefined,
       },
       relations: ['subject', 'period', 'teacher', 'subject.department'],
       order: {
@@ -116,15 +114,17 @@ export class SectionService implements CrudRepository<Section> {
     return new ResponseSectionDto(item);
   }
 
+  /** Actualización parcial: los campos ausentes conservan su valor; `teacher: null` quita el profesor. */
   async update(
     id: number,
     updateDto: UpdateSectionDto,
   ): Promise<ResponseSectionDto> {
+    const current = await this.findValid(id);
     if (
       await this.findByName(
-        updateDto.name,
-        updateDto.subject.id,
-        updateDto.period.id,
+        updateDto.name ?? current.name,
+        updateDto.subject?.id ?? current.subject.id,
+        updateDto.period?.id ?? current.period.id,
         id,
       )
     ) {

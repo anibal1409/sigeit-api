@@ -101,9 +101,7 @@ export class InscriptionService implements CrudRepository<Inscription> {
           period: {
             id: periodId,
           },
-          teacher: {
-            id: data?.teacherId || Not(0),
-          },
+          teacher: data?.teacherId ? { id: data.teacherId } : undefined,
           subject: {
             id: data?.subjectId || Not(0),
             semester: data?.semester || Not(0),

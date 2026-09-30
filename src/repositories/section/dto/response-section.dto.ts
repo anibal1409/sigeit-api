@@ -49,15 +49,15 @@ export class ResponseSectionDto {
   @Type(() => Period)
   period: Period;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ nullable: true })
+  @IsOptional()
   @Type(() => Number)
-  teacherId: number;
+  teacherId: number | null;
 
-  @ApiProperty()
+  @ApiProperty({ nullable: true })
   @IsOptional()
   @Type(() => Teacher)
-  teacher: Teacher;
+  teacher: Teacher | null;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -78,8 +78,8 @@ export class ResponseSectionDto {
     this.subject = data.subject;
     this.periodId = data.period.id;
     this.period = data.period;
-    this.teacherId = data.teacher.id;
-    this.teacher = data.teacher;
+    this.teacherId = data.teacher?.id ?? null;
+    this.teacher = data.teacher ?? null;
     this.inscribed = data.inscribed;
     this.all = data.all;
   }

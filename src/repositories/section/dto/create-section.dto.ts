@@ -41,10 +41,14 @@ export class CreateSectionDto extends PartialType(
   @Type(() => IdCreateEntity)
   period: IdCreateEntity;
 
-  @ApiProperty({ type: IdCreateEntity })
-  @IsNotEmpty()
+  @ApiPropertyOptional({
+    type: IdCreateEntity,
+    nullable: true,
+    description: 'Nulo mientras la sección no tenga profesor asignado',
+  })
+  @IsOptional()
   @Type(() => IdCreateEntity)
-  teacher: IdCreateEntity;
+  teacher?: IdCreateEntity | null;
 
   @ApiProperty()
   @IsNotEmpty()

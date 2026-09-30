@@ -233,9 +233,7 @@ export class PeriodService implements CrudRepository<Period> {
         subject: {
           id: section.subject.id,
         },
-        teacher: {
-          id: section.teacher.id,
-        },
+        teacher: section.teacher ? { id: section.teacher.id } : null,
         inscribed: 0,
         period: {
           id: periodId,

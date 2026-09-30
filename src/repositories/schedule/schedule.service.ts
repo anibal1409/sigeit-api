@@ -147,9 +147,7 @@ export class ScheduleService implements CrudRepository<Schedule> {
             },
             status: students || null,
           },
-          teacher: {
-            id: query?.teacherId || Not(0),
-          },
+          teacher: query?.teacherId ? { id: query.teacherId } : undefined,
         },
         classroom: {
           id: query?.classroomId || Not(0),
