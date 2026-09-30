@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { stripAccents } from '../../common/text';
+import { normalizeText } from '../../common/text';
 import { UploadedFileData } from '../../common/upload';
 import { Subject } from '../subject/entities';
 import { normalizeSubjectCode } from '../subject/subject-code';
@@ -18,12 +18,12 @@ import {
   ResponseTeacherGradeSearchDto,
   SearchTeacherGradeDto,
   TeacherGradeDto,
-  TeacherGradeMatchDto,
   toSubjectRef,
   TranscriptPreviewDto,
   UpdateTeacherDegreeDto,
 } from './dto';
 import { TeacherDegree, TeacherGrade } from './entities';
+import { byPercentDesc, toGradeMatch } from './grade-match';
 import { TeacherService } from './teacher.service';
 import { readTranscriptWithAi } from './transcript-ai.reader';
 import { extractPdfText, parseTranscriptText } from './transcript.parser';
@@ -162,7 +162,7 @@ export class TeacherDegreeService {
       .leftJoinAndSelect('teacher.department', 'department')
       .leftJoinAndSelect('grade.subject', 'subject')
       .where('degree.deleted = false AND teacher.deleted = false');
-    const words = normalizeSearchText(query.subject).split(' ').filter(Boolean);
+    const words = normalizeText(query.subject).split(' ').filter(Boolean);
     if (words.length) {
       const allWordsIn = (column: string) =>
         words.map((_, i) => `${column} LIKE :w${i}`).join(' AND ');
@@ -189,7 +189,7 @@ export class TeacherDegreeService {
     preview: TranscriptPreviewDto,
   ): Promise<TranscriptPreviewDto> {
     const names = preview.grades.map((grade) =>
-      normalizeSearchText(grade.subjectName),
+      normalizeText(grade.subjectName),
     );
     if (!names.length) return preview;
     const [subjects, previous] = await Promise.all([
@@ -205,7 +205,7 @@ export class TeacherDegreeService {
     ]);
     const byCode = new Map(subjects.map((item) => [item.code, item]));
     const byName = new Map(
-      subjects.map((item) => [normalizeSearchText(item.name), item]),
+      subjects.map((item) => [normalizeText(item.name), item]),
     );
     const used = new Map<string, Subject>();
     previous.forEach(
@@ -237,16 +237,11 @@ export class TeacherDegreeService {
   }
 }
 
-/** Minúsculas, sin tildes y con espacios simples: formato de `normalizedName`. */
-function normalizeSearchText(text: string): string {
-  return stripAccents(text).toLowerCase().replace(/\s+/g, ' ').trim();
-}
-
 /** Entidad de nota con el nombre normalizado que usa la búsqueda y la equivalencia por id. */
 function toGradeEntity(grade: TeacherGradeDto): DeepPartial<TeacherGrade> {
   return {
     ...grade,
-    normalizedName: normalizeSearchText(grade.subjectName),
+    normalizedName: normalizeText(grade.subjectName),
     subject: grade.subject ? { id: grade.subject.id } : null,
   };
 }
@@ -274,32 +269,10 @@ function groupByTeacher(
       teacher: new ResponseTeacherDto(teacher),
       matches: [],
     };
-    entry.matches.push(toMatch(grade));
+    entry.matches.push(toGradeMatch(grade));
     byTeacher.set(teacher.id, entry);
   }
-  const byPercent = (a: TeacherGradeMatchDto, b: TeacherGradeMatchDto) =>
-    (b.percent ?? -1) - (a.percent ?? -1);
   const results = [...byTeacher.values()];
-  results.forEach((entry) => entry.matches.sort(byPercent));
-  return results.sort((a, b) => byPercent(a.matches[0], b.matches[0]));
-}
-
-/** Coincidencia de búsqueda con la nota expresada también en porcentaje de su escala. */
-function toMatch(grade: TeacherGrade): TeacherGradeMatchDto {
-  const { degree } = grade;
-  const hasGrade = grade.grade !== null && grade.grade !== undefined;
-  return {
-    code: grade.code,
-    subjectName: grade.subjectName,
-    period: grade.period,
-    grade: grade.grade,
-    remark: grade.remark,
-    maxGrade: degree.maxGrade,
-    percent: hasGrade
-      ? Math.round((grade.grade / degree.maxGrade) * 1000) / 10
-      : undefined,
-    degreeTitle: degree.title,
-    degreeLevel: degree.level,
-    subject: toSubjectRef(grade.subject),
-  };
+  results.forEach((entry) => entry.matches.sort(byPercentDesc));
+  return results.sort((a, b) => byPercentDesc(a.matches[0], b.matches[0]));
 }
