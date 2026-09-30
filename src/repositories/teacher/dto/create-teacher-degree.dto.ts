@@ -17,6 +17,15 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IdCreateEntity } from '../../base';
 import { DegreeLevel } from '../enum';
 
+/** Asignatura del pensum; al guardar solo se usa `id`, `code` y `name` son informativos. */
+export class SubjectRefDto extends IdCreateEntity {
+  @ApiPropertyOptional({ example: '0715963' })
+  code?: string;
+
+  @ApiPropertyOptional({ example: 'Programación Orientada a Objetos' })
+  name?: string;
+}
+
 /** Nota de una asignatura cursada (registro manual o extraída de un récord). */
 export class TeacherGradeDto {
   @ApiPropertyOptional({ example: '0081814' })
@@ -49,6 +58,16 @@ export class TeacherGradeDto {
   @IsOptional()
   @IsString()
   remark?: string;
+
+  @ApiPropertyOptional({
+    type: SubjectRefDto,
+    description:
+      'Asignatura del pensum a la que equivale; en la vista previa es una sugerencia',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => SubjectRefDto)
+  subject?: SubjectRefDto;
 }
 
 /** Datos para registrar un título de un profesor junto con sus notas. */

@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
+import { Subject } from '../subject/entities';
 import { TeacherDegree, TeacherGrade } from './entities';
 import { DegreeLevel } from './enum';
 import { TeacherDegreeService } from './teacher-degree.service';
@@ -22,13 +23,32 @@ describe('TeacherDegreeService', () => {
     buffer: Buffer.from('x'),
   });
 
+  const poo = {
+    id: 2,
+    code: '0715963',
+    name: 'Programación Orientada a Objetos',
+  };
+  const subjects = [
+    { id: 1, code: '0081814', name: 'Matemáticas I' },
+    poo,
+    { id: 3, code: '0071234', name: 'Física I' },
+  ];
+  const previousGrades = [{ normalizedName: 'programacion i', subject: poo }];
+
   beforeEach(async () => {
     jest.mocked(readTranscriptWithAi).mockReset().mockResolvedValue(aiPreview);
     const module = await Test.createTestingModule({
       providers: [
         TeacherDegreeService,
         { provide: getRepositoryToken(TeacherDegree), useValue: {} },
-        { provide: getRepositoryToken(TeacherGrade), useValue: {} },
+        {
+          provide: getRepositoryToken(TeacherGrade),
+          useValue: { find: jest.fn().mockResolvedValue(previousGrades) },
+        },
+        {
+          provide: getRepositoryToken(Subject),
+          useValue: { find: jest.fn().mockResolvedValue(subjects) },
+        },
         { provide: TeacherService, useValue: { findValid: jest.fn() } },
       ],
     }).compile();
@@ -68,6 +88,27 @@ describe('TeacherDegreeService', () => {
         expect.any(Buffer),
         'image/jpeg',
       );
+    });
+
+    it('sugiere la equivalencia por código, por uso previo o por nombre', async () => {
+      jest.mocked(readTranscriptWithAi).mockResolvedValue({
+        maxGrade: 20,
+        grades: [
+          { code: '81814', subjectName: 'Cálculo' },
+          { subjectName: 'Programación I' },
+          { subjectName: 'FISICA  I' },
+          { subjectName: 'Dibujo' },
+        ],
+      });
+
+      const { grades } = await service.parseTranscript(file('foto.png'));
+
+      expect(grades.map((grade) => grade.subject?.id)).toEqual([
+        1,
+        2,
+        3,
+        undefined,
+      ]);
     });
 
     it('rechaza formatos no soportados', async () => {

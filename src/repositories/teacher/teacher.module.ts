@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { Section } from '../section/entities';
+import { Subject } from '../subject/entities';
 import { Teacher, TeacherDegree, TeacherGrade } from './entities';
 import { TeacherDegreeController } from './teacher-degree.controller';
 import { TeacherDegreeService } from './teacher-degree.service';
@@ -10,7 +11,13 @@ import { TeacherService } from './teacher.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Teacher, TeacherDegree, TeacherGrade, Section]),
+    TypeOrmModule.forFeature([
+      Teacher,
+      TeacherDegree,
+      TeacherGrade,
+      Section,
+      Subject,
+    ]),
   ],
   controllers: [TeacherController, TeacherDegreeController],
   providers: [TeacherService, TeacherDegreeService],

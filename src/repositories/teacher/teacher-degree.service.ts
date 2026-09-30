@@ -1,4 +1,4 @@
-import { DeepPartial, Repository } from 'typeorm';
+import { DeepPartial, In, Repository } from 'typeorm';
 
 import {
   BadRequestException,
@@ -9,6 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { stripAccents } from '../../common/text';
 import { UploadedFileData } from '../../common/upload';
+import { Subject } from '../subject/entities';
+import { normalizeSubjectCode } from '../subject/subject-code';
 import {
   CreateTeacherDegreeDto,
   ResponseTeacherDegreeDto,
@@ -17,6 +19,7 @@ import {
   SearchTeacherGradeDto,
   TeacherGradeDto,
   TeacherGradeMatchDto,
+  toSubjectRef,
   TranscriptPreviewDto,
   UpdateTeacherDegreeDto,
 } from './dto';
@@ -35,6 +38,13 @@ const TRANSCRIPT_MIME_TYPES: Record<string, string> = {
   heic: 'image/heic',
 };
 
+/** Nombre de la asignatura del pensum en el formato de `normalizedName`, en SQL. */
+const SUBJECT_NAME_SQL =
+  "translate(lower(subject.name), 'áéíóúüñÁÉÍÓÚÜÑ', 'aeiouunaeiouun')";
+
+/** Relaciones para devolver un título con sus notas y equivalencias. */
+const DEGREE_RELATIONS = ['grades', 'grades.subject'];
+
 /** Títulos de los profesores, sus notas y la búsqueda de profesores por nota. */
 @Injectable()
 export class TeacherDegreeService {
@@ -43,6 +53,8 @@ export class TeacherDegreeService {
     private readonly repository: Repository<TeacherDegree>,
     @InjectRepository(TeacherGrade)
     private readonly gradeRepository: Repository<TeacherGrade>,
+    @InjectRepository(Subject)
+    private readonly subjectRepository: Repository<Subject>,
     private readonly teacherService: TeacherService,
   ) {}
 
@@ -50,7 +62,7 @@ export class TeacherDegreeService {
   async findAllTeacher(teacherId: number): Promise<ResponseTeacherDegreeDto[]> {
     const items = await this.repository.find({
       where: { deleted: false, teacher: { id: teacherId } },
-      relations: ['grades'],
+      relations: DEGREE_RELATIONS,
       order: { graduationDate: 'DESC', grades: { period: 'ASC', code: 'ASC' } },
     });
     return items.map((item) => new ResponseTeacherDegreeDto(item));
@@ -113,6 +125,7 @@ export class TeacherDegreeService {
    * Extrae las notas de un récord sin guardarlas (vista previa). Los PDF con
    * texto en formato UDO se interpretan localmente (gratis e inmediato); las
    * imágenes, los PDF escaneados y los formatos no reconocidos van a la IA.
+   * Cada nota trae sugerida su asignatura equivalente del pensum.
    */
   async parseTranscript(file: UploadedFileData): Promise<TranscriptPreviewDto> {
     const extension = file.originalname.split('.').pop()?.toLowerCase();
@@ -122,16 +135,20 @@ export class TeacherDegreeService {
         'Formato no soportado: use PDF, JPG, PNG, WEBP o HEIC.',
       );
     }
+    let preview: TranscriptPreviewDto;
     if (extension === 'pdf') {
-      const preview = parseTranscriptText(await extractPdfText(file.buffer));
-      if (preview.grades.length) return preview;
+      preview = parseTranscriptText(await extractPdfText(file.buffer));
     }
-    return readTranscriptWithAi(file.buffer, mimeType);
+    if (!preview?.grades.length) {
+      preview = await readTranscriptWithAi(file.buffer, mimeType);
+    }
+    return this.suggestEquivalences(preview);
   }
 
   /**
-   * Profesores con notas en asignaturas cuyo nombre contiene todas las palabras
-   * buscadas (sin distinguir mayúsculas ni tildes), ordenados por mejor nota.
+   * Profesores con notas en asignaturas cuyo nombre, o el de su asignatura
+   * equivalente del pensum, contiene todas las palabras buscadas (sin
+   * distinguir mayúsculas ni tildes), ordenados por mejor nota.
    * ponytail: coincidencia por subcadena; usar pg_trgm si se necesita tolerar
    * errores de escritura o abreviaturas ("Program." vs "Programación").
    */
@@ -143,15 +160,17 @@ export class TeacherDegreeService {
       .innerJoinAndSelect('grade.degree', 'degree')
       .innerJoinAndSelect('degree.teacher', 'teacher')
       .leftJoinAndSelect('teacher.department', 'department')
+      .leftJoinAndSelect('grade.subject', 'subject')
       .where('degree.deleted = false AND teacher.deleted = false');
-    normalizeSearchText(query.subject)
-      .split(' ')
-      .filter(Boolean)
-      .forEach((word, i) =>
-        qb.andWhere(`grade.normalizedName LIKE :w${i}`, {
-          [`w${i}`]: `%${word}%`,
-        }),
+    const words = normalizeSearchText(query.subject).split(' ').filter(Boolean);
+    if (words.length) {
+      const allWordsIn = (column: string) =>
+        words.map((_, i) => `${column} LIKE :w${i}`).join(' AND ');
+      qb.andWhere(
+        `((${allWordsIn('grade.normalizedName')}) OR (${allWordsIn(SUBJECT_NAME_SQL)}))`,
+        Object.fromEntries(words.map((word, i) => [`w${i}`, `%${word}%`])),
       );
+    }
     if (query.minPercent !== undefined) {
       qb.andWhere('grade.grade * 100 / degree.maxGrade >= :minPercent', {
         minPercent: query.minPercent,
@@ -160,11 +179,55 @@ export class TeacherDegreeService {
     return groupByTeacher(await qb.getMany());
   }
 
+  /**
+   * Sugiere la asignatura equivalente del pensum de cada nota, en este orden:
+   * mismo código, la equivalencia ya usada antes para ese nombre (así se
+   * aprenden casos como "Programación I" → "Programación Orientada a Objetos")
+   * o mismo nombre.
+   */
+  private async suggestEquivalences(
+    preview: TranscriptPreviewDto,
+  ): Promise<TranscriptPreviewDto> {
+    const names = preview.grades.map((grade) =>
+      normalizeSearchText(grade.subjectName),
+    );
+    if (!names.length) return preview;
+    const [subjects, previous] = await Promise.all([
+      this.subjectRepository.find({
+        where: { deleted: false },
+        select: ['id', 'code', 'name'],
+      }),
+      this.gradeRepository.find({
+        where: { normalizedName: In(names), subject: { deleted: false } },
+        relations: ['subject'],
+        order: { id: 'DESC' },
+      }),
+    ]);
+    const byCode = new Map(subjects.map((item) => [item.code, item]));
+    const byName = new Map(
+      subjects.map((item) => [normalizeSearchText(item.name), item]),
+    );
+    const used = new Map<string, Subject>();
+    previous.forEach(
+      (grade) =>
+        used.has(grade.normalizedName) ||
+        used.set(grade.normalizedName, grade.subject),
+    );
+    preview.grades.forEach((grade, i) => {
+      const subject =
+        (grade.code && byCode.get(normalizeSubjectCode(grade.code))) ||
+        used.get(names[i]) ||
+        byName.get(names[i]);
+      grade.subject = toSubjectRef(subject);
+    });
+    return preview;
+  }
+
   /** Título vigente con sus notas ordenadas; lanza 404 si no existe. */
   private async findValid(id: number): Promise<TeacherDegree> {
     const item = await this.repository.findOne({
       where: { id, deleted: false },
-      relations: ['grades'],
+      relations: DEGREE_RELATIONS,
       order: { grades: { period: 'ASC', code: 'ASC' } },
     });
     if (!item) {
@@ -179,9 +242,13 @@ function normalizeSearchText(text: string): string {
   return stripAccents(text).toLowerCase().replace(/\s+/g, ' ').trim();
 }
 
-/** Entidad de nota con el nombre normalizado que usa la búsqueda. */
+/** Entidad de nota con el nombre normalizado que usa la búsqueda y la equivalencia por id. */
 function toGradeEntity(grade: TeacherGradeDto): DeepPartial<TeacherGrade> {
-  return { ...grade, normalizedName: normalizeSearchText(grade.subjectName) };
+  return {
+    ...grade,
+    normalizedName: normalizeSearchText(grade.subjectName),
+    subject: grade.subject ? { id: grade.subject.id } : null,
+  };
 }
 
 /** Rechaza (400) las notas que superan la nota máxima de la escala del título. */
@@ -233,5 +300,6 @@ function toMatch(grade: TeacherGrade): TeacherGradeMatchDto {
       : undefined,
     degreeTitle: degree.title,
     degreeLevel: degree.level,
+    subject: toSubjectRef(grade.subject),
   };
 }

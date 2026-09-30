@@ -11,13 +11,14 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { DegreeLevel } from '../enum';
+import { SubjectRefDto } from './create-teacher-degree.dto';
 import { ResponseTeacherDto } from './response-teacher.dto';
 
 /** Filtros para buscar profesores por las notas de sus títulos. */
 export class SearchTeacherGradeDto {
   @ApiProperty({
     description:
-      'Texto de la asignatura; ignora mayúsculas y tildes, y exige todas las palabras',
+      'Texto de la asignatura; ignora mayúsculas y tildes, exige todas las palabras y también busca en el nombre de la asignatura equivalente del pensum',
     example: 'programacion objetos',
   })
   @IsNotEmpty()
@@ -65,6 +66,12 @@ export class TeacherGradeMatchDto {
 
   @ApiProperty({ enum: DegreeLevel, enumName: 'DegreeLevel' })
   degreeLevel!: DegreeLevel;
+
+  @ApiPropertyOptional({
+    type: SubjectRefDto,
+    description: 'Asignatura del pensum a la que equivale la nota',
+  })
+  subject?: SubjectRefDto;
 }
 
 /** Profesor con las asignaturas que coinciden, de mejor a peor nota. */
