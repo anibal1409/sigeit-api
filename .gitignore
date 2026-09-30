@@ -37,3 +37,6 @@ lerna-debug.log*
 
 # Generated files
 /generated
+# Variables de entorno (usar .env.example como plantilla)
+.env*
+!.env.example
