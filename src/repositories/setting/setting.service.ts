@@ -4,8 +4,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { School } from '../school/entities';
-import { assertAdmin } from '../user/permissions';
-import { UserService } from '../user/user.service';
 import { ResponseSettingDto, UpdateSettingDto } from './dto';
 import { Setting } from './entities';
 
@@ -17,7 +15,6 @@ export class SettingService {
     private repository: Repository<Setting>,
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
-    private userService: UserService,
   ) {}
 
   /** Devuelve la única fila; si no existe, la crea con valores por defecto tomando nombre y siglas de la primera escuela. */
@@ -50,14 +47,9 @@ export class SettingService {
 
   /**
    * Actualiza la configuración.
-   * @throws ForbiddenException si el usuario no es Administrador.
    * @throws BadRequestException si endTime <= startTime (comparando con lo guardado).
    */
-  async update(
-    userId: number,
-    updateDto: UpdateSettingDto,
-  ): Promise<ResponseSettingDto> {
-    assertAdmin(await this.userService.findValid(userId));
+  async update(updateDto: UpdateSettingDto): Promise<ResponseSettingDto> {
     const item = await this.findOrCreate();
     const merged = { ...item, ...updateDto };
     // HH:mm con cero a la izquierda: la comparación de texto equivale a la de horas.

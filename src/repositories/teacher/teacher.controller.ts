@@ -16,6 +16,7 @@ import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { ResponseTeacherDto } from './dto/response-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { TeacherService } from './teacher.service';
+import { AllowRoles, TEACHER_ADMIN_ROLES } from '../../auth/roles';
 
 @ApiTags('teacher')
 // @Public()
@@ -24,6 +25,7 @@ export class TeacherController {
   constructor(private readonly teacherService: TeacherService) {}
 
   @Post()
+  @AllowRoles(...TEACHER_ADMIN_ROLES)
   @ApiResponse({
     type: ResponseTeacherDto,
   })
@@ -58,6 +60,7 @@ export class TeacherController {
   }
 
   @Get(':id/subjects-history')
+  @AllowRoles(...TEACHER_ADMIN_ROLES)
   @ApiOperation({
     summary: 'Historial de asignaturas impartidas por el profesor',
   })
@@ -67,6 +70,7 @@ export class TeacherController {
   }
 
   @Patch(':id')
+  @AllowRoles(...TEACHER_ADMIN_ROLES)
   @ApiResponse({
     type: ResponseTeacherDto,
   })
@@ -78,6 +82,7 @@ export class TeacherController {
   }
 
   @Delete(':id')
+  @AllowRoles(...TEACHER_ADMIN_ROLES)
   @ApiResponse({
     type: ResponseTeacherDto,
   })

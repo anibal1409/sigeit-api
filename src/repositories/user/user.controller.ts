@@ -14,10 +14,13 @@ import { UserRespondeDto } from './dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from './enums';
-import { CurrentUserId } from './permissions';
+import { User } from './entities';
+import { CurrentUser } from './permissions';
 import { UserService } from './user.service';
+import { AllowRoles } from '../../auth/roles';
 
 @ApiTags('user')
+@AllowRoles(Roles.Administrator)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -43,9 +46,9 @@ export class UserController {
     type: UserRespondeDto,
     isArray: true,
   })
-  findAll(@CurrentUserId() userId: number) {
+  findAll(@CurrentUser() user: User) {
     // Id del JWT verificado, no de la cookie (que el cliente podría alterar).
-    return this.userService.findAll(userId);
+    return this.userService.findAll(user.id);
   }
 
   @Get(':id')

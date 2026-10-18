@@ -7,6 +7,7 @@ import { UserModule } from '../repositories/user/user.module';
 import { AuthController } from './auth.controller';
 import { ChangePasswordService } from './change-password';
 import { JWT_CONST, JwtAuthGuard } from './jwt-auth';
+import { RolesGuard } from './roles/roles.guard';
 import { JwtAuthService } from './jwt-auth/jwt-auth.service';
 import { LoginService } from './login/login.service';
 import { LogoutService } from './logout';
@@ -30,7 +31,9 @@ import { JwtStrategy, LocalStrategy } from './strategies';
   providers: [
     LoginService,
     JwtAuthService,
+    // El orden importa: primero se valida el JWT y después el rol.
     { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
     ChangePasswordService,
     LogoutService,
     RecoveryPasswordService,

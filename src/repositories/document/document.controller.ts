@@ -19,7 +19,8 @@ import {
 } from '@nestjs/swagger';
 
 import { strictValidation } from '../../common/validation';
-import { CurrentUserId } from '../user/permissions';
+import { User } from '../user/entities';
+import { CurrentUser } from '../user/permissions';
 import { DocumentService } from './document.service';
 import {
   ActiveDocumentQueryDto,
@@ -28,6 +29,8 @@ import {
   ResponseDocumentDto,
   UpdateDocumentDto,
 } from './dto';
+import { AllowRoles } from '../../auth/roles';
+import { Roles } from '../user/enums';
 
 /** Formatos de documento por departamento. Escritura: Administrador o jefe del departamento. */
 @ApiTags('document')
@@ -36,15 +39,16 @@ export class DocumentController {
   constructor(private readonly documentService: DocumentService) {}
 
   @Post()
+  @AllowRoles(Roles.Administrator, Roles.HeadDepartment)
   @ApiOperation({ summary: 'Crear formato' })
   @ApiResponse({ type: ResponseDocumentDto })
   @ApiBadRequestResponse({ description: 'Nombre repetido o falta {tabla}' })
   @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
   create(
-    @CurrentUserId() userId: number,
+    @CurrentUser() user: User,
     @Body(strictValidation) createDocumentDto: CreateDocumentDto,
   ) {
-    return this.documentService.create(userId, createDocumentDto);
+    return this.documentService.create(user, createDocumentDto);
   }
 
   @Get()
@@ -54,10 +58,10 @@ export class DocumentController {
   })
   @ApiResponse({ type: ResponseDocumentDto, isArray: true })
   findAll(
-    @CurrentUserId() userId: number,
+    @CurrentUser() user: User,
     @Query(strictValidation) query: FindDocumentsQueryDto,
   ) {
-    return this.documentService.findAll(userId, query);
+    return this.documentService.findAll(user, query);
   }
 
   @Get('active')
@@ -76,26 +80,25 @@ export class DocumentController {
   }
 
   @Patch(':id')
+  @AllowRoles(Roles.Administrator, Roles.HeadDepartment)
   @ApiOperation({ summary: 'Actualizar formato (solo los campos enviados)' })
   @ApiResponse({ type: ResponseDocumentDto })
   @ApiBadRequestResponse({ description: 'Nombre repetido o falta {tabla}' })
   @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
   update(
-    @CurrentUserId() userId: number,
+    @CurrentUser() user: User,
     @Param('id', ParseIntPipe) id: number,
     @Body(strictValidation) updateDocumentDto: UpdateDocumentDto,
   ) {
-    return this.documentService.update(userId, id, updateDocumentDto);
+    return this.documentService.update(user, id, updateDocumentDto);
   }
 
   @Delete(':id')
+  @AllowRoles(Roles.Administrator, Roles.HeadDepartment)
   @ApiOperation({ summary: 'Eliminar formato' })
   @ApiResponse({ type: ResponseDocumentDto })
   @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
-  remove(
-    @CurrentUserId() userId: number,
-    @Param('id', ParseIntPipe) id: number,
-  ) {
-    return this.documentService.remove(userId, id);
+  remove(@CurrentUser() user: User, @Param('id', ParseIntPipe) id: number) {
+    return this.documentService.remove(user, id);
   }
 }

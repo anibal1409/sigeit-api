@@ -37,6 +37,7 @@ import {
   RecoveryPasswordResponseDto,
   RecoveryPasswordService,
 } from './recovery-password';
+import { ANY_ROLE, AllowRoles } from './roles';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -116,6 +117,7 @@ export class AuthController {
   }
 
   @Put('change-password')
+  @AllowRoles(...ANY_ROLE)
   @ApiResponse({
     type: ChangePasswordResponseDto,
   })

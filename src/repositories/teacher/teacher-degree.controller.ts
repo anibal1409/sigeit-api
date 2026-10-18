@@ -35,9 +35,11 @@ import {
   UploadedFileData,
 } from '../../common/upload';
 import { TeacherDegreeService } from './teacher-degree.service';
+import { AllowRoles, TEACHER_ADMIN_ROLES } from '../../auth/roles';
 
 /** Títulos académicos de los profesores y las notas de sus asignaturas. */
 @ApiTags('teacher-degree')
+@AllowRoles(...TEACHER_ADMIN_ROLES)
 @Controller('teacher-degree')
 export class TeacherDegreeController {
   constructor(private readonly teacherDegreeService: TeacherDegreeService) {}

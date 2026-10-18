@@ -9,8 +9,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { stripAccents } from '../../common/text';
 import { Department } from '../department/entities';
-import { assertCanManageDepartment } from '../user/permissions';
-import { UserService } from '../user/user.service';
+import { User } from '../user/entities';
+import { assertDepartmentScope } from '../user/permissions';
 import {
   ReserveOfficeNumbersDto,
   ResponseDepartmentSettingDto,
@@ -30,7 +30,6 @@ export class DepartmentSettingService {
     @InjectRepository(Department)
     private departmentRepository: Repository<Department>,
     private dataSource: DataSource,
-    private userService: UserService,
   ) {}
 
   /** Todos los departamentos con su correlativo; crea las filas que falten. */
@@ -57,14 +56,11 @@ export class DepartmentSettingService {
 
   /** Solo Administrador o el jefe de ese departamento. Fijar el último número lo ubica en el año en curso. */
   async update(
-    userId: number,
+    user: User,
     departmentId: number,
     updateDto: UpdateDepartmentSettingDto,
   ): Promise<ResponseDepartmentSettingDto> {
-    assertCanManageDepartment(
-      await this.userService.findValid(userId),
-      departmentId,
-    );
+    assertDepartmentScope(user, departmentId);
     const item = await this.findOrCreate(departmentId);
     if (item.officeYear !== currentYear()) {
       Object.assign(item, { officeYear: currentYear(), officeLastNumber: 0 });
@@ -83,14 +79,11 @@ export class DepartmentSettingService {
    * el año en curso).
    */
   async reserve(
-    userId: number,
+    user: User,
     departmentId: number,
     dto: ReserveOfficeNumbersDto,
   ): Promise<ResponseOfficeNumbersDto> {
-    assertCanManageDepartment(
-      await this.userService.findValid(userId),
-      departmentId,
-    );
+    assertDepartmentScope(user, departmentId);
     await this.findOrCreate(departmentId);
     return this.dataSource.transaction(async (manager) => {
       const item = await manager.findOne(DepartmentSetting, {

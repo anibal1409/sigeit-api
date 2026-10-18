@@ -1,44 +1,28 @@
-import { Request } from 'express';
-
 import {
   createParamDecorator,
   ExecutionContext,
   ForbiddenException,
 } from '@nestjs/common';
 
+import { RequestWithUser } from '../../auth/roles/roles.guard';
 import { User } from './entities';
 import { Roles } from './enums/roles';
 
-/** Id del usuario autenticado, tomado del JWT validado (`req.user.userId`). */
-export const CurrentUserId = createParamDecorator(
-  (_: unknown, ctx: ExecutionContext): number => {
-    const user = ctx.switchToHttp().getRequest<Request>().user as {
-      userId: string;
-    };
-    return +user?.userId;
-  },
+/** Usuario autenticado, ya cargado y validado (activo, no eliminado) por `RolesGuard`. */
+export const CurrentUser = createParamDecorator(
+  (_: unknown, ctx: ExecutionContext): User =>
+    ctx.switchToHttp().getRequest<RequestWithUser>().currentUser,
 );
 
-/** Usuario existente, no eliminado y activo: un token vigente de un usuario dado de baja no debe dar permisos. */
-function isActive(user: User): boolean {
-  return !!user && !user.deleted && user.status !== false;
-}
-
-/** Lanza 403 si el usuario no es Administrador activo. */
-export function assertAdmin(user: User): void {
-  if (!isActive(user) || user.role !== Roles.Administrator) {
-    throw new ForbiddenException();
-  }
-}
-
-/** Lanza 403 salvo que sea Administrador o jefe de ese departamento. */
-export function assertCanManageDepartment(
-  user: User,
-  departmentId: number,
-): void {
-  const isHead =
-    user?.role === Roles.HeadDepartment && user.department?.id === departmentId;
-  if (!isActive(user) || (user.role !== Roles.Administrator && !isHead)) {
+/**
+ * Lanza 403 si un jefe de departamento actúa sobre otro departamento. Los
+ * demás roles ya fueron filtrados por `@AllowRoles` en la ruta.
+ */
+export function assertDepartmentScope(user: User, departmentId: number): void {
+  if (
+    user.role === Roles.HeadDepartment &&
+    user.department?.id !== departmentId
+  ) {
     throw new ForbiddenException();
   }
 }

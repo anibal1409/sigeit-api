@@ -9,9 +9,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { CrudRepository } from '../../common/use-case';
 import { Department } from '../department/entities';
-import { assertCanManageDepartment } from '../user/permissions';
+import { User } from '../user/entities';
+import { assertDepartmentScope } from '../user/permissions';
 import { Roles } from '../user/enums/roles';
-import { UserService } from '../user/user.service';
 import {
   CreateDocumentDto,
   FindDocumentsQueryDto,
@@ -28,7 +28,6 @@ export class DocumentService implements CrudRepository<DocumentE> {
     @InjectRepository(DocumentE)
     private repository: Repository<DocumentE>,
     private dataSource: DataSource,
-    private userService: UserService,
   ) {}
 
   async findValid(id: number): Promise<DocumentE> {
@@ -79,10 +78,9 @@ export class DocumentService implements CrudRepository<DocumentE> {
 
   /** Lista formatos; un jefe de departamento solo ve los de su departamento. */
   async findAll(
-    userId: number,
+    user: User,
     query: FindDocumentsQueryDto,
   ): Promise<ResponseDocumentDto[]> {
-    const user = await this.userService.findValid(userId);
     const departmentId =
       user.role === Roles.HeadDepartment
         ? (user.department?.id ?? 0)
@@ -104,11 +102,10 @@ export class DocumentService implements CrudRepository<DocumentE> {
   }
 
   async create(
-    userId: number,
+    user: User,
     createDto: CreateDocumentDto,
   ): Promise<ResponseDocumentDto> {
-    const user = await this.userService.findValid(userId);
-    assertCanManageDepartment(user, createDto.department.id);
+    assertDepartmentScope(user, createDto.department.id);
     const item = await this.saveValidated({
       ...createDto,
       status: createDto.status ?? true,
@@ -118,24 +115,22 @@ export class DocumentService implements CrudRepository<DocumentE> {
 
   /** Aplica sobre el documento guardado solo los campos recibidos. */
   async update(
-    userId: number,
+    user: User,
     id: number,
     updateDto: UpdateDocumentDto,
   ): Promise<ResponseDocumentDto> {
-    const user = await this.userService.findValid(userId);
     const item = await this.findValid(id);
-    assertCanManageDepartment(user, item.department.id);
+    assertDepartmentScope(user, item.department.id);
     if (updateDto.department) {
-      assertCanManageDepartment(user, updateDto.department.id);
+      assertDepartmentScope(user, updateDto.department.id);
     }
     await this.saveValidated({ ...item, ...updateDto } as DocumentE);
     return this.findOne(id);
   }
 
-  async remove(userId: number, id: number): Promise<ResponseDocumentDto> {
-    const user = await this.userService.findValid(userId);
+  async remove(user: User, id: number): Promise<ResponseDocumentDto> {
     const item = await this.findValid(id);
-    assertCanManageDepartment(user, item.department.id);
+    assertDepartmentScope(user, item.department.id);
     item.deleted = true;
     return new ResponseDocumentDto(await this.repository.save(item));
   }

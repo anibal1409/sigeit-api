@@ -17,7 +17,8 @@ import {
 } from '@nestjs/swagger';
 
 import { strictValidation } from '../../common/validation';
-import { CurrentUserId } from '../user/permissions';
+import { User } from '../user/entities';
+import { CurrentUser } from '../user/permissions';
 import { DepartmentSettingService } from './department-setting.service';
 import {
   ReserveOfficeNumbersDto,
@@ -28,6 +29,8 @@ import {
   UpdateSettingDto,
 } from './dto';
 import { SettingService } from './setting.service';
+import { AllowRoles, PLANNING_ROLES } from '../../auth/roles';
+import { Roles } from '../user/enums';
 
 /** Configuración del instituto (fila única) y correlativo de oficios por departamento. */
 @ApiTags('setting')
@@ -58,10 +61,10 @@ export class SettingController {
   })
   @ApiForbiddenResponse({ description: 'El usuario no es Administrador' })
   update(
-    @CurrentUserId() userId: number,
+    @CurrentUser() user: User,
     @Body(strictValidation) updateSettingDto: UpdateSettingDto,
   ) {
-    return this.settingService.update(userId, updateSettingDto);
+    return this.settingService.update(updateSettingDto);
   }
 
   @Get('department')
@@ -86,6 +89,7 @@ export class SettingController {
   }
 
   @Patch('department/:departmentId')
+  @AllowRoles(Roles.Administrator, Roles.HeadDepartment)
   @ApiOperation({
     summary:
       'Actualizar el correlativo (Administrador o jefe del departamento)',
@@ -93,18 +97,15 @@ export class SettingController {
   @ApiResponse({ type: ResponseDepartmentSettingDto })
   @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
   updateDepartment(
-    @CurrentUserId() userId: number,
+    @CurrentUser() user: User,
     @Param('departmentId', ParseIntPipe) departmentId: number,
     @Body(strictValidation) updateDto: UpdateDepartmentSettingDto,
   ) {
-    return this.departmentSettingService.update(
-      userId,
-      departmentId,
-      updateDto,
-    );
+    return this.departmentSettingService.update(user, departmentId, updateDto);
   }
 
   @Post('department/:departmentId/office-numbers')
+  @AllowRoles(...PLANNING_ROLES)
   @ApiOperation({
     summary: 'Reservar números de oficio de forma atómica',
     description:
@@ -118,10 +119,10 @@ export class SettingController {
   @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
   @ApiNotFoundResponse({ description: 'Departamento no encontrado' })
   reserveOfficeNumbers(
-    @CurrentUserId() userId: number,
+    @CurrentUser() user: User,
     @Param('departmentId', ParseIntPipe) departmentId: number,
     @Body(strictValidation) dto: ReserveOfficeNumbersDto,
   ) {
-    return this.departmentSettingService.reserve(userId, departmentId, dto);
+    return this.departmentSettingService.reserve(user, departmentId, dto);
   }
 }

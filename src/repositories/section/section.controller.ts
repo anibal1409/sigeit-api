@@ -28,6 +28,7 @@ import { CreateSectionDto } from './dto/create-section.dto';
 import { UpdateSectionDto } from './dto/update-section.dto';
 import { SectionTeacherService } from './section-teacher.service';
 import { SectionService } from './section.service';
+import { AllowRoles, PLANNING_ROLES } from '../../auth/roles';
 
 @ApiTags('section')
 @Controller('section')
@@ -38,6 +39,7 @@ export class SectionController {
   ) {}
 
   @Post()
+  @AllowRoles(...PLANNING_ROLES)
   @ApiResponse({
     type: ResponseSectionDto,
   })
@@ -91,6 +93,7 @@ export class SectionController {
   }
 
   @Patch(':id')
+  @AllowRoles(...PLANNING_ROLES)
   @ApiResponse({
     type: ResponseSectionDto,
   })
@@ -102,6 +105,7 @@ export class SectionController {
   }
 
   @Delete(':id')
+  @AllowRoles(...PLANNING_ROLES)
   @ApiResponse({
     type: ResponseSectionDto,
   })
@@ -110,6 +114,7 @@ export class SectionController {
   }
 
   @Post('generate-report')
+  @AllowRoles(...PLANNING_ROLES)
   @ApiResponse({
     description: 'Genera un reporte Excel de secciones académicas',
     type: ReportResponseDto,

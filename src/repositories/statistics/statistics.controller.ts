@@ -26,11 +26,13 @@ import {
   TimelineItemDto,
 } from './dto/response-statistics.dto';
 import { StatisticsService } from './statistics.service';
+import { AllowRoles, PLANNING_ROLES } from '../../auth/roles';
 
 /**
  * Estadísticas para gráficos (sin uso de inscripciones).
  */
 @ApiTags('statistics')
+@AllowRoles(...PLANNING_ROLES)
 @Controller('statistics')
 @UsePipes(
   new ValidationPipe({

@@ -7,11 +7,14 @@ import {
   EntityAuditHistoryDto,
   GetAuditLogsDto,
 } from './dto';
+import { AllowRoles } from '../auth/roles';
+import { Roles } from '../repositories/user/enums';
 
 /**
  * Consulta de registros de auditoría (requiere sesión autenticada).
  */
 @ApiTags('audit')
+@AllowRoles(Roles.Administrator)
 @Controller('audit')
 export class AuditController {
   constructor(private readonly auditService: AuditService) {}
