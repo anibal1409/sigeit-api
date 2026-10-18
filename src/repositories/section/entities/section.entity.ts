@@ -13,9 +13,6 @@ export class Section extends IdEntity {
   @Column({ nullable: true })
   capacity: number;
 
-  @Column({ default: 0 })
-  inscribed: number;
-
   @ManyToOne(() => Subject, (subject) => subject.id, { onDelete: 'CASCADE' })
   @JoinColumn()
   subject: Subject;

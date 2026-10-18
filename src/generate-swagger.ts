@@ -23,7 +23,6 @@ async function generateSwagger() {
     .addTag('days', 'Gestión de días y calendario')
     .addTag('departments', 'Gestión de departamentos académicos')
     .addTag('documents', 'Gestión de documentos')
-    .addTag('inscriptions', 'Gestión de inscripciones estudiantiles')
     .addTag('periods', 'Gestión de períodos académicos')
     .addTag('schedules', 'Gestión de horarios')
     .addTag('schools', 'Gestión de escuelas y facultades')

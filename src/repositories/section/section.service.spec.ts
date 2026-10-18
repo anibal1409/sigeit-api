@@ -1,6 +1,5 @@
 import { Repository } from 'typeorm';
 
-import { InscriptionService } from '../inscription/inscription.service';
 import { ScheduleService } from '../schedule/schedule.service';
 import { Section } from './entities';
 import { SectionService } from './section.service';
@@ -22,11 +21,10 @@ describe('SectionService', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    // Instancia directa: la dependencia circular con InscriptionService impide resolverla con Nest.
+    // Instancia directa con dependencias falsas: el test solo usa el repositorio.
     service = new SectionService(
       repository as unknown as Repository<Section>,
       {} as ScheduleService,
-      {} as InscriptionService,
     );
   });
 

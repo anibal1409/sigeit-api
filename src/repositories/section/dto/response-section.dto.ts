@@ -21,11 +21,6 @@ export class ResponseSectionDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  @Type(() => Number)
-  inscribed: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
   @IsString()
   name: string;
 
@@ -80,7 +75,6 @@ export class ResponseSectionDto {
     this.period = data.period;
     this.teacherId = data.teacher?.id ?? null;
     this.teacher = data.teacher ?? null;
-    this.inscribed = data.inscribed;
     this.all = data.all;
   }
 }
