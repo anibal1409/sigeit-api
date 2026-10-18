@@ -204,9 +204,9 @@
     "semantic_hash": ""
   },
   "src/auth/auth.module.ts": {
-    "mtime": 1758411241.1968484,
-    "seen": 1790715876.2781365,
-    "ast_hash": "d14938f25744fff18e2ac2185de9845c",
+    "mtime": 1792350226.5958529,
+    "seen": 1792350329.050668,
+    "ast_hash": "7db97718370118d14cee7ec2d903ad1a",
     "semantic_hash": ""
   },
   "src/auth/change-password/change-password.service.ts": {
@@ -252,15 +252,15 @@
     "semantic_hash": ""
   },
   "src/auth/jwt-auth/JwtAuth.guard.ts": {
-    "mtime": 1758411241.197138,
-    "seen": 1790715876.278145,
-    "ast_hash": "9530d324b3ade3be4e7015db6275891e",
+    "mtime": 1792349805.2701824,
+    "seen": 1792349858.5501084,
+    "ast_hash": "0703280a929d92a5da712014cfec18b1",
     "semantic_hash": ""
   },
   "src/auth/jwt-auth/constants.ts": {
-    "mtime": 1758411241.1972463,
-    "seen": 1790715876.2781482,
-    "ast_hash": "d5e5d27bef4410f2308d2a6637b61e04",
+    "mtime": 1792350226.5956883,
+    "seen": 1792350329.0509684,
+    "ast_hash": "e96ba8f73a3ba1f5af72950e9cb37196",
     "semantic_hash": ""
   },
   "src/auth/jwt-auth/index.ts": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "src/common/index.ts": {
-    "mtime": 1792348518.383794,
-    "seen": 1792348706.2302103,
-    "ast_hash": "03447ce2339263aa3d3d2381853cd8b2",
+    "mtime": 1792350226.5997694,
+    "seen": 1792350329.0517926,
+    "ast_hash": "2f694182f7d1c8d4eba8cab09dbe97d3",
     "semantic_hash": ""
   },
   "src/common/pagination/dto/index.ts": {
@@ -828,15 +828,15 @@
     "semantic_hash": ""
   },
   "src/repositories/document/document.controller.ts": {
-    "mtime": 1758411241.2002501,
-    "seen": 1790715876.278242,
-    "ast_hash": "382e6b23ba3f7d331bb67adc97deb20a",
+    "mtime": 1792350233.376751,
+    "seen": 1792350329.0547912,
+    "ast_hash": "44047a0099ba3dccf0c6562edf8f475d",
     "semantic_hash": ""
   },
   "src/repositories/document/document.module.ts": {
-    "mtime": 1758411241.2002501,
-    "seen": 1790715876.278243,
-    "ast_hash": "d16e096d32c53425c16d7f7177411b19",
+    "mtime": 1792349673.5880027,
+    "seen": 1792349858.5548832,
+    "ast_hash": "7bcdc0a80c9bdaf85b665565e6fcd6c8",
     "semantic_hash": ""
   },
   "src/repositories/document/document.service.spec.ts": {
@@ -846,27 +846,27 @@
     "semantic_hash": ""
   },
   "src/repositories/document/document.service.ts": {
-    "mtime": 1758411241.2002501,
-    "seen": 1790715876.278245,
-    "ast_hash": "b34d9a69302aa9d326ee7ab1589669e1",
+    "mtime": 1792349736.11052,
+    "seen": 1792349858.554931,
+    "ast_hash": "31d886b7d877a8aab9b890ef4cee5e98",
     "semantic_hash": ""
   },
   "src/repositories/document/dto/create-document.dto.ts": {
-    "mtime": 1758411241.2002501,
-    "seen": 1790715876.278246,
-    "ast_hash": "84d142993f66f93886f7d589e2476e44",
+    "mtime": 1792349630.5953875,
+    "seen": 1792349858.554932,
+    "ast_hash": "0501dcd918e41553b1781d2cc3c22550",
     "semantic_hash": ""
   },
   "src/repositories/document/dto/index.ts": {
-    "mtime": 1758411241.2003982,
-    "seen": 1790715876.2782466,
-    "ast_hash": "ba45cfbc2009e88afb8bb856e4a74360",
+    "mtime": 1792349636.1423926,
+    "seen": 1792349858.5549333,
+    "ast_hash": "e0ea591036bb4b0d06d81941bc0eb76c",
     "semantic_hash": ""
   },
   "src/repositories/document/dto/response-document.dto.ts": {
-    "mtime": 1758411241.2003982,
-    "seen": 1790715876.2782474,
-    "ast_hash": "ac4e38e209abdd629202c7229dbca78d",
+    "mtime": 1792349632.7302177,
+    "seen": 1792349858.5549371,
+    "ast_hash": "c56e3f5884fba68b34b1f892fcb63b76",
     "semantic_hash": ""
   },
   "src/repositories/document/dto/update-document.dto.ts": {
@@ -876,9 +876,9 @@
     "semantic_hash": ""
   },
   "src/repositories/document/entities/document.entity.ts": {
-    "mtime": 1758411241.2003982,
-    "seen": 1790715876.2782495,
-    "ast_hash": "95382fd7cdac50fb01b2fd416be89c24",
+    "mtime": 1792349629.5165718,
+    "seen": 1792349858.5550067,
+    "ast_hash": "61c0d5ad6aa58abd275d91364a1a8739",
     "semantic_hash": ""
   },
   "src/repositories/document/entities/index.ts": {
@@ -1722,9 +1722,9 @@
     "semantic_hash": ""
   },
   "src/repositories/user/user.controller.ts": {
-    "mtime": 1758411241.2038083,
-    "seen": 1790715876.2783813,
-    "ast_hash": "3c9add66f079b747f9abbffb399ffc06",
+    "mtime": 1792350261.6138573,
+    "seen": 1792350329.0618393,
+    "ast_hash": "a2357f93047ef93b5dc188d652b0ae32",
     "semantic_hash": ""
   },
   "src/repositories/user/user.module.ts": {
@@ -1794,9 +1794,9 @@
     "semantic_hash": ""
   },
   "swagger.json": {
-    "mtime": 1790806853.7078009,
-    "seen": 1790806897.9227858,
-    "ast_hash": "31c18da28ec1cc298be07ed957aeaa09",
+    "mtime": 1792349847.8947232,
+    "seen": 1792349858.5634859,
+    "ast_hash": "f7f37ed1b8118afc688a3defe1a75565",
     "semantic_hash": ""
   },
   "test/app.e2e-spec.ts": {
@@ -2022,9 +2022,9 @@
     "semantic_hash": ""
   },
   "src/repositories/setting/dto/index.ts": {
-    "mtime": 1792348682.6268585,
-    "seen": 1792348706.236382,
-    "ast_hash": "613af42e3ed91c3f9b1e3732bf86e418",
+    "mtime": 1792349720.1956913,
+    "seen": 1792349858.55917,
+    "ast_hash": "71cbaed10fc02b540cc794b850023b7c",
     "semantic_hash": ""
   },
   "src/repositories/setting/dto/response-setting.dto.ts": {
@@ -2040,9 +2040,9 @@
     "semantic_hash": ""
   },
   "src/repositories/setting/entities/index.ts": {
-    "mtime": 1792348682.624888,
-    "seen": 1792348706.2363863,
-    "ast_hash": "35885d7438a092cfad4cfe1d0661a92a",
+    "mtime": 1792349720.1956913,
+    "seen": 1792349858.5592728,
+    "ast_hash": "84a110b688bf5b985dbf51af8ab8528a",
     "semantic_hash": ""
   },
   "src/repositories/setting/entities/setting.entity.ts": {
@@ -2052,33 +2052,81 @@
     "semantic_hash": ""
   },
   "src/repositories/setting/index.ts": {
-    "mtime": 1792348682.6323807,
-    "seen": 1792348706.2363973,
-    "ast_hash": "348d56b984f07961889faf7bead9345f",
+    "mtime": 1792349720.1959982,
+    "seen": 1792349858.5593228,
+    "ast_hash": "bca578759c61aa72b22aae0707ca392f",
     "semantic_hash": ""
   },
   "src/repositories/setting/setting.controller.ts": {
-    "mtime": 1792348761.8351862,
-    "seen": 1792348770.0508084,
-    "ast_hash": "7cb87998ac8e91ae4d98326f9ebfc789",
+    "mtime": 1792350261.6138573,
+    "seen": 1792350329.0587952,
+    "ast_hash": "bc770c4602d76cdc77eb69990d0463aa",
     "semantic_hash": ""
   },
   "src/repositories/setting/setting.module.ts": {
-    "mtime": 1792348759.1186907,
-    "seen": 1792348770.0508094,
-    "ast_hash": "d45a927e4b86992283716e643e396933",
+    "mtime": 1792349736.11052,
+    "seen": 1792349858.5593255,
+    "ast_hash": "68e999066616b0704c3e256d2cbb03ee",
     "semantic_hash": ""
   },
   "src/repositories/setting/setting.service.ts": {
-    "mtime": 1792348759.1185098,
-    "seen": 1792348770.05081,
-    "ast_hash": "1206199aaea1e1b015db2363aedc31ea",
+    "mtime": 1792349680.0201936,
+    "seen": 1792349858.5593266,
+    "ast_hash": "0da1648c185366622c9edf4ea5f9b78e",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1792348744.2654312,
-    "seen": 1792348770.054377,
-    "ast_hash": "25ab50fec5ce8540fc19032742d8c697",
+    "mtime": 1792350325.3560684,
+    "seen": 1792350329.0624332,
+    "ast_hash": "646237d7eb67ba8c0c6a1c1ca398c51b",
+    "semantic_hash": ""
+  },
+  "src/repositories/document/dto/query-document.dto.ts": {
+    "mtime": 1792349631.6603882,
+    "seen": 1792349858.5549352,
+    "ast_hash": "9f85ce8a337e753be2b4f2128d25a42f",
+    "semantic_hash": ""
+  },
+  "src/repositories/setting/department-setting.service.ts": {
+    "mtime": 1792350254.7772515,
+    "seen": 1792350329.058517,
+    "ast_hash": "354b6ad57dc3f3d53f864329053ba993",
+    "semantic_hash": ""
+  },
+  "src/repositories/setting/dto/department-setting.dto.ts": {
+    "mtime": 1792350245.5790973,
+    "seen": 1792350329.058518,
+    "ast_hash": "c1f967dc652bc9ac17bdf1b2ba551752",
+    "semantic_hash": ""
+  },
+  "src/repositories/setting/entities/department-setting.entity.ts": {
+    "mtime": 1792349706.4684763,
+    "seen": 1792349858.559271,
+    "ast_hash": "0bd9ab4ac38a5035b68b1374274a68e8",
+    "semantic_hash": ""
+  },
+  "src/repositories/user/permissions.ts": {
+    "mtime": 1792350233.4192946,
+    "seen": 1792350329.0618007,
+    "ast_hash": "b33affbf0e132ee8836c94548cb312df",
+    "semantic_hash": ""
+  },
+  "src/common/validation/index.ts": {
+    "mtime": 1792350226.5997694,
+    "seen": 1792350329.0523007,
+    "ast_hash": "cbe551269a53fef56bb6ad3bfe8a7805",
+    "semantic_hash": ""
+  },
+  "src/common/validation/strict-validation.pipe.ts": {
+    "mtime": 1792350226.5997694,
+    "seen": 1792350329.0523021,
+    "ast_hash": "374738d57b2edcf4630a8695d3fa14ec",
+    "semantic_hash": ""
+  },
+  ".cursor/skills/sigeit-review/SKILL.md": {
+    "mtime": 1792350320.0524988,
+    "seen": 1792350329.062383,
+    "ast_hash": "fe4335d2ad04bceb912921f994771477",
     "semantic_hash": ""
   }
 }
