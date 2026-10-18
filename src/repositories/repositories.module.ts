@@ -9,6 +9,7 @@ import { InscriptionModule } from './inscription/inscription.module';
 import { PeriodModule } from './period/period.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { SchoolModule } from './school/school.module';
+import { SettingModule } from './setting/setting.module';
 import { SectionModule } from './section/section.module';
 import { SubjectModule } from './subject/subject.module';
 import { SubjectDemandModule } from './subject-demand/subject-demand.module';
@@ -27,6 +28,7 @@ import { UserModule } from './user/user.module';
     SubjectModule,
     TeacherModule,
     SectionModule,
+    SettingModule,
     ScheduleModule,
     ClassroomModule,
     DocumentModule,
