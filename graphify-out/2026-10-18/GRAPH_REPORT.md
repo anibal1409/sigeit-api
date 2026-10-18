@@ -1,17 +1,17 @@
 # Graph Report - sigeit-api  (2026-10-18)
 
 ## Corpus Check
-- 357 files · ~80,563 words
+- 344 files · ~79,297 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: (none) 2, .mdc 1, .example 1)
 
 ## Summary
-- 2293 nodes · 5906 edges · 103 communities (95 shown, 8 thin omitted)
-- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 193 edges (avg confidence: 0.8)
+- 2232 nodes · 5792 edges · 100 communities (87 shown, 13 thin omitted)
+- Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 172 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ec509747`
+- Built from commit: `c2e3d423`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,136 +19,133 @@
 - statistics.service.ts
 - ScheduleController
 - CrudRepository
-- Teacher
-- DocumentController
+- change-password.service.ts
+- .update
 - School
 - day.service.ts
-- CareerController
+- login.service.ts
 - period.service.ts
-- schedule-conflict.service.ts
+- schedule-planning.service.ts
 - package.json
 - @nestjs/swagger
-- Section
-- user.service.ts
-- inscription.service.ts
+- SectionTeacherService
+- @nestjs/common
+- src_repositories_inscription_dto_index_closeinscriptiondto
 - SubjectDemand
 - subject-demand.parser.ts
-- section.service.ts
-- SectionController
-- teacher-degree.service.ts
-- @nestjs/common
+- section-teacher.service.ts
+- SectionService
+- Section
+- repositories.module.ts
 - dependencies
 - Delete
 - devDependencies
 - DocumentService
-- ResponseTeacherDto
-- schedule.service.ts
+- response-teacher.dto.ts
+- ScheduleService
 - audit.service.ts
 - app.module.ts
 - auth.controller.ts
-- .constructor
-- audit-path.util.ts
+- schedule.controller.ts
+- RecoveryPasswordResponseDto
 - Setting
 - SubjectService
-- subject.service.ts
+- scripts
 - Public
-- department-setting.service.ts
-- InscriptionService
+- setting.controller.ts
+- TypeDocument
 - response-teacher-degree.dto.ts
-- SectionService
+- UpdateDepartmentSettingDto
 - TeacherDegreeController
 - compilerOptions
 - Generación de Clientes API - SIGEIT-API
 - create-teacher-degree.dto.ts
-- audit-capture.service.ts
-- UserService
+- audit.module.ts
+- User
 - mail.service.ts
 - .import
-- ScheduleConflictsQueryDto
+- CreateUserDto
 - login.guard.ts
-- AuditAction
+- subject.service.ts
 - department.service.ts
-- schedule-planning.service.ts
-- common/index.ts
-- .findByEntity
-- TeacherService
+- CoverageStatus
+- pagination.ts
+- AuditController
+- AllowRoles
 - AuditService
 - subject-demand.service.ts
 - Contrato de estadísticas para frontend con Chart.js
-- InscriptionController
+- SearchTeacherGradeDto
 - jest
-- CreateTeacherDegreeDto
-- TypeDocument
+- DepartmentSetting
+- FindDocumentsQueryDto
 - README.md
 - auth.module.ts
-- DepartmentSetting
-- RecoveryPasswordResponseDto
-- GetAuditLogsDto
+- DepartmentSettingService
+- ScheduleConflictsQueryDto
+- property-diff.util.ts
 - nest-cli.json
 - .reserveOfficeNumbers
-- Department
-- transcript-ai.reader.ts
+- typeorm
+- CreateTeacherDegreeDto
 - ScheduleConflictService
 - openapitools.json
-- LoginUserResponseDto
+- Department
 - tsconfig.build.json
 - CreateDocumentDto
-- SearchTeacherGradeDto
+- GetAuditLogsDto
 - test.entity.ts
 - src_repositories_section_dto_index_sectionteachergradedto
 - UpdateSettingDto
-- teacher-degree.controller.ts
-- TeacherDegreeService
-- openapi.js
-- GetInscriptionDto
+- teacher-degree.service.ts
+- src_repositories_inscription_dto_index_createinscriptiondto
+- @nestjs/core
+- src_repositories_inscription_dto_index_getinscriptiondto
 - CLAUDE.md
 - document.service.ts
 - career.service.ts
-- AppModule
-- GetSubjectDemandDto
+- src_repositories_inscription_dto_index_responseinscriptiondto
+- src_repositories_inscription_dto_index_updateinscriptiondto
 - Revisión de cambios — sigeit-api
-- CareerService
-- .getHello
-- ResponseCareerDto
-- Inscription
-- UpdateDepartmentSettingDto
-- @nestjs/testing
-- GetCareersDto
-- CreateCareerDto
-- AuditModule
-- ResponseSectionDto
-- AuthModule
+- Subject
+- src_repositories_inscription_entities_index_inscription
+- src_repositories_inscription_enums_index_stageinscription
+- openapi.js
+- src_repositories_document_document_service_periodservice
+- audit-capture.service.ts
+- rxjs
+- RolesGuard
 
 ## God Nodes (most connected - your core abstractions)
-1. `@nestjs/swagger` - 103 edges
-2. `@nestjs/common` - 88 edges
-3. `class-validator` - 51 edges
-4. `Department` - 48 edges
-5. `typeorm` - 46 edges
-6. `Section` - 46 edges
-7. `class-transformer` - 44 edges
-8. `@nestjs/typeorm` - 43 edges
-9. `IdEntity` - 41 edges
-10. `Subject` - 41 edges
+1. `@nestjs/swagger` - 97 edges
+2. `@nestjs/common` - 87 edges
+3. `User` - 55 edges
+4. `Department` - 49 edges
+5. `class-validator` - 47 edges
+6. `typeorm` - 45 edges
+7. `Section` - 43 edges
+8. `@nestjs/typeorm` - 42 edges
+9. `Subject` - 41 edges
+10. `class-transformer` - 40 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Error de Generación de Swagger` --references--> `AppModule`  [INFERRED]
   README-CLIENTS.md → src/app.module.ts
+- `1. Seguridad` --references--> `assertDepartmentScope()`  [INFERRED]
+  .cursor/skills/sigeit-review/SKILL.md → src/repositories/user/permissions.ts
+- `AuditController` --references--> `AllowRoles()`  [EXTRACTED]
+  src/audit/audit.controller.ts → src/auth/roles/roles.decorator.ts
 - `CreateAuditEntryParams` --references--> `AuditAction`  [EXTRACTED]
   src/audit/audit.service.ts → src/audit/enum/audit-action.enum.ts
-- `ResponseAuditLogDto` --references--> `AuditAction`  [EXTRACTED]
-  src/audit/dto/response-audit-log.dto.ts → src/audit/enum/audit-action.enum.ts
 - `AuditLog` --references--> `AuditAction`  [EXTRACTED]
   src/audit/entities/audit-log.entity.ts → src/audit/enum/audit-action.enum.ts
-- `LoginUserResponseDto` --references--> `Career`  [EXTRACTED]
-  src/auth/login/dto/login.dto.ts → src/repositories/career/entities/career.entity.ts
 
 ## Import Cycles
 - 4-file cycle: `src/auth/jwt-auth/JwtAuth.guard.ts -> src/auth/login/index.ts -> src/auth/login/login.service.ts -> src/auth/jwt-auth/index.ts -> src/auth/jwt-auth/JwtAuth.guard.ts`
 - 4-file cycle: `src/repositories/career/entities/career.entity.ts -> src/repositories/subject/entities/index.ts -> src/repositories/subject/entities/subject.entity.ts -> src/repositories/career/entities/index.ts -> src/repositories/career/entities/career.entity.ts`
 - 4-file cycle: `src/repositories/classroom/entities/classroom.entity.ts -> src/repositories/department/entities/index.ts -> src/repositories/department/entities/department.entity.ts -> src/repositories/classroom/entities/index.ts -> src/repositories/classroom/entities/classroom.entity.ts`
 
-## Communities (103 total, 8 thin omitted)
+## Communities (100 total, 13 thin omitted)
 
 ### Community 0 - "statistics.service.ts"
 Cohesion: 0.06
@@ -159,16 +156,16 @@ Cohesion: 0.14
 Nodes (19): ApiConflictResponse, ApiOkResponse, GetSchedulesDto, ApiPropertyOptional, IsBooleanString, IsOptional, Type, ScheduleController (+11 more)
 
 ### Community 2 - "CrudRepository"
-Cohesion: 0.05
-Nodes (47): CrudRepository, ClassroomController, ApiResponse, ApiTags, Body, Controller, Get, Param (+39 more)
+Cohesion: 0.06
+Nodes (42): CrudRepository, ClassroomController, ApiResponse, ApiTags, Body, Controller, Get, Param (+34 more)
 
-### Community 3 - "Teacher"
-Cohesion: 0.11
-Nodes (19): OneToMany, src_repositories_section_entities_index_section, src_repositories_teacher_dto_index_createteacherdto, src_repositories_teacher_dto_index_getteachersdto, src_repositories_teacher_dto_index_responsesubjecthistorydto, src_repositories_teacher_dto_index_updateteacherdto, ResponseSubjectHistoryDto, ApiProperty (+11 more)
+### Community 3 - "change-password.service.ts"
+Cohesion: 0.15
+Nodes (11): Inject, ChangePasswordService, Inject, Injectable, ChangePasswordDto, ChangePasswordResponseDto, ApiProperty, IsNotEmpty (+3 more)
 
-### Community 4 - "DocumentController"
-Cohesion: 0.23
-Nodes (11): DocumentController, ApiBadRequestResponse, ApiForbiddenResponse, ApiOperation, ApiResponse, ApiTags, Body, Controller (+3 more)
+### Community 4 - ".update"
+Cohesion: 0.19
+Nodes (14): DocumentController, ApiBadRequestResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOperation, ApiResponse, ApiTags, Body (+6 more)
 
 ### Community 5 - "School"
 Cohesion: 0.07
@@ -178,61 +175,57 @@ Nodes (34): CreateSchoolDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsNotE
 Cohesion: 0.07
 Nodes (33): DayController, ApiResponse, ApiTags, Body, Controller, Get, Param, Patch (+25 more)
 
-### Community 7 - "CareerController"
-Cohesion: 0.21
-Nodes (9): CareerController, ApiResponse, ApiTags, Body, Controller, Get, Param, Patch (+1 more)
+### Community 7 - "login.service.ts"
+Cohesion: 0.09
+Nodes (19): bcrypt, ref_express, ref_express_serve_static_core, passport-local, getDefaultCokieOptions(), src_auth_cookies_index_getdefaultcokieoptions, src_auth_jwt_auth_index_jwt_const, src_auth_login_dto_index_loginuserresponsedto (+11 more)
 
 ### Community 8 - "period.service.ts"
-Cohesion: 0.06
-Nodes (41): IsDate, CreatePeriodDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsDateString, IsInt, IsNotEmpty (+33 more)
+Cohesion: 0.05
+Nodes (43): IsDate, CreatePeriodDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsDateString, IsInt, IsNotEmpty (+35 more)
 
-### Community 9 - "schedule-conflict.service.ts"
-Cohesion: 0.15
-Nodes (23): src_repositories_schedule_dto_index_dayconflictsdto, src_repositories_schedule_dto_index_scheduleconflictsdto, src_repositories_schedule_dto_index_scheduleconflictsquerydto, src_repositories_schedule_dto_index_schedulelitedto, ScheduleCandidate, toCoverage(), academicHours(), consecutiveBlocks() (+15 more)
+### Community 9 - "schedule-planning.service.ts"
+Cohesion: 0.09
+Nodes (42): src_repositories_period_entities_index_period, Period, Column, Entity, src_repositories_schedule_dto_index_conflictpairdto, src_repositories_schedule_dto_index_coveragestatus, src_repositories_schedule_dto_index_dayconflictsdto, src_repositories_schedule_dto_index_freeslotdto (+34 more)
 
 ### Community 10 - "package.json"
 Cohesion: 0.04
-Nodes (48): author, description, engines, node, license, name, private, version (+40 more)
+Nodes (45): author, description, engines, node, license, name, private, version (+37 more)
 
 ### Community 11 - "@nestjs/swagger"
-Cohesion: 0.12
-Nodes (12): class-transformer, class-validator, @nestjs/swagger, QueryBaseDto, ApiPropertyOptional, Type, IdCreateEntity, ApiProperty (+4 more)
+Cohesion: 0.13
+Nodes (11): class-transformer, class-validator, @nestjs/swagger, QueryBaseDto, ApiPropertyOptional, Type, IdCreateEntity, ApiProperty (+3 more)
 
-### Community 12 - "Section"
-Cohesion: 0.11
-Nodes (19): src_repositories_period_entities_index_period, Period, Column, Entity, InjectRepository, src_repositories_schedule_entities_index_schedule, Schedule, Column (+11 more)
+### Community 12 - "SectionTeacherService"
+Cohesion: 0.19
+Nodes (8): GetSectionTeachersDto, ResponseSectionTeacherDto, ApiProperty, ApiPropertyOptional, IsOptional, Type, SectionTeacherService, Injectable
 
-### Community 13 - "user.service.ts"
-Cohesion: 0.12
-Nodes (22): src_auth_password_hasher_index_hashpassword, CreateUserDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsEmail, IsNotEmpty, IsOptional (+14 more)
-
-### Community 14 - "inscription.service.ts"
-Cohesion: 0.12
-Nodes (22): CreateInscriptionDto, ApiProperty, IsNotEmpty, IsString, Type, src_repositories_inscription_dto_index_closeinscriptiondto, src_repositories_inscription_dto_index_createinscriptiondto, src_repositories_inscription_dto_index_getinscriptiondto (+14 more)
+### Community 13 - "@nestjs/common"
+Cohesion: 0.14
+Nodes (20): @nestjs/common, src_audit_dto_index_auditlogspagedto, src_auth_password_hasher_index_hashpassword, src_auth_roles_index_allowroles, ANY_ROLE, ROLES_KEY, READ_METHODS, RequestWithUser (+12 more)
 
 ### Community 15 - "SubjectDemand"
-Cohesion: 0.15
-Nodes (12): ImportSubjectDemandResultDto, ApiProperty, SubjectDemand, Column, Entity, JoinColumn, ManyToOne, DemandRow (+4 more)
+Cohesion: 0.14
+Nodes (12): ResponseSubjectDemandDto, ApiProperty, SubjectDemand, Column, Entity, JoinColumn, ManyToOne, DemandRow (+4 more)
 
 ### Community 16 - "subject-demand.parser.ts"
 Cohesion: 0.18
-Nodes (13): exceljs, ref_stream, src_common_text_index_stripaccents, detectDelimiter(), isInteger(), locateColumns(), normalizeHeader(), ParsedDemand (+5 more)
+Nodes (14): exceljs, ref_stream, src_common_text_index_stripaccents, stripAccents(), toPrefix(), detectDelimiter(), isInteger(), locateColumns() (+6 more)
 
-### Community 17 - "section.service.ts"
+### Community 17 - "section-teacher.service.ts"
+Cohesion: 0.18
+Nodes (15): src_common_text_index_normalizetext, src_repositories_section_dto_index_getsectionteachersdto, src_repositories_section_dto_index_responsesectionteacherdto, best(), bestGrades(), byRelevance(), GENERIC_WORDS, keyWords() (+7 more)
+
+### Community 18 - "SectionService"
+Cohesion: 0.05
+Nodes (40): CreateSectionDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsNotEmpty, IsOptional, IsString, Type (+32 more)
+
+### Community 19 - "Section"
 Cohesion: 0.09
-Nodes (25): src_common_use_case_index_crudrepository, CreateSectionDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsNotEmpty, IsOptional, IsString (+17 more)
+Nodes (30): @nestjs/typeorm, src_auth_roles_index_planning_roles, PLANNING_ROLES, src_common_use_case_index_crudrepository, src_repositories_section_dto_index_createsectiondto, src_repositories_section_dto_index_generatereportdto, src_repositories_section_dto_index_getsectionsdto, src_repositories_section_dto_index_reportresponsedto (+22 more)
 
-### Community 18 - "SectionController"
-Cohesion: 0.16
-Nodes (16): GetSectionsDto, ApiPropertyOptional, IsBooleanString, IsOptional, Type, SectionController, ApiOperation, ApiResponse (+8 more)
-
-### Community 19 - "teacher-degree.service.ts"
-Cohesion: 0.07
-Nodes (42): @nestjs/typeorm, src_common_text_index_normalizetext, best(), bestGrades(), byRelevance(), GENERIC_WORDS, keyWords(), SectionTeacherService (+34 more)
-
-### Community 20 - "@nestjs/common"
+### Community 20 - "repositories.module.ts"
 Cohesion: 0.13
-Nodes (16): @nestjs/common, strictValidation, PeriodModule, Module, SettingModule, Module, StatisticsModule, Module (+8 more)
+Nodes (18): CareerModule, Module, DocumentModule, Module, PeriodModule, Module, ScheduleModule, Module (+10 more)
 
 ### Community 21 - "dependencies"
 Cohesion: 0.06
@@ -243,184 +236,184 @@ Cohesion: 0.12
 Nodes (14): Delete, CreateTestDto, UpdateTestDto, TestController, Body, Controller, Get, Param (+6 more)
 
 ### Community 23 - "devDependencies"
-Cohesion: 0.04
-Nodes (48): devDependencies, eslint, eslint-config-prettier, eslint-plugin-prettier, jest, @nestjs/cli, @nestjs/schematics, @nestjs/testing (+40 more)
+Cohesion: 0.07
+Nodes (27): devDependencies, eslint, eslint-config-prettier, eslint-plugin-prettier, jest, @nestjs/cli, @nestjs/schematics, @nestjs/testing (+19 more)
 
 ### Community 24 - "DocumentService"
-Cohesion: 0.18
-Nodes (11): DocumentService, Injectable, InjectRepository, ResponseDocumentDto, ApiProperty, ApiPropertyOptional, DocumentE, Column (+3 more)
+Cohesion: 0.16
+Nodes (12): DocumentService, Injectable, InjectRepository, ResponseDocumentDto, ApiProperty, ApiPropertyOptional, DocumentE, Column (+4 more)
 
-### Community 25 - "ResponseTeacherDto"
-Cohesion: 0.06
-Nodes (44): CreateTeacherDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsDateString, IsEmail, IsEnum, IsNotEmpty (+36 more)
+### Community 25 - "response-teacher.dto.ts"
+Cohesion: 0.08
+Nodes (35): CreateTeacherDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsDateString, IsEmail, IsEnum, IsNotEmpty (+27 more)
 
-### Community 26 - "schedule.service.ts"
-Cohesion: 0.06
-Nodes (34): CreateScheduleDto, CreateSchedulesBulkDto, ApiProperty, ApiPropertyOptional, ArrayNotEmpty, IsArray, IsBoolean, IsInt (+26 more)
+### Community 26 - "ScheduleService"
+Cohesion: 0.16
+Nodes (11): ResponseScheduleDto, ApiProperty, IsBoolean, IsNotEmpty, IsOptional, IsString, Type, ScheduleService (+3 more)
 
 ### Community 27 - "audit.service.ts"
-Cohesion: 0.17
-Nodes (13): AuditLogsPageDto, ApiProperty, EntityAuditHistoryDto, ApiProperty, src_audit_dto_index_auditlogspagedto, src_audit_dto_index_entityaudithistorydto, src_audit_dto_index_getauditlogsdto, src_audit_dto_index_responseauditlogdto (+5 more)
+Cohesion: 0.09
+Nodes (25): CreateAuditEntryParams, AuditLogsPageDto, ApiProperty, EntityAuditHistoryDto, ApiProperty, src_audit_dto_index_entityaudithistorydto, src_audit_dto_index_getauditlogsdto, src_audit_dto_index_responseauditlogdto (+17 more)
 
 ### Community 28 - "app.module.ts"
-Cohesion: 0.25
-Nodes (7): @nestjs/config, AppController, Controller, AppService, Injectable, RepositoriesModule, Module
+Cohesion: 0.15
+Nodes (12): @nestjs/config, AppController, Controller, Get, AppService, Injectable, AuditModule, Module (+4 more)
 
 ### Community 29 - "auth.controller.ts"
-Cohesion: 0.10
-Nodes (19): ChangePasswordDto, ChangePasswordResponseDto, ApiProperty, IsNotEmpty, IsString, src_auth_change_password_index_changepassworddto, src_auth_change_password_index_changepasswordresponsedto, src_auth_change_password_index_changepasswordservice (+11 more)
+Cohesion: 0.09
+Nodes (23): src_auth_change_password_index_changepassworddto, src_auth_change_password_index_changepasswordresponsedto, src_auth_change_password_index_changepasswordservice, LoginDto, LoginUserResponseDto, ApiProperty, IsNotEmpty, IsNumber (+15 more)
 
-### Community 30 - ".constructor"
-Cohesion: 0.14
-Nodes (9): ref_express_serve_static_core, Inject, ChangePasswordService, Inject, Injectable, getDefaultCokieOptions(), src_auth_cookies_index_getdefaultcokieoptions, LogoutService (+1 more)
+### Community 30 - "schedule.controller.ts"
+Cohesion: 0.11
+Nodes (24): CreateScheduleDto, CreateSchedulesBulkDto, ApiProperty, ApiPropertyOptional, ArrayNotEmpty, IsArray, IsBoolean, IsInt (+16 more)
 
-### Community 31 - "audit-path.util.ts"
-Cohesion: 0.13
-Nodes (15): AuditCaptureService, Injectable, AuditDiffService, Injectable, AuditInterceptor, RequestUser, Injectable, EXCLUDED_PREFIXES (+7 more)
+### Community 31 - "RecoveryPasswordResponseDto"
+Cohesion: 0.24
+Nodes (7): RecoveryPasswordDto, RecoveryPasswordResponseDto, ApiProperty, IsNotEmpty, IsString, RecoveryPasswordService, Injectable
 
 ### Community 32 - "Setting"
 Cohesion: 0.20
 Nodes (9): ResponseSettingDto, ApiProperty, ApiPropertyOptional, Setting, Column, Entity, SettingService, Injectable (+1 more)
 
 ### Community 33 - "SubjectService"
-Cohesion: 0.07
-Nodes (26): GetSubjectDepartmentDto, ApiPropertyOptional, IsBooleanString, IsOptional, Type, ResponseSubjectDto, ApiProperty, ApiPropertyOptional (+18 more)
+Cohesion: 0.06
+Nodes (33): CreateSubjectDto, ApiProperty, ApiPropertyOptional, IsNotEmpty, IsOptional, IsString, Type, GetSubjectDepartmentDto (+25 more)
 
-### Community 34 - "subject.service.ts"
-Cohesion: 0.19
-Nodes (11): CreateSubjectDto, ApiProperty, ApiPropertyOptional, IsNotEmpty, IsOptional, IsString, Type, src_repositories_subject_dto_index_createsubjectdto (+3 more)
+### Community 34 - "scripts"
+Cohesion: 0.10
+Nodes (21): scripts, build, build:client, build:client:full, format, generate:clients, generate:clients-legacy, generate:clients-legacy2 (+13 more)
 
 ### Community 35 - "Public"
 Cohesion: 0.21
 Nodes (13): Put, Req, AuthController, ApiResponse, ApiTags, Body, Controller, Get (+5 more)
 
-### Community 36 - "department-setting.service.ts"
-Cohesion: 0.19
-Nodes (15): stripAccents(), toPrefix(), ResponseOfficeNumbersDto, src_repositories_setting_dto_index_reserveofficenumbersdto, src_repositories_setting_dto_index_responsedepartmentsettingdto, src_repositories_setting_dto_index_responseofficenumbersdto, src_repositories_setting_dto_index_responsesettingdto, src_repositories_setting_dto_index_updatedepartmentsettingdto (+7 more)
+### Community 36 - "setting.controller.ts"
+Cohesion: 0.21
+Nodes (12): src_common_validation_index_strictvalidation, ResponseOfficeNumbersDto, src_repositories_setting_dto_index_reserveofficenumbersdto, src_repositories_setting_dto_index_responsedepartmentsettingdto, src_repositories_setting_dto_index_responseofficenumbersdto, src_repositories_setting_dto_index_responsesettingdto, src_repositories_setting_dto_index_updatedepartmentsettingdto, src_repositories_setting_dto_index_updatesettingdto (+4 more)
 
-### Community 37 - "InscriptionService"
-Cohesion: 0.22
-Nodes (7): ResponseInscriptionDto, ApiProperty, IsNotEmpty, IsString, Type, InscriptionService, Injectable
+### Community 37 - "TypeDocument"
+Cohesion: 0.32
+Nodes (4): src_repositories_base_index_idcreateentity, src_repositories_document_enum_index_typedocument, TypeDocument, AcademicCharge
 
 ### Community 38 - "response-teacher-degree.dto.ts"
 Cohesion: 0.16
 Nodes (18): normalizeText(), attemptNumbers(), EvaluatedGrade, GradeFacts, gradeStatus(), subjectKey(), summarizeGrades(), ResponseTeacherGradeDto (+10 more)
 
-### Community 39 - "SectionService"
-Cohesion: 0.20
-Nodes (3): SectionService, Injectable, InjectRepository
+### Community 39 - "UpdateDepartmentSettingDto"
+Cohesion: 0.29
+Nodes (10): ReserveOfficeNumbersDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsInt, IsOptional, Matches, Max (+2 more)
 
 ### Community 40 - "TeacherDegreeController"
-Cohesion: 0.15
-Nodes (16): UpdateTeacherDegreeDto, TeacherDegreeController, ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags, Body (+8 more)
+Cohesion: 0.17
+Nodes (15): TeacherDegreeController, ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags, Body, Controller (+7 more)
 
 ### Community 41 - "compilerOptions"
 Cohesion: 0.10
 Nodes (19): compilerOptions, allowSyntheticDefaultImports, baseUrl, declaration, emitDecoratorMetadata, esModuleInterop, experimentalDecorators, forceConsistentCasingInFileNames (+11 more)
 
 ### Community 42 - "Generación de Clientes API - SIGEIT-API"
-Cohesion: 0.13
-Nodes (14): Angular, Archivo de Configuración OpenAPI, Configuración, Copia de Clientes (Post-construcción), Dependencias Requeridas, Estructura de Archivos Generados, Flujo de Trabajo Recomendado, Generación Completa de Clientes (+6 more)
+Cohesion: 0.11
+Nodes (18): Angular, Archivo de Configuración OpenAPI, Configuración, Copia de Clientes (Post-construcción), Dependencias Requeridas, Error de Generación de Clientes, Error de Generación de Swagger, Estructura de Archivos Generados (+10 more)
 
 ### Community 43 - "create-teacher-degree.dto.ts"
-Cohesion: 0.14
-Nodes (16): GetSectionTeachersDto, ResponseSectionTeacherDto, ApiProperty, ApiPropertyOptional, IsOptional, Type, DEGREE_FIELDS, SubjectRefDto (+8 more)
+Cohesion: 0.20
+Nodes (10): DEGREE_FIELDS, SubjectRefDto, TeacherGradeMatchDto, src_repositories_teacher_enum_index_degreelevel, DegreeLevel, Doctorate, Master, Other (+2 more)
 
-### Community 44 - "audit-capture.service.ts"
-Cohesion: 0.17
-Nodes (14): AuditRequestShape, maskSensitivePath(), parseResourceFromPath(), extractAuthAuditUser(), buildCreateFieldSummary(), buildPropertyChangeMap(), normalizeCompare(), serializeForAudit() (+6 more)
+### Community 44 - "audit.module.ts"
+Cohesion: 0.18
+Nodes (7): AuditCaptureService, Injectable, AuditDiffService, Injectable, AuditInterceptor, RequestUser, Injectable
 
-### Community 45 - "UserService"
+### Community 45 - "User"
 Cohesion: 0.11
-Nodes (18): ApiProperty, IsBoolean, IsNotEmpty, IsOptional, IsString, Type, UserRespondeDto, ApiResponse (+10 more)
+Nodes (19): ApiHideProperty, Exclude, hashPassword(), ApiProperty, IsBoolean, IsNotEmpty, IsOptional, IsString (+11 more)
 
 ### Community 46 - "mail.service.ts"
 Cohesion: 0.18
-Nodes (8): @nestjs-modules/mailer, MailModule, Module, MailService, Injectable, recovery(), welcome(), InjectRepository
+Nodes (8): @nestjs-modules/mailer, Inject, MailModule, Module, MailService, Injectable, recovery(), welcome()
 
 ### Community 47 - ".import"
 Cohesion: 0.15
 Nodes (13): SubjectDemandController, ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags, Controller, Get (+5 more)
 
-### Community 48 - "ScheduleConflictsQueryDto"
-Cohesion: 0.24
-Nodes (14): FreeSlotsQueryDto, PlanningPeriodQueryDto, ScheduleConflictsQueryDto, ApiProperty, ApiPropertyOptional, ArrayNotEmpty, IsBoolean, IsInt (+6 more)
+### Community 48 - "CreateUserDto"
+Cohesion: 0.11
+Nodes (19): CreateUserDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsEmail, IsNotEmpty, IsOptional, IsString (+11 more)
 
 ### Community 49 - "login.guard.ts"
-Cohesion: 0.12
-Nodes (9): @nestjs/passport, rxjs, JwtAuthGuard, Injectable, src_auth_login_index_is_public_key, IS_PUBLIC_KEY, LoginAuthGuard, Injectable (+1 more)
+Cohesion: 0.16
+Nodes (7): @nestjs/passport, JwtAuthGuard, Injectable, src_auth_login_index_is_public_key, IS_PUBLIC_KEY, LoginAuthGuard, Injectable
 
-### Community 50 - "AuditAction"
-Cohesion: 0.14
-Nodes (13): CreateAuditEntryParams, AuditAction, AuthChangePassword, AuthLogin, AuthLogout, AuthOther, AuthRecoveryComplete, AuthRecoveryRequest (+5 more)
+### Community 50 - "subject.service.ts"
+Cohesion: 0.31
+Nodes (4): src_repositories_subject_dto_index_createsubjectdto, src_repositories_subject_dto_index_getsubjectdepartmentdto, src_repositories_subject_dto_index_updatesubjectdto, normalizeSubjectCode()
 
 ### Community 51 - "department.service.ts"
 Cohesion: 0.06
 Nodes (41): DepartmentController, ApiResponse, ApiTags, Body, Controller, Get, Param, Patch (+33 more)
 
-### Community 52 - "schedule-planning.service.ts"
-Cohesion: 0.13
-Nodes (25): src_repositories_schedule_dto_index_conflictpairdto, src_repositories_schedule_dto_index_coveragestatus, src_repositories_schedule_dto_index_freeslotdto, src_repositories_schedule_dto_index_freeslotsquerydto, src_repositories_schedule_dto_index_periodauditdto, src_repositories_schedule_dto_index_planningperiodquerydto, src_repositories_schedule_dto_index_sectioncoveragedto, AuditSummaryDto (+17 more)
+### Community 52 - "CoverageStatus"
+Cohesion: 0.40
+Nodes (5): CoverageStatus, Complete, Empty, Exceeded, Incomplete
 
-### Community 53 - "common/index.ts"
-Cohesion: 0.31
+### Community 53 - "pagination.ts"
+Cohesion: 0.36
 Nodes (3): PaginationDataDto, PaginationDto, pagination()
 
-### Community 54 - ".findByEntity"
+### Community 54 - "AuditController"
 Cohesion: 0.21
 Nodes (9): ApiParam, AuditController, ApiOperation, ApiResponse, ApiTags, Controller, Get, Param (+1 more)
 
-### Community 55 - "TeacherService"
-Cohesion: 0.09
-Nodes (21): GetTeachersDto, ApiPropertyOptional, IsBooleanString, IsEnum, IsOptional, Type, UpdateTeacherDto, TeacherController (+13 more)
+### Community 55 - "AllowRoles"
+Cohesion: 0.07
+Nodes (34): src_auth_roles_index_teacher_admin_roles, AllowRoles(), TEACHER_ADMIN_ROLES, GetTeachersDto, ApiPropertyOptional, IsBooleanString, IsEnum, IsOptional (+26 more)
 
 ### Community 56 - "AuditService"
 Cohesion: 0.24
 Nodes (7): AuditService, Injectable, InjectRepository, AuditLog, Column, Entity, PrimaryGeneratedColumn
 
 ### Community 57 - "subject-demand.service.ts"
-Cohesion: 0.29
-Nodes (4): src_repositories_subject_demand_dto_index_getsubjectdemanddto, src_repositories_subject_demand_dto_index_importsubjectdemandresultdto, src_repositories_subject_demand_dto_index_responsesubjectdemanddto, src_repositories_subject_demand_entities_index_subjectdemand
+Cohesion: 0.17
+Nodes (13): FILE_UPLOAD_BODY, MAX_UPLOAD_SIZE, UploadedFileData, GetSubjectDemandDto, ApiPropertyOptional, IsOptional, Type, ImportSubjectDemandResultDto (+5 more)
 
 ### Community 58 - "Contrato de estadísticas para frontend con Chart.js"
 Cohesion: 0.18
 Nodes (10): Comparaciones entre períodos, Comparación de demanda por asignatura, Contrato de estadísticas para frontend con Chart.js, Endpoints de estadísticas, Formato recomendado, Mapeo sugerido para Chart.js, Principios, Qué conviene evitar (+2 more)
 
-### Community 59 - "InscriptionController"
-Cohesion: 0.14
-Nodes (15): CloseInscriptionDto, ApiProperty, IsArray, IsNumber, Type, InscriptionController, ApiResponse, ApiTags (+7 more)
+### Community 59 - "SearchTeacherGradeDto"
+Cohesion: 0.20
+Nodes (10): SearchTeacherGradeDto, ApiProperty, ApiPropertyOptional, IsNotEmpty, IsNumber, IsOptional, IsString, Max (+2 more)
 
 ### Community 60 - "jest"
 Cohesion: 0.22
 Nodes (9): jest, collectCoverageFrom, coverageDirectory, moduleFileExtensions, rootDir, testEnvironment, testRegex, transform (+1 more)
 
-### Community 61 - "CreateTeacherDegreeDto"
-Cohesion: 0.21
-Nodes (18): IsPositive, CreateTeacherDegreeDto, TeacherDegreePeriodDto, TeacherGradeDto, ApiProperty, ApiPropertyOptional, IsArray, IsBoolean (+10 more)
+### Community 61 - "DepartmentSetting"
+Cohesion: 0.25
+Nodes (6): OneToOne, InjectRepository, DepartmentSetting, Column, Entity, JoinColumn
 
-### Community 62 - "TypeDocument"
-Cohesion: 0.17
-Nodes (13): ApiNotFoundResponse, Get, Query, ActiveDocumentQueryDto, FindDocumentsQueryDto, ApiProperty, ApiPropertyOptional, IsEnum (+5 more)
+### Community 62 - "FindDocumentsQueryDto"
+Cohesion: 0.32
+Nodes (8): ActiveDocumentQueryDto, FindDocumentsQueryDto, ApiProperty, ApiPropertyOptional, IsEnum, IsInt, IsOptional, Type
 
 ### Community 63 - "README.md"
 Cohesion: 0.25
 Nodes (7): Description, Installation, License, Running the app, Stay in touch, Support, Test
 
 ### Community 64 - "auth.module.ts"
-Cohesion: 0.08
-Nodes (23): ref_express, ref_jsonwebtoken, @nestjs/jwt, src_auth_change_password_dto_index_changepasswordresponsedto, JWT_CONST, src_auth_jwt_auth_index_jwt_const, src_auth_jwt_auth_index_jwtauthguard, src_auth_jwt_auth_index_jwtauthservice (+15 more)
-
-### Community 65 - "DepartmentSetting"
-Cohesion: 0.20
-Nodes (10): OneToOne, currentYear(), DepartmentSettingService, Injectable, InjectRepository, ResponseDepartmentSettingDto, DepartmentSetting, Column (+2 more)
-
-### Community 66 - "RecoveryPasswordResponseDto"
 Cohesion: 0.12
-Nodes (12): bcrypt, UserLoginDto, comparePassword(), hashPassword(), RecoveryPasswordDto, RecoveryPasswordResponseDto, ApiProperty, IsNotEmpty (+4 more)
+Nodes (14): ref_jsonwebtoken, @nestjs/jwt, passport-jwt, JWT_CONST, src_auth_jwt_auth_index_jwtauthguard, JwtAuthService, Injectable, JwtResult (+6 more)
 
-### Community 67 - "GetAuditLogsDto"
-Cohesion: 0.29
-Nodes (7): GetAuditLogsDto, ApiPropertyOptional, IsInt, IsOptional, Max, Min, Type
+### Community 65 - "DepartmentSettingService"
+Cohesion: 0.47
+Nodes (4): currentYear(), DepartmentSettingService, Injectable, ResponseDepartmentSettingDto
+
+### Community 66 - "ScheduleConflictsQueryDto"
+Cohesion: 0.20
+Nodes (15): FreeSlotsQueryDto, PlanningPeriodQueryDto, ScheduleConflictsQueryDto, ApiProperty, ApiPropertyOptional, ArrayNotEmpty, IsBoolean, IsInt (+7 more)
+
+### Community 67 - "property-diff.util.ts"
+Cohesion: 0.52
+Nodes (5): buildCreateFieldSummary(), buildPropertyChangeMap(), normalizeCompare(), serializeForAudit(), stringifyPropertyChanges()
 
 ### Community 68 - "nest-cli.json"
 Cohesion: 0.29
@@ -430,125 +423,97 @@ Nodes (6): collection, compilerOptions, deleteOutDir, plugins, $schema, sourceRo
 Cohesion: 0.21
 Nodes (13): SettingController, ApiBadRequestResponse, ApiForbiddenResponse, ApiNotFoundResponse, ApiOperation, ApiResponse, ApiTags, Body (+5 more)
 
-### Community 70 - "Department"
-Cohesion: 0.11
-Nodes (28): ApiHideProperty, CreateDateColumn, Exclude, typeorm, IdEntity, Column, PrimaryGeneratedColumn, src_repositories_base_index_identity (+20 more)
+### Community 70 - "typeorm"
+Cohesion: 0.20
+Nodes (12): CreateDateColumn, typeorm, IdEntity, Column, PrimaryGeneratedColumn, src_repositories_base_index_identity, Classroom, Column (+4 more)
 
-### Community 71 - "transcript-ai.reader.ts"
-Cohesion: 0.14
-Nodes (24): pdf-parse, src_repositories_teacher_dto_index_teacherdegreeperioddto, src_repositories_teacher_dto_index_teachergradedto, src_repositories_teacher_dto_index_transcriptpreviewdto, TranscriptPreviewDto, ApiProperty, ApiPropertyOptional, buildRequest() (+16 more)
+### Community 71 - "CreateTeacherDegreeDto"
+Cohesion: 0.10
+Nodes (37): IsPositive, pdf-parse, CreateTeacherDegreeDto, TeacherDegreePeriodDto, TeacherGradeDto, ApiProperty, ApiPropertyOptional, IsArray (+29 more)
 
 ### Community 72 - "ScheduleConflictService"
-Cohesion: 0.19
-Nodes (6): ScheduleConflictService, Injectable, SchedulePlanningService, Injectable, InjectRepository, ConflictContext
+Cohesion: 0.13
+Nodes (17): AuditSummaryDto, ConflictPairDto, DayConflictsDto, FreeClassroomDto, FreeSlotDto, PeriodAuditDto, ScheduleConflictsDto, ScheduleLiteDto (+9 more)
 
 ### Community 73 - "openapitools.json"
 Cohesion: 0.40
 Nodes (4): generator-cli, version, $schema, spaces
 
-### Community 74 - "LoginUserResponseDto"
-Cohesion: 0.32
-Nodes (8): LoginDto, LoginUserResponseDto, ApiProperty, IsNotEmpty, IsNumber, IsOptional, IsString, Type
+### Community 74 - "Department"
+Cohesion: 0.19
+Nodes (14): Career, Column, Entity, JoinColumn, ManyToMany, ManyToOne, src_repositories_career_entities_index_career, Department (+6 more)
 
 ### Community 75 - "tsconfig.build.json"
 Cohesion: 0.50
 Nodes (3): ./tsconfig.json, exclude, extends
 
 ### Community 76 - "CreateDocumentDto"
-Cohesion: 0.17
+Cohesion: 0.18
 Nodes (11): CreateDocumentDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsEnum, IsNotEmpty, IsOptional, IsString (+3 more)
 
-### Community 77 - "SearchTeacherGradeDto"
-Cohesion: 0.18
-Nodes (11): ResponseTeacherGradeSearchDto, SearchTeacherGradeDto, ApiProperty, ApiPropertyOptional, IsNotEmpty, IsNumber, IsOptional, IsString (+3 more)
+### Community 77 - "GetAuditLogsDto"
+Cohesion: 0.29
+Nodes (7): GetAuditLogsDto, ApiPropertyOptional, IsInt, IsOptional, Max, Min, Type
 
 ### Community 81 - "UpdateSettingDto"
 Cohesion: 0.22
 Nodes (9): ApiPropertyOptional, IsInt, IsOptional, IsString, Matches, Max, MaxLength, Min (+1 more)
 
-### Community 82 - "teacher-degree.controller.ts"
-Cohesion: 0.36
-Nodes (7): @nestjs/platform-express, src_common_upload_index_file_upload_body, src_common_upload_index_max_upload_size, src_common_upload_index_uploadedfiledata, FILE_UPLOAD_BODY, MAX_UPLOAD_SIZE, UploadedFileData
+### Community 82 - "teacher-degree.service.ts"
+Cohesion: 0.10
+Nodes (25): src_common_upload_index_file_upload_body, src_common_upload_index_max_upload_size, src_common_upload_index_uploadedfiledata, pickDegreeFields(), src_repositories_teacher_dto_index_createteacherdegreedto, src_repositories_teacher_dto_index_pickdegreefields, src_repositories_teacher_dto_index_responseteacherdegreedto, src_repositories_teacher_dto_index_responseteacherdto (+17 more)
 
-### Community 83 - "TeacherDegreeService"
-Cohesion: 0.35
-Nodes (6): pickDegreeFields(), ResponseTeacherDegreeDto, assertInScale(), TeacherDegreeService, toGradeEntity(), Injectable
-
-### Community 84 - "openapi.js"
-Cohesion: 0.29
-Nodes (7): download(), execute(), fs, https, ref_child_process, ref_fs, ref_https
-
-### Community 85 - "GetInscriptionDto"
+### Community 84 - "@nestjs/core"
 Cohesion: 0.20
-Nodes (5): GetInscriptionDto, ApiPropertyOptional, IsBooleanString, IsOptional, Type
+Nodes (6): cookie-parser, ref_fs, @nestjs/core, supertest, AppModule, Module
 
 ### Community 87 - "document.service.ts"
-Cohesion: 0.19
-Nodes (11): src_common_validation_index_strictvalidation, DocumentModule, Module, src_repositories_document_dto_index_activedocumentquerydto, src_repositories_document_dto_index_createdocumentdto, src_repositories_document_dto_index_finddocumentsquerydto, src_repositories_document_dto_index_responsedocumentdto, src_repositories_document_dto_index_updatedocumentdto (+3 more)
+Cohesion: 0.15
+Nodes (9): @nestjs/testing, strictValidation, src_repositories_document_dto_index_activedocumentquerydto, src_repositories_document_dto_index_createdocumentdto, src_repositories_document_dto_index_finddocumentsquerydto, src_repositories_document_dto_index_responsedocumentdto, src_repositories_document_dto_index_updatedocumentdto, UpdateDocumentDto (+1 more)
 
 ### Community 88 - "career.service.ts"
-Cohesion: 0.28
-Nodes (6): CareerModule, Module, src_repositories_career_dto_index_createcareerdto, src_repositories_career_dto_index_getcareersdto, src_repositories_career_dto_index_updatecareerdto, UpdateCareerDto
-
-### Community 89 - "AppModule"
-Cohesion: 0.25
-Nodes (7): Error de Generación de Clientes, Error de Generación de Swagger, Problemas de Compatibilidad, Solución de Problemas, supertest, AppModule, Module
-
-### Community 90 - "GetSubjectDemandDto"
-Cohesion: 0.25
-Nodes (6): GetSubjectDemandDto, ApiPropertyOptional, IsOptional, Type, ResponseSubjectDemandDto, ApiProperty
+Cohesion: 0.06
+Nodes (38): CareerController, ApiResponse, ApiTags, Body, Controller, Get, Param, Patch (+30 more)
 
 ### Community 91 - "Revisión de cambios — sigeit-api"
 Cohesion: 0.29
 Nodes (6): 1. Seguridad, 2. Eficiencia, 3. Duplicado y muerto, 4. Idioma y documentación, 5. Verificación, Revisión de cambios — sigeit-api
 
-### Community 92 - "CareerService"
+### Community 92 - "Subject"
+Cohesion: 0.10
+Nodes (22): OneToMany, InjectRepository, Subject, Column, Entity, JoinColumn, JoinTable, ManyToMany (+14 more)
+
+### Community 95 - "openapi.js"
 Cohesion: 0.33
-Nodes (3): CareerService, Injectable, InjectRepository
+Nodes (6): download(), execute(), fs, https, ref_child_process, ref_https
 
-### Community 94 - "ResponseCareerDto"
-Cohesion: 0.22
-Nodes (8): ResponseCareerDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsNotEmpty, IsOptional, IsString, Type
+### Community 98 - "audit-capture.service.ts"
+Cohesion: 0.16
+Nodes (17): AuditRequestShape, EXCLUDED_PREFIXES, httpMethodToAuditAction(), maskSensitivePath(), MUTATING_METHODS, normalizePath(), parseAuthResource(), parseResourceFromPath() (+9 more)
 
-### Community 95 - "Inscription"
-Cohesion: 0.22
-Nodes (8): Inscription, Column, Entity, Index, JoinColumn, ManyToOne, Inject, InjectRepository
-
-### Community 96 - "UpdateDepartmentSettingDto"
-Cohesion: 0.29
-Nodes (10): ReserveOfficeNumbersDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsInt, IsOptional, Matches, Max (+2 more)
-
-### Community 98 - "GetCareersDto"
-Cohesion: 0.29
-Nodes (6): Query, GetCareersDto, ApiPropertyOptional, IsBooleanString, IsOptional, Type
-
-### Community 99 - "CreateCareerDto"
-Cohesion: 0.25
-Nodes (8): CreateCareerDto, ApiProperty, ApiPropertyOptional, IsBoolean, IsNotEmpty, IsOptional, IsString, Type
-
-### Community 101 - "ResponseSectionDto"
-Cohesion: 0.25
-Nodes (7): ResponseSectionDto, ApiProperty, IsBoolean, IsNotEmpty, IsOptional, IsString, Type
+### Community 101 - "RolesGuard"
+Cohesion: 0.40
+Nodes (3): RolesGuard, Injectable, InjectRepository
 
 ## Knowledge Gaps
-- **264 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `plugins` (+259 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 902 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **262 isolated node(s):** `$schema`, `collection`, `sourceRoot`, `deleteOutDir`, `plugins` (+257 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 881 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `@nestjs/common` to `statistics.service.ts`, `CrudRepository`, `Teacher`, `School`, `day.service.ts`, `period.service.ts`, `schedule-conflict.service.ts`, `package.json`, `Section`, `user.service.ts`, `inscription.service.ts`, `subject-demand.parser.ts`, `section.service.ts`, `teacher-degree.service.ts`, `Delete`, `schedule.service.ts`, `audit.service.ts`, `app.module.ts`, `auth.controller.ts`, `.constructor`, `audit-path.util.ts`, `subject.service.ts`, `department-setting.service.ts`, `audit-capture.service.ts`, `mail.service.ts`, `login.guard.ts`, `department.service.ts`, `schedule-planning.service.ts`, `subject-demand.service.ts`, `auth.module.ts`, `transcript-ai.reader.ts`, `teacher-degree.controller.ts`, `document.service.ts`, `career.service.ts`, `AppModule`?**
-  _High betweenness centrality (0.299) - this node is a cross-community bridge._
-- **Why does `@nestjs/swagger` connect `@nestjs/swagger` to `statistics.service.ts`, `CrudRepository`, `Teacher`, `School`, `day.service.ts`, `period.service.ts`, `package.json`, `Section`, `user.service.ts`, `inscription.service.ts`, `section.service.ts`, `Delete`, `ResponseTeacherDto`, `audit.service.ts`, `auth.controller.ts`, `subject.service.ts`, `department-setting.service.ts`, `response-teacher-degree.dto.ts`, `create-teacher-degree.dto.ts`, `department.service.ts`, `schedule-planning.service.ts`, `subject-demand.service.ts`, `TypeDocument`, `RecoveryPasswordResponseDto`, `Department`, `CreateDocumentDto`, `teacher-degree.controller.ts`, `document.service.ts`, `career.service.ts`?**
-  _High betweenness centrality (0.161) - this node is a cross-community bridge._
-- **Why does `@nestjs/typeorm` connect `teacher-degree.service.ts` to `statistics.service.ts`, `CrudRepository`, `Teacher`, `School`, `day.service.ts`, `period.service.ts`, `schedule-conflict.service.ts`, `package.json`, `Section`, `user.service.ts`, `inscription.service.ts`, `section.service.ts`, `@nestjs/common`, `schedule.service.ts`, `audit.service.ts`, `app.module.ts`, `subject.service.ts`, `department-setting.service.ts`, `department.service.ts`, `schedule-planning.service.ts`, `subject-demand.service.ts`, `document.service.ts`, `career.service.ts`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
+- **Why does `@nestjs/common` connect `@nestjs/common` to `statistics.service.ts`, `CrudRepository`, `change-password.service.ts`, `School`, `day.service.ts`, `login.service.ts`, `period.service.ts`, `schedule-planning.service.ts`, `package.json`, `@nestjs/swagger`, `subject-demand.parser.ts`, `section-teacher.service.ts`, `Section`, `repositories.module.ts`, `Delete`, `audit.service.ts`, `app.module.ts`, `auth.controller.ts`, `schedule.controller.ts`, `setting.controller.ts`, `audit.module.ts`, `mail.service.ts`, `login.guard.ts`, `subject.service.ts`, `department.service.ts`, `AllowRoles`, `subject-demand.service.ts`, `auth.module.ts`, `CreateTeacherDegreeDto`, `Department`, `teacher-degree.service.ts`, `@nestjs/core`, `document.service.ts`, `career.service.ts`, `audit-capture.service.ts`?**
+  _High betweenness centrality (0.249) - this node is a cross-community bridge._
+- **Why does `@nestjs/swagger` connect `@nestjs/swagger` to `statistics.service.ts`, `CrudRepository`, `change-password.service.ts`, `School`, `day.service.ts`, `period.service.ts`, `schedule-planning.service.ts`, `package.json`, `@nestjs/common`, `Section`, `Delete`, `response-teacher.dto.ts`, `audit.service.ts`, `auth.controller.ts`, `schedule.controller.ts`, `RecoveryPasswordResponseDto`, `setting.controller.ts`, `TypeDocument`, `response-teacher-degree.dto.ts`, `create-teacher-degree.dto.ts`, `department.service.ts`, `AllowRoles`, `subject-demand.service.ts`, `ScheduleConflictsQueryDto`, `ScheduleConflictService`, `Department`, `teacher-degree.service.ts`, `@nestjs/core`, `document.service.ts`, `career.service.ts`?**
+  _High betweenness centrality (0.126) - this node is a cross-community bridge._
+- **Why does `User` connect `User` to `ScheduleController`, `DepartmentSettingService`, `.update`, `RolesGuard`, `setting.controller.ts`, `.reserveOfficeNumbers`, `typeorm`, `School`, `Department`, `@nestjs/common`, `CreateUserDto`, `Section`, `document.service.ts`, `DocumentService`, `ScheduleService`, `schedule.controller.ts`?**
+  _High betweenness centrality (0.050) - this node is a cross-community bridge._
 - **What connects `$schema`, `collection`, `sourceRoot` to the rest of the system?**
-  _264 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _262 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `statistics.service.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.0568986568986569 - nodes in this community are weakly interconnected._
 - **Should `ScheduleController` be split into smaller, more focused modules?**
-  _Cohesion score 0.1431451612903226 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.14015151515151514 - nodes in this community are weakly interconnected._
 - **Should `CrudRepository` be split into smaller, more focused modules?**
-  _Cohesion score 0.05157894736842105 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05507246376811594 - nodes in this community are weakly interconnected._
