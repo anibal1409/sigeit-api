@@ -7,67 +7,94 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+import { CurrentUserId } from '../user/permissions';
 import { DocumentService } from './document.service';
-import { CreateDocumentDto, ResponseDocumentDto } from './dto';
-import { UpdateDocumentDto } from './dto/update-document.dto';
+import {
+  ActiveDocumentQueryDto,
+  CreateDocumentDto,
+  FindDocumentsQueryDto,
+  ResponseDocumentDto,
+  UpdateDocumentDto,
+} from './dto';
 
+/** Formatos de documento por departamento. Escritura: Administrador o jefe del departamento. */
 @ApiTags('document')
 @Controller('document')
 export class DocumentController {
   constructor(private readonly documentService: DocumentService) {}
 
   @Post()
-  @ApiResponse({
-    type: ResponseDocumentDto,
-  })
-  create(@Body() createDocumentDto: CreateDocumentDto) {
-    return this.documentService.create(createDocumentDto);
+  @ApiOperation({ summary: 'Crear formato' })
+  @ApiResponse({ type: ResponseDocumentDto })
+  @ApiBadRequestResponse({ description: 'Nombre repetido o falta {tabla}' })
+  @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
+  create(
+    @CurrentUserId() userId: number,
+    @Body() createDocumentDto: CreateDocumentDto,
+  ) {
+    return this.documentService.create(userId, createDocumentDto);
   }
 
   @Get()
-  @ApiResponse({
-    type: ResponseDocumentDto,
-    isArray: true,
+  @ApiOperation({
+    summary: 'Listar formatos',
+    description: 'Un jefe de departamento solo ve los de su departamento.',
   })
-  findAll() {
-    return this.documentService.findAll();
+  @ApiResponse({ type: ResponseDocumentDto, isArray: true })
+  findAll(
+    @CurrentUserId() userId: number,
+    @Query() query: FindDocumentsQueryDto,
+  ) {
+    return this.documentService.findAll(userId, query);
   }
 
   @Get('active')
-  @ApiResponse({
-    type: ResponseDocumentDto,
-  })
-  findActive() {
-    return this.documentService.findActive();
+  @ApiOperation({ summary: 'Formato activo de un departamento y tipo' })
+  @ApiResponse({ type: ResponseDocumentDto })
+  @ApiNotFoundResponse({ description: 'No hay formato activo' })
+  findActive(@Query() query: ActiveDocumentQueryDto) {
+    return this.documentService.findActive(+query.departmentId, query.type);
   }
 
   @Get(':id')
-  @ApiResponse({
-    type: ResponseDocumentDto,
-  })
+  @ApiOperation({ summary: 'Obtener formato' })
+  @ApiResponse({ type: ResponseDocumentDto })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.documentService.findOne(+id);
+    return this.documentService.findOne(id);
   }
 
   @Patch(':id')
-  @ApiResponse({
-    type: ResponseDocumentDto,
-  })
+  @ApiOperation({ summary: 'Actualizar formato (solo los campos enviados)' })
+  @ApiResponse({ type: ResponseDocumentDto })
+  @ApiBadRequestResponse({ description: 'Nombre repetido o falta {tabla}' })
+  @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
   update(
+    @CurrentUserId() userId: number,
     @Param('id', ParseIntPipe) id: number,
     @Body() updateDocumentDto: UpdateDocumentDto,
   ) {
-    return this.documentService.update(+id, updateDocumentDto);
+    return this.documentService.update(userId, id, updateDocumentDto);
   }
 
   @Delete(':id')
-  @ApiResponse({
-    type: ResponseDocumentDto,
-  })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.documentService.remove(+id);
+  @ApiOperation({ summary: 'Eliminar formato' })
+  @ApiResponse({ type: ResponseDocumentDto })
+  @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
+  remove(
+    @CurrentUserId() userId: number,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.documentService.remove(userId, id);
   }
 }

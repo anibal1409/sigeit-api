@@ -1,37 +1,50 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
-
-// eslint-disable-next-line prettier/prettier
 import {
-  ApiProperty,
-  OmitType,
-  PartialType,
-} from '@nestjs/swagger';
+  IsBoolean,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
+
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { IdCreateEntity } from '../../base';
-import { DocumentE } from '../entities';
 import { TypeDocument } from '../enum';
 
-export class CreateDocumentDto extends PartialType(
-  OmitType(DocumentE, ['updatedAt', 'createdAt', 'deleted', 'department']),
-) {
+/** Datos para crear un formato de documento. */
+export class CreateDocumentDto {
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
+  @MaxLength(100)
   name!: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ enum: TypeDocument, enumName: 'TypeDocument' })
+  @IsEnum(TypeDocument)
+  type!: TypeDocument;
+
+  @ApiProperty({
+    description: 'Cuerpo con variables; carga académica exige {tabla}',
+  })
   @IsString()
-  description!: string;
+  @MaxLength(5000)
+  body!: string;
 
   @ApiProperty()
-  @IsNotEmpty()
   @IsString()
-  type!: TypeDocument;
+  @MaxLength(1000)
+  signature!: string;
 
   @ApiProperty({ type: IdCreateEntity })
   @IsNotEmpty()
+  @ValidateNested()
   @Type(() => IdCreateEntity)
-  department: IdCreateEntity;
+  department!: IdCreateEntity;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  status?: boolean;
 }

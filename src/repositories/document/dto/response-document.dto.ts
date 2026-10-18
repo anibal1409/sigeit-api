@@ -1,55 +1,43 @@
-import { Type } from 'class-transformer';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 import { Department } from '../../department/entities';
 import { DocumentE } from '../entities';
 import { TypeDocument } from '../enum';
 
+/** Formato de documento devuelto por la API. */
 export class ResponseDocumentDto {
   @ApiProperty()
-  @IsNotEmpty()
-  @Type(() => Number)
   id: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  name!: string;
+  name: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  description!: string;
+  body: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  type!: TypeDocument;
+  signature: string;
+
+  @ApiProperty({ enum: TypeDocument, enumName: 'TypeDocument' })
+  type: TypeDocument;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @Type(() => Number)
   departmentId: number;
 
-  @ApiProperty()
-  @IsOptional()
-  @Type(() => Department)
-  department: Department;
+  @ApiPropertyOptional({ type: Department })
+  department?: Department;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsBoolean()
-  status!: boolean;
+  status: boolean;
 
   constructor(data: DocumentE) {
     this.id = data.id;
     this.name = data.name;
-    this.description = data.description;
+    this.body = data.body;
+    this.signature = data.signature;
     this.status = data.status;
     this.department = data.department;
-    this.departmentId = data.department.id;
+    this.departmentId = data.department?.id;
     this.type = data.type;
   }
 }
