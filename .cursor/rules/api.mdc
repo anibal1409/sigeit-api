@@ -9,6 +9,10 @@ alwaysApply: true
 Fuente única para Cursor y Claude (`CLAUDE.md` apunta aquí). Antes de dar por
 terminado un cambio, aplicar la skill `sigeit-review`.
 
+Decisiones y cambios relevantes (qué se hizo, por qué y qué se eliminó) en
+`docs/decisiones/`. Leerlos antes de tocar autenticación, permisos,
+configuración, formatos u horarios, y registrar ahí cada cambio de ese tipo.
+
 ## Idioma
 - Todo identificador va en inglés: variables, funciones, clases, archivos, carpetas, rutas, columnas, enums y mensajes de excepción.
 - Comentarios, JSDoc, descripciones de Swagger y documentación van en español.
