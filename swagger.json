@@ -3165,6 +3165,65 @@
         ]
       }
     },
+    "/setting": {
+      "get": {
+        "operationId": "SettingController_find",
+        "summary": "Obtener la configuración del instituto",
+        "description": "Si no existe, se crea con valores por defecto.",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSettingDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "setting"
+        ]
+      },
+      "patch": {
+        "operationId": "SettingController_update",
+        "summary": "Actualizar la configuración (solo Administrador)",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSettingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Datos inválidos o endTime <= startTime"
+          },
+          "403": {
+            "description": "El usuario no es Administrador"
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseSettingDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "setting"
+        ]
+      }
+    },
     "/classroom": {
       "post": {
         "operationId": "ClassroomController_create",
@@ -6838,6 +6897,74 @@
             "items": {
               "$ref": "#/components/schemas/IdCreateEntity"
             }
+          }
+        }
+      },
+      "ResponseSettingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "instituteName": {
+            "type": "string"
+          },
+          "instituteAbbreviation": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "07:00"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "18:00"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "interval": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "instituteName",
+          "instituteAbbreviation",
+          "startTime",
+          "endTime",
+          "duration",
+          "interval"
+        ]
+      },
+      "UpdateSettingDto": {
+        "type": "object",
+        "properties": {
+          "instituteName": {
+            "type": "string"
+          },
+          "instituteAbbreviation": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "07:00"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "18:00"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "interval": {
+            "type": "number"
           }
         }
       },
