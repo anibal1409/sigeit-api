@@ -3224,6 +3224,154 @@
         ]
       }
     },
+    "/setting/department": {
+      "get": {
+        "operationId": "SettingController_findDepartments",
+        "summary": "Correlativo de oficios de todos los departamentos",
+        "description": "Crea con valores por defecto las filas que falten.",
+        "parameters": [],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseDepartmentSettingDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "setting"
+        ]
+      }
+    },
+    "/setting/department/{departmentId}": {
+      "get": {
+        "operationId": "SettingController_findDepartment",
+        "summary": "Correlativo de oficios de un departamento",
+        "description": "officeLastNumber es 0 si officeYear no es el año en curso.",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Departamento no encontrado"
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentSettingDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "setting"
+        ]
+      },
+      "patch": {
+        "operationId": "SettingController_updateDepartment",
+        "summary": "Actualizar el correlativo (Administrador o jefe del departamento)",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDepartmentSettingDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "403": {
+            "description": "Sin permiso sobre el departamento"
+          },
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDepartmentSettingDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "setting"
+        ]
+      }
+    },
+    "/setting/department/{departmentId}/office-numbers": {
+      "post": {
+        "operationId": "SettingController_reserveOfficeNumbers",
+        "summary": "Reservar números de oficio de forma atómica",
+        "description": "Sin start: last+1…last+count. Con start: start…start+count-1. Reinicia si cambia el año.",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReserveOfficeNumbersDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseOfficeNumbersDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Departamento no encontrado"
+          }
+        },
+        "tags": [
+          "setting"
+        ]
+      }
+    },
     "/classroom": {
       "post": {
         "operationId": "ClassroomController_create",
@@ -3401,6 +3549,7 @@
     "/document": {
       "post": {
         "operationId": "DocumentController_create",
+        "summary": "Crear formato",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -3413,6 +3562,12 @@
           }
         },
         "responses": {
+          "400": {
+            "description": "Nombre repetido o falta {tabla}"
+          },
+          "403": {
+            "description": "Sin permiso sobre el departamento"
+          },
           "default": {
             "description": "",
             "content": {
@@ -3430,7 +3585,26 @@
       },
       "get": {
         "operationId": "DocumentController_findAll",
-        "parameters": [],
+        "summary": "Listar formatos",
+        "description": "Un jefe de departamento solo ve los de su departamento.",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TypeDocument"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": "",
@@ -3454,8 +3628,29 @@
     "/document/active": {
       "get": {
         "operationId": "DocumentController_findActive",
-        "parameters": [],
+        "summary": "Formato activo de un departamento y tipo",
+        "parameters": [
+          {
+            "name": "departmentId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "type",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TypeDocument"
+            }
+          }
+        ],
         "responses": {
+          "404": {
+            "description": "No hay formato activo"
+          },
           "default": {
             "description": "",
             "content": {
@@ -3475,6 +3670,7 @@
     "/document/{id}": {
       "get": {
         "operationId": "DocumentController_findOne",
+        "summary": "Obtener formato",
         "parameters": [
           {
             "name": "id",
@@ -3503,6 +3699,7 @@
       },
       "patch": {
         "operationId": "DocumentController_update",
+        "summary": "Actualizar formato (solo los campos enviados)",
         "parameters": [
           {
             "name": "id",
@@ -3524,6 +3721,12 @@
           }
         },
         "responses": {
+          "400": {
+            "description": "Nombre repetido o falta {tabla}"
+          },
+          "403": {
+            "description": "Sin permiso sobre el departamento"
+          },
           "default": {
             "description": "",
             "content": {
@@ -3541,6 +3744,7 @@
       },
       "delete": {
         "operationId": "DocumentController_remove",
+        "summary": "Eliminar formato",
         "parameters": [
           {
             "name": "id",
@@ -3552,6 +3756,9 @@
           }
         ],
         "responses": {
+          "403": {
+            "description": "Sin permiso sobre el departamento"
+          },
           "default": {
             "description": "",
             "content": {
@@ -6968,6 +7175,108 @@
           }
         }
       },
+      "ResponseDepartmentSettingDto": {
+        "type": "object",
+        "properties": {
+          "departmentId": {
+            "type": "number"
+          },
+          "departmentName": {
+            "type": "string"
+          },
+          "officePrefix": {
+            "type": "string",
+            "example": "DIS"
+          },
+          "officeYear": {
+            "type": "number"
+          },
+          "officeLastNumber": {
+            "type": "number"
+          },
+          "askOfficeNumberOnBulk": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "departmentId",
+          "departmentName",
+          "officePrefix",
+          "officeYear",
+          "officeLastNumber",
+          "askOfficeNumberOnBulk"
+        ]
+      },
+      "UpdateDepartmentSettingDto": {
+        "type": "object",
+        "properties": {
+          "officePrefix": {
+            "type": "string",
+            "example": "DIS"
+          },
+          "officeLastNumber": {
+            "type": "number",
+            "description": "Último número emitido en el año en curso"
+          },
+          "askOfficeNumberOnBulk": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ReserveOfficeNumbersDto": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 500
+          },
+          "year": {
+            "type": "number",
+            "example": 2026
+          },
+          "start": {
+            "type": "number",
+            "description": "Número inicial escrito por el usuario"
+          }
+        },
+        "required": [
+          "count",
+          "year"
+        ]
+      },
+      "ResponseOfficeNumbersDto": {
+        "type": "object",
+        "properties": {
+          "prefix": {
+            "type": "string"
+          },
+          "year": {
+            "type": "number"
+          },
+          "numbers": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "codes": {
+            "example": [
+              "DIS-249/2026"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "prefix",
+          "year",
+          "numbers",
+          "codes"
+        ]
+      },
       "CreateClassroomDto": {
         "type": "object",
         "properties": {
@@ -7060,26 +7369,40 @@
           }
         }
       },
+      "TypeDocument": {
+        "type": "string",
+        "enum": [
+          "academic_charge"
+        ]
+      },
       "CreateDocumentDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
-          },
           "type": {
+            "$ref": "#/components/schemas/TypeDocument"
+          },
+          "body": {
+            "type": "string",
+            "description": "Cuerpo con variables; carga académica exige {tabla}"
+          },
+          "signature": {
             "type": "string"
           },
           "department": {
             "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
           }
         },
         "required": [
           "name",
-          "description",
           "type",
+          "body",
+          "signature",
           "department"
         ]
       },
@@ -7092,11 +7415,14 @@
           "name": {
             "type": "string"
           },
-          "description": {
+          "body": {
+            "type": "string"
+          },
+          "signature": {
             "type": "string"
           },
           "type": {
-            "type": "string"
+            "$ref": "#/components/schemas/TypeDocument"
           },
           "departmentId": {
             "type": "number"
@@ -7111,10 +7437,10 @@
         "required": [
           "id",
           "name",
-          "description",
+          "body",
+          "signature",
           "type",
           "departmentId",
-          "department",
           "status"
         ]
       },
@@ -7124,14 +7450,21 @@
           "name": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
-          },
           "type": {
+            "$ref": "#/components/schemas/TypeDocument"
+          },
+          "body": {
+            "type": "string",
+            "description": "Cuerpo con variables; carga académica exige {tabla}"
+          },
+          "signature": {
             "type": "string"
           },
           "department": {
             "$ref": "#/components/schemas/IdCreateEntity"
+          },
+          "status": {
+            "type": "boolean"
           }
         }
       },
