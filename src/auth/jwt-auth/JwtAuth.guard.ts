@@ -47,7 +47,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       }
     }
 
-    super.handleRequest(err, user, info, context, status);
+    return super.handleRequest(err, user, info, context, status);
   }
 
   canActivate(
