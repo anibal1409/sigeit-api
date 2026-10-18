@@ -1,22 +1,41 @@
-import { Request } from 'express';
-
-import { Body, Controller, Get, Patch, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiForbiddenResponse,
+  ApiNotFoundResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 
-import { ResponseSettingDto, UpdateSettingDto } from './dto';
+import { CurrentUserId } from '../user/permissions';
+import { DepartmentSettingService } from './department-setting.service';
+import {
+  ReserveOfficeNumbersDto,
+  ResponseDepartmentSettingDto,
+  ResponseOfficeNumbersDto,
+  ResponseSettingDto,
+  UpdateDepartmentSettingDto,
+  UpdateSettingDto,
+} from './dto';
 import { SettingService } from './setting.service';
 
-/** Configuración única del instituto (sin `:id`). */
+/** Configuración del instituto (fila única) y correlativo de oficios por departamento. */
 @ApiTags('setting')
 @Controller('setting')
 export class SettingController {
-  constructor(private readonly settingService: SettingService) {}
+  constructor(
+    private readonly settingService: SettingService,
+    private readonly departmentSettingService: DepartmentSettingService,
+  ) {}
 
   /** Devuelve la configuración; la crea con valores por defecto si no existe. */
   @Get()
@@ -37,8 +56,65 @@ export class SettingController {
     description: 'Datos inválidos o endTime <= startTime',
   })
   @ApiForbiddenResponse({ description: 'El usuario no es Administrador' })
-  update(@Req() request: Request, @Body() updateSettingDto: UpdateSettingDto) {
-    const user = request.user as { userId: string };
-    return this.settingService.update(+user?.userId, updateSettingDto);
+  update(
+    @CurrentUserId() userId: number,
+    @Body() updateSettingDto: UpdateSettingDto,
+  ) {
+    return this.settingService.update(userId, updateSettingDto);
+  }
+
+  @Get('department')
+  @ApiOperation({
+    summary: 'Correlativo de oficios de todos los departamentos',
+    description: 'Crea con valores por defecto las filas que falten.',
+  })
+  @ApiResponse({ type: ResponseDepartmentSettingDto, isArray: true })
+  findDepartments() {
+    return this.departmentSettingService.findAll();
+  }
+
+  @Get('department/:departmentId')
+  @ApiOperation({
+    summary: 'Correlativo de oficios de un departamento',
+    description: 'officeLastNumber es 0 si officeYear no es el año en curso.',
+  })
+  @ApiResponse({ type: ResponseDepartmentSettingDto })
+  @ApiNotFoundResponse({ description: 'Departamento no encontrado' })
+  findDepartment(@Param('departmentId', ParseIntPipe) departmentId: number) {
+    return this.departmentSettingService.findOne(departmentId);
+  }
+
+  @Patch('department/:departmentId')
+  @ApiOperation({
+    summary:
+      'Actualizar el correlativo (Administrador o jefe del departamento)',
+  })
+  @ApiResponse({ type: ResponseDepartmentSettingDto })
+  @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
+  updateDepartment(
+    @CurrentUserId() userId: number,
+    @Param('departmentId', ParseIntPipe) departmentId: number,
+    @Body() updateDto: UpdateDepartmentSettingDto,
+  ) {
+    return this.departmentSettingService.update(
+      userId,
+      departmentId,
+      updateDto,
+    );
+  }
+
+  @Post('department/:departmentId/office-numbers')
+  @ApiOperation({
+    summary: 'Reservar números de oficio de forma atómica',
+    description:
+      'Sin start: last+1…last+count. Con start: start…start+count-1. Reinicia si cambia el año.',
+  })
+  @ApiResponse({ status: 201, type: ResponseOfficeNumbersDto })
+  @ApiNotFoundResponse({ description: 'Departamento no encontrado' })
+  reserveOfficeNumbers(
+    @Param('departmentId', ParseIntPipe) departmentId: number,
+    @Body() dto: ReserveOfficeNumbersDto,
+  ) {
+    return this.departmentSettingService.reserve(departmentId, dto);
   }
 }

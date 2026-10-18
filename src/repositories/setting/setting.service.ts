@@ -1,15 +1,11 @@
 import { Repository } from 'typeorm';
 
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { School } from '../school/entities';
-import { User } from '../user/entities';
-import { Roles } from '../user/enums/roles';
+import { assertAdmin } from '../user/permissions';
+import { UserService } from '../user/user.service';
 import { ResponseSettingDto, UpdateSettingDto } from './dto';
 import { Setting } from './entities';
 
@@ -21,8 +17,7 @@ export class SettingService {
     private repository: Repository<Setting>,
     @InjectRepository(School)
     private schoolRepository: Repository<School>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private userService: UserService,
   ) {}
 
   /** Devuelve la única fila; si no existe, la crea con valores por defecto tomando nombre y siglas de la primera escuela. */
@@ -62,10 +57,7 @@ export class SettingService {
     userId: number,
     updateDto: UpdateSettingDto,
   ): Promise<ResponseSettingDto> {
-    const user = await this.userRepository.findOne({ where: { id: userId } });
-    if (user?.role !== Roles.Administrator) {
-      throw new ForbiddenException();
-    }
+    assertAdmin(await this.userService.findValid(userId));
     const item = await this.findOrCreate();
     const merged = { ...item, ...updateDto };
     // HH:mm con cero a la izquierda: la comparación de texto equivale a la de horas.
