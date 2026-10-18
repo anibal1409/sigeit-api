@@ -18,6 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { strictValidation } from '../../common/validation';
 import { CurrentUserId } from '../user/permissions';
 import { DocumentService } from './document.service';
 import {
@@ -41,7 +42,7 @@ export class DocumentController {
   @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
   create(
     @CurrentUserId() userId: number,
-    @Body() createDocumentDto: CreateDocumentDto,
+    @Body(strictValidation) createDocumentDto: CreateDocumentDto,
   ) {
     return this.documentService.create(userId, createDocumentDto);
   }
@@ -54,7 +55,7 @@ export class DocumentController {
   @ApiResponse({ type: ResponseDocumentDto, isArray: true })
   findAll(
     @CurrentUserId() userId: number,
-    @Query() query: FindDocumentsQueryDto,
+    @Query(strictValidation) query: FindDocumentsQueryDto,
   ) {
     return this.documentService.findAll(userId, query);
   }
@@ -63,7 +64,7 @@ export class DocumentController {
   @ApiOperation({ summary: 'Formato activo de un departamento y tipo' })
   @ApiResponse({ type: ResponseDocumentDto })
   @ApiNotFoundResponse({ description: 'No hay formato activo' })
-  findActive(@Query() query: ActiveDocumentQueryDto) {
+  findActive(@Query(strictValidation) query: ActiveDocumentQueryDto) {
     return this.documentService.findActive(+query.departmentId, query.type);
   }
 
@@ -82,7 +83,7 @@ export class DocumentController {
   update(
     @CurrentUserId() userId: number,
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateDocumentDto: UpdateDocumentDto,
+    @Body(strictValidation) updateDocumentDto: UpdateDocumentDto,
   ) {
     return this.documentService.update(userId, id, updateDocumentDto);
   }

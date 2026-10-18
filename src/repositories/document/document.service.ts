@@ -8,6 +8,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CrudRepository } from '../../common/use-case';
+import { Department } from '../department/entities';
 import { assertCanManageDepartment } from '../user/permissions';
 import { Roles } from '../user/enums/roles';
 import { UserService } from '../user/user.service';
@@ -140,7 +141,7 @@ export class DocumentService implements CrudRepository<DocumentE> {
   }
 
   /**
-   * Valida `{tabla}` y nombre único, y guarda. Si queda activo, desactiva en la
+   * Valida `{tabla}`, que el departamento exista y el nombre único, y guarda. Si queda activo, desactiva en la
    * misma transacción los demás formatos del mismo departamento y tipo.
    */
   private async saveValidated(doc: DocumentE): Promise<DocumentE> {
@@ -149,6 +150,12 @@ export class DocumentService implements CrudRepository<DocumentE> {
       !doc.body.includes('{tabla}')
     ) {
       throw new BadRequestException('Body must contain {tabla}.');
+    }
+    const departmentExists = await this.dataSource
+      .getRepository(Department)
+      .exist({ where: { id: doc.department.id, deleted: false } });
+    if (!departmentExists) {
+      throw new BadRequestException('Department not found.');
     }
     if (await this.findByName(doc.name, doc.department.id, doc.id)) {
       throw new BadRequestException('Document already exists.');

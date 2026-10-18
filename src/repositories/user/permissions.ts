@@ -19,9 +19,14 @@ export const CurrentUserId = createParamDecorator(
   },
 );
 
-/** Lanza 403 si el usuario no es Administrador. */
+/** Usuario existente, no eliminado y activo: un token vigente de un usuario dado de baja no debe dar permisos. */
+function isActive(user: User): boolean {
+  return !!user && !user.deleted && user.status !== false;
+}
+
+/** Lanza 403 si el usuario no es Administrador activo. */
 export function assertAdmin(user: User): void {
-  if (user?.role !== Roles.Administrator) {
+  if (!isActive(user) || user.role !== Roles.Administrator) {
     throw new ForbiddenException();
   }
 }
@@ -33,7 +38,7 @@ export function assertCanManageDepartment(
 ): void {
   const isHead =
     user?.role === Roles.HeadDepartment && user.department?.id === departmentId;
-  if (user?.role !== Roles.Administrator && !isHead) {
+  if (!isActive(user) || (user.role !== Roles.Administrator && !isHead)) {
     throw new ForbiddenException();
   }
 }

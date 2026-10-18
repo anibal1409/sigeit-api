@@ -16,6 +16,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { strictValidation } from '../../common/validation';
 import { CurrentUserId } from '../user/permissions';
 import { DepartmentSettingService } from './department-setting.service';
 import {
@@ -58,7 +59,7 @@ export class SettingController {
   @ApiForbiddenResponse({ description: 'El usuario no es Administrador' })
   update(
     @CurrentUserId() userId: number,
-    @Body() updateSettingDto: UpdateSettingDto,
+    @Body(strictValidation) updateSettingDto: UpdateSettingDto,
   ) {
     return this.settingService.update(userId, updateSettingDto);
   }
@@ -94,7 +95,7 @@ export class SettingController {
   updateDepartment(
     @CurrentUserId() userId: number,
     @Param('departmentId', ParseIntPipe) departmentId: number,
-    @Body() updateDto: UpdateDepartmentSettingDto,
+    @Body(strictValidation) updateDto: UpdateDepartmentSettingDto,
   ) {
     return this.departmentSettingService.update(
       userId,
@@ -110,11 +111,17 @@ export class SettingController {
       'Sin start: last+1…last+count. Con start: start…start+count-1. Reinicia si cambia el año.',
   })
   @ApiResponse({ status: 201, type: ResponseOfficeNumbersDto })
+  @ApiBadRequestResponse({
+    description:
+      'Año fuera de rango o start menor o igual al último número emitido',
+  })
+  @ApiForbiddenResponse({ description: 'Sin permiso sobre el departamento' })
   @ApiNotFoundResponse({ description: 'Departamento no encontrado' })
   reserveOfficeNumbers(
+    @CurrentUserId() userId: number,
     @Param('departmentId', ParseIntPipe) departmentId: number,
-    @Body() dto: ReserveOfficeNumbersDto,
+    @Body(strictValidation) dto: ReserveOfficeNumbersDto,
   ) {
-    return this.departmentSettingService.reserve(departmentId, dto);
+    return this.departmentSettingService.reserve(userId, departmentId, dto);
   }
 }

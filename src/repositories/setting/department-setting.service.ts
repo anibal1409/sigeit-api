@@ -1,6 +1,10 @@
 import { DataSource, In, Repository } from 'typeorm';
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { stripAccents } from '../../common/text';
@@ -65,25 +69,46 @@ export class DepartmentSettingService {
     if (item.officeYear !== currentYear()) {
       Object.assign(item, { officeYear: currentYear(), officeLastNumber: 0 });
     }
-    await this.repository.save({ ...item, ...updateDto });
-    return this.findOne(departmentId);
+    const saved = await this.repository.save({ ...item, ...updateDto });
+    return new ResponseDepartmentSettingDto(saved, currentYear());
   }
 
   /**
    * Reserva `count` números con bloqueo de fila, así nunca se repiten aunque
    * se generen cartas a la vez. Con `start` usa start…start+count-1.
+   * Solo Administrador o el jefe del departamento.
+   * @throws BadRequestException si `start` no supera el último número emitido.
+   * @throws BadRequestException si `year` es anterior al último año emitido
+   * (repetiría números del año en curso) o posterior al año actual (bloquearía
+   * el año en curso).
    */
   async reserve(
+    userId: number,
     departmentId: number,
     dto: ReserveOfficeNumbersDto,
   ): Promise<ResponseOfficeNumbersDto> {
+    assertCanManageDepartment(
+      await this.userService.findValid(userId),
+      departmentId,
+    );
     await this.findOrCreate(departmentId);
     return this.dataSource.transaction(async (manager) => {
       const item = await manager.findOne(DepartmentSetting, {
         where: { departmentId },
         lock: { mode: 'pessimistic_write' },
       });
+      if (dto.year < item.officeYear || dto.year > currentYear()) {
+        throw new BadRequestException(
+          'year must be between the last issued year and the current year.',
+        );
+      }
       const last = item.officeYear === dto.year ? item.officeLastNumber : 0;
+      // Un inicio menor o igual al último emitido repetiría números.
+      if (dto.start !== undefined && dto.start <= last) {
+        throw new BadRequestException(
+          `start must be greater than the last issued number (${last}).`,
+        );
+      }
       const first = dto.start ?? last + 1;
       const numbers = Array.from({ length: dto.count }, (_, i) => first + i);
       item.officeYear = dto.year;

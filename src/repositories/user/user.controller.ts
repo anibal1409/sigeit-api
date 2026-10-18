@@ -1,5 +1,3 @@
-import { Request } from 'express';
-
 import {
   Body,
   Controller,
@@ -9,7 +7,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Req,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -17,6 +14,7 @@ import { UserRespondeDto } from './dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Roles } from './enums';
+import { CurrentUserId } from './permissions';
 import { UserService } from './user.service';
 
 @ApiTags('user')
@@ -45,8 +43,9 @@ export class UserController {
     type: UserRespondeDto,
     isArray: true,
   })
-  findAll(@Req() request: Request) {
-    return this.userService.findAll(+request.cookies?.['sigeit-cookie']?.id);
+  findAll(@CurrentUserId() userId: number) {
+    // Id del JWT verificado, no de la cookie (que el cliente podría alterar).
+    return this.userService.findAll(userId);
   }
 
   @Get(':id')

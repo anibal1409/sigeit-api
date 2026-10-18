@@ -55,6 +55,7 @@ export class UpdateDepartmentSettingDto {
   @IsOptional()
   @IsInt()
   @Min(0)
+  @Max(999999)
   officeLastNumber?: number;
 
   @ApiPropertyOptional()
@@ -77,10 +78,14 @@ export class ReserveOfficeNumbersDto {
   @Max(9999)
   year: number;
 
-  @ApiPropertyOptional({ description: 'Número inicial escrito por el usuario' })
+  @ApiPropertyOptional({
+    description:
+      'Número inicial escrito por el usuario; debe superar el último emitido',
+  })
   @IsOptional()
   @IsInt()
   @Min(1)
+  @Max(999999)
   start?: number;
 }
 
