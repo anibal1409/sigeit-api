@@ -9,12 +9,12 @@ Aplica las reglas de `.cursor/rules/api.mdc` sobre el diff (`git diff` y archivo
 
 ## 1. Seguridad
 - [ ] Ningún secreto en el código; las variables nuevas están en `.env.example`.
-- [ ] Todo endpoint de escritura comprueba permisos con `user/permissions.ts`; los de lectura públicos llevan `@Public()` a propósito.
-- [ ] El usuario sale de `@CurrentUserId()`, no de cookie, cuerpo ni query.
+- [ ] Cada ruta nueva tiene el rol correcto: `@AllowRoles(...)` si no es solo del Administrador (escrituras) o si es una lectura sensible; `@Public()` solo a propósito. Probar con un token de un rol no permitido (403).
+- [ ] Alcance: jefe de departamento con `assertDepartmentScope`; recursos de un usuario comprobando el propietario en el servicio.
+- [ ] El usuario sale de `@CurrentUser()`, no de cookie, cuerpo ni query.
 - [ ] `@Body(strictValidation)` / `@Query(strictValidation)`: enviar `{"id":1}` o `{"deleted":true}` debe dar 400.
 - [ ] Al hacer `{ ...guardado, ...dto }`, el DTO no puede traer campos que cambien de dueño o de departamento sin volver a comprobar permisos.
 - [ ] Números con `@Min`/`@Max`, textos con `@MaxLength`, formatos con `@Matches`/`@IsEnum`.
-- [ ] Un usuario eliminado o inactivo no conserva permisos.
 - [ ] Contadores y "un solo activo" dentro de transacción; lectura-modificación-escritura con `lock: { mode: 'pessimistic_write' }`.
 - [ ] Sin SQL concatenado con datos del usuario; usar parámetros de TypeORM.
 - [ ] Los errores esperados responden 400/403/404, nunca 500 (probar casos límite: campo ausente, id inexistente, valores en el borde).
