@@ -3363,6 +3363,12 @@
               }
             }
           },
+          "400": {
+            "description": "Año fuera de rango o start menor o igual al último número emitido"
+          },
+          "403": {
+            "description": "Sin permiso sobre el departamento"
+          },
           "404": {
             "description": "Departamento no encontrado"
           }
@@ -7237,7 +7243,7 @@
           },
           "start": {
             "type": "number",
-            "description": "Número inicial escrito por el usuario"
+            "description": "Número inicial escrito por el usuario; debe superar el último emitido"
           }
         },
         "required": [
