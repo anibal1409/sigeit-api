@@ -22,6 +22,10 @@ import {
   ResponseScheduleDto,
   UpdateScheduleDto,
 } from './dto';
+import { Section } from '../section/entities';
+import { User } from '../user/entities';
+import { Roles } from '../user/enums/roles';
+import { assertDepartmentScope } from '../user/permissions';
 import { Schedule } from './entities';
 import {
   ScheduleCandidate,
@@ -81,7 +85,11 @@ export class ScheduleService implements CrudRepository<Schedule> {
     });
   }
 
-  async create(createDto: CreateScheduleDto): Promise<ResponseScheduleDto> {
+  async create(
+    user: User,
+    createDto: CreateScheduleDto,
+  ): Promise<ResponseScheduleDto> {
+    await this.assertSectionScope(user, createDto.section.id);
     const { force, ...data } = createDto;
     await this.conflictService.assertSchedulable([toCandidate(data)], force);
     await this.assertUnique([data]);
@@ -117,8 +125,10 @@ export class ScheduleService implements CrudRepository<Schedule> {
    * guardar y los inserta en una sola operación: se guardan todos o ninguno.
    */
   async createBulk(
+    user: User,
     dto: CreateSchedulesBulkDto,
   ): Promise<ResponseScheduleDto[]> {
+    await this.assertSectionScope(user, dto.section.id);
     const { force, dayIds, ...data } = dto;
     const items = [...new Set(dayIds)].map((id) => ({ ...data, day: { id } }));
     await this.conflictService.assertSchedulable(items.map(toCandidate), force);
@@ -187,12 +197,18 @@ export class ScheduleService implements CrudRepository<Schedule> {
 
   /** Los campos omitidos conservan su valor actual antes de validar choques. */
   async update(
+    user: User,
     id: number,
     updateDto: UpdateScheduleDto,
   ): Promise<ResponseScheduleDto> {
     const { force, ...changes } = updateDto;
-    const { status, start, end, period, classroom, section, day } =
-      await this.findValid(id);
+    const current = await this.findValid(id);
+    await this.assertSectionScope(user, current.section.id);
+    if (changes.section) {
+      // Mover el bloque a otra sección también exige que sea de su departamento.
+      await this.assertSectionScope(user, changes.section.id);
+    }
+    const { status, start, end, period, classroom, section, day } = current;
     const data = { status, start, end, period, classroom, section, day };
     Object.entries(changes).forEach(([key, value]) => {
       if (value !== undefined && value !== null) data[key] = value;
@@ -206,10 +222,38 @@ export class ScheduleService implements CrudRepository<Schedule> {
     return this.findOne(item.id);
   }
 
-  async remove(id: number): Promise<ResponseScheduleDto> {
+  /** Elimina un bloque; un jefe de departamento solo los de su departamento. */
+  async remove(user: User, id: number): Promise<ResponseScheduleDto> {
+    await this.assertSectionScope(user, (await this.findValid(id)).section.id);
+    return this.removeById(id);
+  }
+
+  /** Elimina sin comprobar alcance; para cascadas internas (p. ej. al borrar una sección). */
+  async removeById(id: number): Promise<ResponseScheduleDto> {
     const item = await this.findValid(id);
     item.deleted = true;
     return new ResponseScheduleDto(await this.repository.save(item));
+  }
+
+  /**
+   * Un jefe de departamento solo planifica secciones de materias de su
+   * departamento. Para los demás roles no consulta nada.
+   */
+  private async assertSectionScope(
+    user: User,
+    sectionId: number,
+  ): Promise<void> {
+    if (user.role !== Roles.HeadDepartment) {
+      return;
+    }
+    const section = await this.repository.manager.findOne(Section, {
+      where: { id: sectionId },
+      relations: ['subject', 'subject.department'],
+    });
+    if (!section) {
+      throw new NotFoundException('Section not found');
+    }
+    assertDepartmentScope(user, section.subject?.department?.id);
   }
 
   createMany(createDto: Array<CreateScheduleDto>): Promise<Schedule[]> {

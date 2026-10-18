@@ -40,6 +40,9 @@ import { UpdateScheduleDto } from './dto/update-schedule.dto';
 import { ScheduleConflictService } from './schedule-conflict.service';
 import { SchedulePlanningService } from './schedule-planning.service';
 import { ScheduleService } from './schedule.service';
+import { User } from '../user/entities';
+import { CurrentUser } from '../user/permissions';
+import { AllowRoles, PLANNING_ROLES } from '../../auth/roles';
 
 /** Convierte los parámetros de query a sus tipos (números, booleanos) antes de validarlos. */
 const QueryTransform = new ValidationPipe({ transform: true });
@@ -54,6 +57,7 @@ export class ScheduleController {
   ) {}
 
   @Post()
+  @AllowRoles(...PLANNING_ROLES)
   @ApiOperation({
     summary: 'Crea un horario',
     description:
@@ -65,11 +69,15 @@ export class ScheduleController {
   @ApiConflictResponse({
     description: 'Choques de aula o profesor (detalle en `conflicts`)',
   })
-  create(@Body() createScheduleDto: CreateScheduleDto) {
-    return this.scheduleService.create(createScheduleDto);
+  create(
+    @CurrentUser() user: User,
+    @Body() createScheduleDto: CreateScheduleDto,
+  ) {
+    return this.scheduleService.create(user, createScheduleDto);
   }
 
   @Post('bulk')
+  @AllowRoles(...PLANNING_ROLES)
   @ApiOperation({
     summary: 'Crea el mismo bloque en varios días',
     description:
@@ -79,8 +87,8 @@ export class ScheduleController {
   @ApiConflictResponse({
     description: 'Choques de aula o profesor en algún día',
   })
-  createBulk(@Body() dto: CreateSchedulesBulkDto) {
-    return this.scheduleService.createBulk(dto);
+  createBulk(@CurrentUser() user: User, @Body() dto: CreateSchedulesBulkDto) {
+    return this.scheduleService.createBulk(user, dto);
   }
 
   @Get('planning/conflicts')
@@ -155,6 +163,7 @@ export class ScheduleController {
   }
 
   @Patch(':id')
+  @AllowRoles(...PLANNING_ROLES)
   @ApiConflictResponse({
     description: 'Choques de aula o profesor (detalle en `conflicts`)',
   })
@@ -162,18 +171,20 @@ export class ScheduleController {
     type: ResponseScheduleDto,
   })
   update(
+    @CurrentUser() user: User,
     @Param('id', ParseIntPipe) id: number,
     @Body() updateScheduleDto: UpdateScheduleDto,
   ) {
-    return this.scheduleService.update(+id, updateScheduleDto);
+    return this.scheduleService.update(user, id, updateScheduleDto);
   }
 
   @Delete(':id')
+  @AllowRoles(...PLANNING_ROLES)
   @ApiResponse({
     type: ResponseScheduleDto,
   })
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.scheduleService.remove(+id);
+  remove(@CurrentUser() user: User, @Param('id', ParseIntPipe) id: number) {
+    return this.scheduleService.remove(user, id);
   }
 
   @Get('download/planned-schedules')

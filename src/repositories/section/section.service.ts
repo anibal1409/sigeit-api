@@ -9,7 +9,6 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CrudRepository } from '../../common/use-case';
-import { InscriptionService } from '../inscription/inscription.service';
 import { ScheduleService } from '../schedule/schedule.service';
 import {
   CreateSectionDto,
@@ -27,7 +26,6 @@ export class SectionService implements CrudRepository<Section> {
     @InjectRepository(Section)
     private repository: Repository<Section>,
     private readonly scheduleService: ScheduleService,
-    private readonly inscriptionService: InscriptionService,
   ) {}
 
   async findValid(id: number): Promise<Section> {
@@ -153,16 +151,7 @@ export class SectionService implements CrudRepository<Section> {
     });
 
     for (const schedule of schedules) {
-      await this.scheduleService.remove(schedule.id);
-    }
-
-    // Eliminar en cascada todas las inscripciones relacionadas
-    const inscriptions = await this.inscriptionService.findAll(item.period.id, {
-      sectionId: item.id,
-    });
-
-    for (const inscription of inscriptions) {
-      await this.inscriptionService.remove(inscription.id);
+      await this.scheduleService.removeById(schedule.id);
     }
 
     // Finalmente eliminar la sección
