@@ -16,10 +16,13 @@ import { JwtStrategy, LocalStrategy } from './strategies';
 @Module({
   imports: [
     forwardRef(() => UserModule),
-    JwtModule.register({
+    // Async para leer JWT_SECRET cuando ConfigModule ya cargó el .env.
+    JwtModule.registerAsync({
       global: true,
-      secret: JWT_CONST.secret,
-      signOptions: { expiresIn: JWT_CONST.expiresIn },
+      useFactory: () => ({
+        secret: JWT_CONST.secret,
+        signOptions: { expiresIn: JWT_CONST.expiresIn },
+      }),
     }),
     MailModule,
   ],
