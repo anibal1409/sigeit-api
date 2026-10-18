@@ -1,11 +1,33 @@
 ---
-description: Reglas de desarrollo para el proyecto Sigeit
+description: Reglas de desarrollo para el proyecto Sigeit (API NestJS + TypeORM)
 globs:
 alwaysApply: true
 ---
 
-rules:
-  - "Ningún método puede tener más de 50 líneas de código efectivas."
-  - "No puede existir código duplicado ni código muerto; cualquier lógica no usada debe eliminarse."
-  - "Todo código nuevo debe estar documentado (clases, métodos y bloques de lógica no triviales)."
-  - "Todo módulo expuesto vía API debe tener la documentación necesaria para Swagger (decoradores de NestJS/Swagger actualizados)."
+# Reglas de desarrollo — sigeit-api
+
+Fuente única para Cursor y Claude (`CLAUDE.md` apunta aquí). Antes de dar por
+terminado un cambio, aplicar la skill `sigeit-review`.
+
+## Idioma
+- Todo identificador va en inglés: variables, funciones, clases, archivos, carpetas, rutas, columnas, enums y mensajes de excepción.
+- Comentarios, JSDoc, descripciones de Swagger y documentación van en español.
+
+## Documentación
+- Todo código nuevo o modificado se documenta en el propio código: JSDoc en clases, métodos públicos, DTOs y entidades; comentario en cada bloque de lógica no trivial explicando el porqué.
+- Todo endpoint lleva `@ApiTags`, `@ApiOperation`, `@ApiResponse` con su DTO de respuesta y las respuestas de error que puede dar (`@ApiBadRequestResponse`, `@ApiForbiddenResponse`, `@ApiNotFoundResponse`).
+- Tras cambiar endpoints o DTOs: `npm run build:client:full` para regenerar `swagger.json` y `dashboard-sdk`.
+
+## Calidad
+- Ningún método supera 50 líneas de código efectivas.
+- Cero código duplicado: antes de escribir, buscar si ya existe (p. ej. `common/text`, `common/validation`, `user/permissions`).
+- Cero código muerto: nada sin usar, ni imports, ni parámetros, ni ramas inalcanzables.
+- Consultas eficientes: sin N+1, sin recargar lo que ya se tiene en memoria, `relations` solo cuando se usan.
+
+## Seguridad
+- Nunca secretos en el código: claves, contraseñas y tokens salen de variables de entorno y se documentan en `.env.example`.
+- El usuario actual se obtiene con `@CurrentUserId()` (JWT verificado), nunca de cookies, cuerpo o query.
+- Permisos con `assertAdmin` / `assertCanManageDepartment` de `user/permissions.ts`; no repetir comprobaciones de rol a mano.
+- Cuerpos y queries nuevos con `@Body(strictValidation)` / `@Query(strictValidation)` para impedir asignación masiva (`id`, `deleted`, etc.).
+- Validar en el DTO con class-validator (longitudes, rangos, formatos, enums); validaciones cruzadas en el servicio con 400.
+- Operaciones concurrentes sobre contadores o "un solo activo" dentro de una transacción (y bloqueo de fila cuando haya lectura-modificación-escritura).
