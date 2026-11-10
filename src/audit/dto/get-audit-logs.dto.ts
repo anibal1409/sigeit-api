@@ -3,10 +3,12 @@ import { IsInt, IsOptional, Max, Min } from 'class-validator';
 
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
+import { AuditLogFiltersDto } from './audit-log-filters.dto';
+
 /**
- * Paginación para listar registros de auditoría.
+ * Paginación y filtros para listar registros de auditoría.
  */
-export class GetAuditLogsDto {
+export class GetAuditLogsDto extends AuditLogFiltersDto {
   @ApiPropertyOptional({ default: 1, minimum: 1 })
   @IsOptional()
   @Type(() => Number)

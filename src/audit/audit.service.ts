@@ -1,15 +1,23 @@
 import { Repository } from 'typeorm';
 
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { AuditLog } from './entities';
 import {
+  AuditLogFiltersDto,
+  AuditStatsDto,
   EntityAuditHistoryDto,
   GetAuditLogsDto,
   ResponseAuditLogDto,
 } from './dto';
 import { AuditAction } from './enum';
+import { applyAuditLogFilters } from './utils/audit-log-query.util';
 
 export interface CreateAuditEntryParams {
   userId: string | null;
@@ -40,9 +48,7 @@ export class AuditService {
     private readonly repository: Repository<AuditLog>,
   ) {}
 
-  /**
-   * Guarda un registro de auditoría; errores se registran sin propagar.
-   */
+  /** Guarda un registro de auditoría; errores se registran sin propagar. */
   async recordSafe(params: CreateAuditEntryParams): Promise<void> {
     try {
       const row = this.repository.create(params);
@@ -52,9 +58,7 @@ export class AuditService {
     }
   }
 
-  /**
-   * Lista registros de auditoría paginados (más recientes primero).
-   */
+  /** Lista registros paginados con filtros (más recientes primero). */
   async findPage(query: GetAuditLogsDto): Promise<{
     items: ResponseAuditLogDto[];
     total: number;
@@ -63,30 +67,59 @@ export class AuditService {
   }> {
     const page = query.page ?? 1;
     const limit = query.limit ?? 50;
-    const [rows, total] = await this.repository.findAndCount({
-      order: { createdAt: 'DESC' },
-      skip: (page - 1) * limit,
-      take: limit,
-    });
-    const items = rows.map((r) => this.toResponseDto(r));
-    return { items, total, page, limit };
+    const qb = this.filteredQuery(query);
+    const [rows, total] = await qb
+      .orderBy('log.createdAt', 'DESC')
+      .skip((page - 1) * limit)
+      .take(limit)
+      .getManyAndCount();
+    return {
+      items: rows.map((r) => this.toResponseDto(r)),
+      total,
+      page,
+      limit,
+    };
   }
 
-  private static readonly RESOURCE_PATTERN = /^[a-z][a-z0-9-]*$/i;
+  /** Un registro por id. */
+  async findOne(id: number): Promise<ResponseAuditLogDto> {
+    const row = await this.repository.findOne({ where: { id } });
+    if (!row) {
+      throw new NotFoundException('Audit log not found');
+    }
+    return this.toResponseDto(row);
+  }
 
-  /**
-   * Historial de auditoría donde el recurso e id coinciden (p. ej. period + 5).
-   */
+  /** Agregados para KPIs y gráficos con los mismos filtros que el listado. */
+  async findStats(filters: AuditLogFiltersDto): Promise<AuditStatsDto> {
+    const base = this.filteredQuery(filters);
+    const totalEvents = await base.clone().getCount();
+    const successCount = await base
+      .clone()
+      .andWhere('log.success = :ok', { ok: true })
+      .getCount();
+    const failureCount = totalEvents - successCount;
+    const distinctActors = await this.countDistinctActors(filters);
+    const byAction = await this.aggregateByAction(filters);
+    const byResource = await this.aggregateByResource(filters);
+    const byDay = await this.aggregateByDay(filters);
+    return {
+      totalEvents,
+      successCount,
+      failureCount,
+      distinctActors,
+      byAction,
+      byResource,
+      byDay,
+    };
+  }
+
+  /** Historial donde el recurso e id coinciden (p. ej. period + 5). */
   async findByEntity(
     resource: string,
     entityId: number,
   ): Promise<EntityAuditHistoryDto> {
-    const r = resource.trim().toLowerCase();
-    if (!AuditService.RESOURCE_PATTERN.test(r)) {
-      throw new BadRequestException(
-        'resource debe ser alfanumérico con guiones (ej. period, section).',
-      );
-    }
+    const r = this.normalizeResource(resource);
     const idStr = String(entityId);
     const rows = await this.repository.find({
       where: { resource: r, resourceId: idStr },
@@ -97,6 +130,75 @@ export class AuditService {
       entityId,
       records: rows.map((row) => this.toResponseDto(row)),
     };
+  }
+
+  private filteredQuery(filters: AuditLogFiltersDto) {
+    const qb = this.repository.createQueryBuilder('log');
+    applyAuditLogFilters(qb, filters);
+    return qb;
+  }
+
+  private normalizeResource(resource: string): string {
+    const r = resource.trim().toLowerCase();
+    if (!/^[a-z][a-z0-9-]*$/.test(r)) {
+      throw new BadRequestException(
+        'resource debe ser alfanumérico con guiones (ej. period, section).',
+      );
+    }
+    return r;
+  }
+
+  private async countDistinctActors(
+    filters: AuditLogFiltersDto,
+  ): Promise<number> {
+    const raw = await this.filteredQuery(filters)
+      .select(
+        "COUNT(DISTINCT COALESCE(log.userId, log.userEmail, 'anonymous'))",
+        'cnt',
+      )
+      .getRawOne<{ cnt: string }>();
+    return Number(raw?.cnt ?? 0);
+  }
+
+  private async aggregateByAction(filters: AuditLogFiltersDto) {
+    const rows = await this.filteredQuery(filters)
+      .select('log.action', 'action')
+      .addSelect('COUNT(*)', 'count')
+      .groupBy('log.action')
+      .orderBy('count', 'DESC')
+      .getRawMany<{ action: AuditAction; count: string }>();
+    return rows.map((r) => ({
+      action: r.action,
+      count: Number(r.count),
+    }));
+  }
+
+  private async aggregateByResource(filters: AuditLogFiltersDto) {
+    const rows = await this.filteredQuery(filters)
+      .select('log.resource', 'resource')
+      .addSelect('COUNT(*)', 'count')
+      .groupBy('log.resource')
+      .orderBy('count', 'DESC')
+      .limit(20)
+      .getRawMany<{ resource: string; count: string }>();
+    return rows.map((r) => ({
+      resource: r.resource,
+      count: Number(r.count),
+    }));
+  }
+
+  private async aggregateByDay(filters: AuditLogFiltersDto) {
+    const rows = await this.filteredQuery(filters)
+      .select(`TO_CHAR(log."createdAt", 'YYYY-MM-DD')`, 'date')
+      .addSelect('COUNT(*)', 'count')
+      .groupBy(`TO_CHAR(log."createdAt", 'YYYY-MM-DD')`)
+      .orderBy('date', 'ASC')
+      .limit(90)
+      .getRawMany<{ date: string; count: string }>();
+    return rows.map((r) => ({
+      date: r.date,
+      count: Number(r.count),
+    }));
   }
 
   private toResponseDto(r: AuditLog): ResponseAuditLogDto {

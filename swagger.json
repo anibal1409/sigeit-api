@@ -4186,9 +4186,125 @@
     "/audit/logs": {
       "get": {
         "operationId": "AuditController_findLogs",
-        "summary": "Listar registros de auditoría (paginado)",
-        "description": "Incluye userAgent, clientSummary y propertyChanges (diff en updates, campos en creaciones).",
+        "summary": "Listar registros de auditoría (paginado y filtrado)",
+        "description": "Filtros por usuario, acción, recurso, fechas, éxito, búsqueda libre, etc.",
         "parameters": [
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "description": "Id del usuario actor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userEmail",
+            "required": false,
+            "in": "query",
+            "description": "Correo del actor (coincidencia parcial, sin distinguir mayúsculas)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/AuditAction"
+            }
+          },
+          {
+            "name": "actions",
+            "required": false,
+            "in": "query",
+            "description": "Varias acciones separadas por coma (ej. CREATE,UPDATE)",
+            "schema": {
+              "example": "CREATE,UPDATE",
+              "type": "string"
+            }
+          },
+          {
+            "name": "resource",
+            "required": false,
+            "in": "query",
+            "description": "Segmento de API / recurso (ej. subject, period)",
+            "schema": {
+              "example": "subject",
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "success",
+            "required": false,
+            "in": "query",
+            "description": "true = solo éxitos HTTP 2xx/3xx",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "httpMethod",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "GET",
+                "POST",
+                "PATCH",
+                "PUT",
+                "DELETE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "Inicio del rango (ISO 8601, inclusive)",
+            "schema": {
+              "example": "2026-01-01T00:00:00.000Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "Fin del rango (ISO 8601, inclusive)",
+            "schema": {
+              "example": "2026-12-31T23:59:59.999Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Texto libre en ruta, correo, IP, cliente o id de recurso (coincidencia parcial)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authOnly",
+            "required": false,
+            "in": "query",
+            "description": "Si true, solo eventos de autenticación (AUTH_*)",
+            "schema": {
+              "type": "boolean"
+            }
+          },
           {
             "name": "page",
             "required": false,
@@ -4221,6 +4337,189 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Solo administrador"
+          }
+        },
+        "tags": [
+          "audit"
+        ]
+      }
+    },
+    "/audit/logs/{id}": {
+      "get": {
+        "operationId": "AuditController_findOne",
+        "summary": "Detalle de un registro de auditoría",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAuditLogDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Solo administrador"
+          },
+          "404": {
+            "description": "Registro no encontrado"
+          }
+        },
+        "tags": [
+          "audit"
+        ]
+      }
+    },
+    "/audit/stats": {
+      "get": {
+        "operationId": "AuditController_findStats",
+        "summary": "Estadísticas y KPIs de auditoría",
+        "description": "Totales, éxitos/fallos, actores distintos, desglose por acción, recurso y día.",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "description": "Id del usuario actor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userEmail",
+            "required": false,
+            "in": "query",
+            "description": "Correo del actor (coincidencia parcial, sin distinguir mayúsculas)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/AuditAction"
+            }
+          },
+          {
+            "name": "actions",
+            "required": false,
+            "in": "query",
+            "description": "Varias acciones separadas por coma (ej. CREATE,UPDATE)",
+            "schema": {
+              "example": "CREATE,UPDATE",
+              "type": "string"
+            }
+          },
+          {
+            "name": "resource",
+            "required": false,
+            "in": "query",
+            "description": "Segmento de API / recurso (ej. subject, period)",
+            "schema": {
+              "example": "subject",
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "success",
+            "required": false,
+            "in": "query",
+            "description": "true = solo éxitos HTTP 2xx/3xx",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "httpMethod",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "GET",
+                "POST",
+                "PATCH",
+                "PUT",
+                "DELETE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "Inicio del rango (ISO 8601, inclusive)",
+            "schema": {
+              "example": "2026-01-01T00:00:00.000Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "Fin del rango (ISO 8601, inclusive)",
+            "schema": {
+              "example": "2026-12-31T23:59:59.999Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Texto libre en ruta, correo, IP, cliente o id de recurso (coincidencia parcial)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authOnly",
+            "required": false,
+            "in": "query",
+            "description": "Si true, solo eventos de autenticación (AUTH_*)",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditStatsDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Solo administrador"
           }
         },
         "tags": [
@@ -4232,7 +4531,7 @@
       "get": {
         "operationId": "AuditController_findByEntity",
         "summary": "Historial de cambios de un registro",
-        "description": "Devuelve todos los eventos de auditoría donde resource y resourceId coinciden con el tipo de entidad y el id (p. ej. period / 12).",
+        "description": "Devuelve todos los eventos donde resource y resourceId coinciden (p. ej. period / 12).",
         "parameters": [
           {
             "name": "resource",
@@ -4263,6 +4562,9 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Solo administrador"
           }
         },
         "tags": [
@@ -7699,6 +8001,23 @@
           "message"
         ]
       },
+      "AuditAction": {
+        "type": "string",
+        "enum": [
+          "CREATE",
+          "UPDATE",
+          "DELETE",
+          "OTHER",
+          "AUTH_LOGIN",
+          "AUTH_LOGOUT",
+          "AUTH_RECOVERY_REQUEST",
+          "AUTH_RECOVERY_VALIDATE",
+          "AUTH_RECOVERY_COMPLETE",
+          "AUTH_CHANGE_PASSWORD",
+          "AUTH_REGISTER_PUBLIC",
+          "AUTH_OTHER"
+        ]
+      },
       "ResponseAuditLogDto": {
         "type": "object",
         "properties": {
@@ -7805,6 +8124,99 @@
           "total",
           "page",
           "limit"
+        ]
+      },
+      "AuditStatsActionItemDto": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/AuditAction"
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "action",
+          "count"
+        ]
+      },
+      "AuditStatsResourceItemDto": {
+        "type": "object",
+        "properties": {
+          "resource": {
+            "type": "string",
+            "example": "subject"
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "resource",
+          "count"
+        ]
+      },
+      "AuditStatsByDayItemDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2026-03-01"
+          },
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "date",
+          "count"
+        ]
+      },
+      "AuditStatsDto": {
+        "type": "object",
+        "properties": {
+          "totalEvents": {
+            "type": "number",
+            "description": "Eventos que coinciden con los filtros"
+          },
+          "successCount": {
+            "type": "number"
+          },
+          "failureCount": {
+            "type": "number"
+          },
+          "distinctActors": {
+            "type": "number",
+            "description": "Usuarios distintos (userId o userEmail cuando no hay id)"
+          },
+          "byAction": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditStatsActionItemDto"
+            }
+          },
+          "byResource": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditStatsResourceItemDto"
+            }
+          },
+          "byDay": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditStatsByDayItemDto"
+            }
+          }
+        },
+        "required": [
+          "totalEvents",
+          "successCount",
+          "failureCount",
+          "distinctActors",
+          "byAction",
+          "byResource",
+          "byDay"
         ]
       },
       "EntityAuditHistoryDto": {
