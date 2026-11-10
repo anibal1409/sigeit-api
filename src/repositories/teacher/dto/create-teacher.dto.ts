@@ -74,6 +74,8 @@ export class CreateTeacherDto extends PartialType(
   @ApiPropertyOptional({
     enum: TeacherDedication,
     enumName: 'TeacherDedication',
+    default: TeacherDedication.Exclusive,
+    description: 'Por defecto EXCLUSIVA si no se envía',
   })
   @IsOptional()
   @IsEnum(TeacherDedication)

@@ -16,6 +16,8 @@ import {
 import { Career } from '../../career/entities';
 import { Department } from '../../department/entities';
 import { Subject } from '../entities';
+import { SubjectInstructionType } from '../enum';
+import { resolveSubjectInstructionType } from '../subject-hours';
 
 export class ResponseSubjectDto {
   @ApiProperty()
@@ -43,10 +45,27 @@ export class ResponseSubjectDto {
   @IsString()
   description?: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Horas semanales totales' })
   @IsNotEmpty()
   @Type(() => Number)
   hours!: number;
+
+  @ApiProperty({ description: 'Horas semanales teóricas' })
+  @IsNotEmpty()
+  @Type(() => Number)
+  theoreticalHours!: number;
+
+  @ApiProperty({ description: 'Horas semanales prácticas' })
+  @IsNotEmpty()
+  @Type(() => Number)
+  practicalHours!: number;
+
+  @ApiProperty({
+    enum: SubjectInstructionType,
+    enumName: 'SubjectInstructionType',
+    description: 'Derivado del reparto teoría/práctica',
+  })
+  instructionType!: SubjectInstructionType;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -94,6 +113,12 @@ export class ResponseSubjectDto {
     this.code = data.code;
     this.credits = data.credits;
     this.hours = data.hours;
+    this.theoreticalHours = data.theoreticalHours;
+    this.practicalHours = data.practicalHours;
+    this.instructionType = resolveSubjectInstructionType(
+      data.theoreticalHours,
+      data.practicalHours,
+    );
     this.semester = data.semester;
     this.typeCurriculum = data.typeCurriculum;
     this.careers = data.careers;

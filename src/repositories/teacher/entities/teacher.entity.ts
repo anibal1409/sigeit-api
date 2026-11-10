@@ -37,8 +37,14 @@ export class Teacher extends IdEntity {
   @Column({ nullable: true })
   employmentStatus?: EmploymentStatus;
 
-  @Column({ nullable: true })
-  dedication?: TeacherDedication;
+  /** Dedicación horaria; por defecto exclusiva para registros nuevos y existentes sin valor. */
+  @Column({
+    type: 'enum',
+    enum: TeacherDedication,
+    nullable: false,
+    default: TeacherDedication.Exclusive,
+  })
+  dedication!: TeacherDedication;
 
   /** Estado de la evaluación para contratar; nulo si no aplica. */
   @Column({ nullable: true })

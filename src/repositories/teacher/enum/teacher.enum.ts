@@ -22,12 +22,11 @@ export enum EmploymentStatus {
   Permanent = 'PERMANENT',
 }
 
-/** Dedicación horaria del profesor. */
+/** Dedicación horaria del profesor (valores persistidos en mayúsculas). */
 export enum TeacherDedication {
-  Exclusive = 'EXCLUSIVE',
-  FullTime = 'FULL_TIME',
-  HalfTime = 'HALF_TIME',
-  Conventional = 'CONVENTIONAL',
+  Exclusive = 'EXCLUSIVA',
+  FullTime = 'TIEMPO_COMPLETO',
+  HalfTime = 'MEDIO_TIEMPO',
 }
 
 /** Estado del proceso de evaluación para contratar al profesor. */

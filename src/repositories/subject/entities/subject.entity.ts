@@ -25,8 +25,15 @@ export class Subject extends IdEntity {
   @Column({ nullable: true })
   description?: string;
 
+  /** Horas de contacto semanales (teoría + práctica). */
   @Column({ nullable: false })
   hours!: number;
+
+  @Column({ nullable: false, default: 0 })
+  theoreticalHours!: number;
+
+  @Column({ nullable: false, default: 0 })
+  practicalHours!: number;
 
   @Column({ nullable: false })
   semester!: number;

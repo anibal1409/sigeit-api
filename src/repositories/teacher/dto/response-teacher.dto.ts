@@ -75,11 +75,12 @@ export class ResponseTeacherDto {
   })
   employmentStatus?: EmploymentStatus;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     enum: TeacherDedication,
     enumName: 'TeacherDedication',
+    default: TeacherDedication.Exclusive,
   })
-  dedication?: TeacherDedication;
+  dedication!: TeacherDedication;
 
   @ApiPropertyOptional({
     enum: HiringEvaluationStatus,

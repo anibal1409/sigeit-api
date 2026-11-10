@@ -4809,11 +4809,11 @@
       },
       "TeacherDedication": {
         "type": "string",
+        "default": "EXCLUSIVA",
         "enum": [
-          "EXCLUSIVE",
-          "FULL_TIME",
-          "HALF_TIME",
-          "CONVENTIONAL"
+          "EXCLUSIVA",
+          "TIEMPO_COMPLETO",
+          "MEDIO_TIEMPO"
         ]
       },
       "HiringEvaluationStatus": {
@@ -4932,7 +4932,8 @@
           "firstName",
           "departmentId",
           "department",
-          "status"
+          "status",
+          "dedication"
         ]
       },
       "ResponseSubjectHistoryDto": {
@@ -6616,7 +6617,18 @@
             "type": "string"
           },
           "hours": {
-            "type": "number"
+            "type": "number",
+            "description": "Horas semanales totales (teoría + práctica)"
+          },
+          "theoreticalHours": {
+            "type": "number",
+            "description": "Horas semanales teóricas; si no se envía, se asume todo el total como teoría",
+            "default": 0
+          },
+          "practicalHours": {
+            "type": "number",
+            "description": "Horas semanales prácticas; por defecto 0",
+            "default": 0
           },
           "semester": {
             "type": "number"
@@ -6645,6 +6657,15 @@
           "careers"
         ]
       },
+      "SubjectInstructionType": {
+        "type": "string",
+        "description": "Derivado del reparto teoría/práctica",
+        "enum": [
+          "TEORICA",
+          "TEORICA_PRACTICA",
+          "PRACTICA"
+        ]
+      },
       "ResponseSubjectDto": {
         "type": "object",
         "properties": {
@@ -6664,7 +6685,19 @@
             "type": "string"
           },
           "hours": {
-            "type": "number"
+            "type": "number",
+            "description": "Horas semanales totales"
+          },
+          "theoreticalHours": {
+            "type": "number",
+            "description": "Horas semanales teóricas"
+          },
+          "practicalHours": {
+            "type": "number",
+            "description": "Horas semanales prácticas"
+          },
+          "instructionType": {
+            "$ref": "#/components/schemas/SubjectInstructionType"
           },
           "semester": {
             "type": "number"
@@ -6700,6 +6733,9 @@
           "code",
           "credits",
           "hours",
+          "theoreticalHours",
+          "practicalHours",
+          "instructionType",
           "semester",
           "typeCurriculum",
           "departmentId",
@@ -6725,7 +6761,18 @@
             "type": "string"
           },
           "hours": {
-            "type": "number"
+            "type": "number",
+            "description": "Horas semanales totales (teoría + práctica)"
+          },
+          "theoreticalHours": {
+            "type": "number",
+            "description": "Horas semanales teóricas; si no se envía, se asume todo el total como teoría",
+            "default": 0
+          },
+          "practicalHours": {
+            "type": "number",
+            "description": "Horas semanales prácticas; por defecto 0",
+            "default": 0
           },
           "semester": {
             "type": "number"

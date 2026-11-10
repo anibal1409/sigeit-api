@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 
 import {
   ApiProperty,
@@ -40,10 +40,33 @@ export class CreateSubjectDto extends PartialType(
   @IsString()
   description?: string;
 
-  @ApiProperty()
+  @ApiProperty({ description: 'Horas semanales totales (teoría + práctica)' })
   @IsNotEmpty()
   @Type(() => Number)
+  @IsInt()
+  @Min(0)
   hours!: number;
+
+  @ApiPropertyOptional({
+    description:
+      'Horas semanales teóricas; si no se envía, se asume todo el total como teoría',
+    default: 0,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  theoreticalHours?: number;
+
+  @ApiPropertyOptional({
+    description: 'Horas semanales prácticas; por defecto 0',
+    default: 0,
+  })
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  practicalHours?: number;
 
   @ApiProperty()
   @IsNotEmpty()

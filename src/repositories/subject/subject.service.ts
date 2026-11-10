@@ -15,7 +15,20 @@ import {
 } from './dto';
 import { ResponseSubjectDto } from './dto/response-subject.dto';
 import { Subject } from './entities';
+import { assertSubjectWeeklyHours } from './subject-hours';
 import { normalizeSubjectCode } from './subject-code';
+
+/** Reparto semanal por defecto al crear: todo el total como teoría. */
+function defaultWeeklySplit(
+  weeklyHours: number,
+  theoreticalHours?: number,
+  practicalHours?: number,
+): { theoreticalHours: number; practicalHours: number } {
+  const practical = practicalHours ?? 0;
+  const theoretical =
+    theoreticalHours ?? weeklyHours - practical;
+  return { theoreticalHours: theoretical, practicalHours: practical };
+}
 
 @Injectable()
 export class SubjectService implements CrudRepository<Subject> {
@@ -64,7 +77,23 @@ export class SubjectService implements CrudRepository<Subject> {
       throw new BadRequestException('Code subject already exists.');
     }
 
-    const item = await this.repository.save({ ...createDto, code });
+    const split = defaultWeeklySplit(
+      createDto.hours,
+      createDto.theoreticalHours,
+      createDto.practicalHours,
+    );
+    assertSubjectWeeklyHours(
+      createDto.hours,
+      split.theoreticalHours,
+      split.practicalHours,
+    );
+
+    const item = await this.repository.save({
+      ...createDto,
+      code,
+      theoreticalHours: split.theoreticalHours,
+      practicalHours: split.practicalHours,
+    });
 
     return await this.findOne(item.id);
   }
@@ -106,6 +135,14 @@ export class SubjectService implements CrudRepository<Subject> {
     if (await this.findByCode(code, id)) {
       throw new BadRequestException('Subject already exists.');
     }
+
+    const current = await this.findValid(id);
+    const weeklyHours = updateDto.hours ?? current.hours;
+    const theoreticalHours =
+      updateDto.theoreticalHours ?? current.theoreticalHours;
+    const practicalHours = updateDto.practicalHours ?? current.practicalHours;
+    assertSubjectWeeklyHours(weeklyHours, theoreticalHours, practicalHours);
+
     const item = await this.repository.save({
       id,
       name: updateDto.name,
@@ -114,7 +151,9 @@ export class SubjectService implements CrudRepository<Subject> {
       department: updateDto.department,
       semester: updateDto.semester,
       credits: updateDto.credits,
-      hours: updateDto.hours,
+      hours: weeklyHours,
+      theoreticalHours,
+      practicalHours,
       typeCurriculum: updateDto.typeCurriculum,
       status: updateDto.status,
       careers: updateDto.careers,
