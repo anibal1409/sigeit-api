@@ -4527,6 +4527,162 @@
         ]
       }
     },
+    "/audit/report/pdf": {
+      "get": {
+        "operationId": "AuditController_downloadPdfReport",
+        "summary": "Descargar reporte de auditoría en PDF",
+        "description": "Aplica los mismos filtros que el listado; incluye KPIs y hasta maxRows eventos.",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "description": "Id del usuario actor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userEmail",
+            "required": false,
+            "in": "query",
+            "description": "Correo del actor (coincidencia parcial, sin distinguir mayúsculas)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "action",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/AuditAction"
+            }
+          },
+          {
+            "name": "actions",
+            "required": false,
+            "in": "query",
+            "description": "Varias acciones separadas por coma (ej. CREATE,UPDATE)",
+            "schema": {
+              "example": "CREATE,UPDATE",
+              "type": "string"
+            }
+          },
+          {
+            "name": "resource",
+            "required": false,
+            "in": "query",
+            "description": "Segmento de API / recurso (ej. subject, period)",
+            "schema": {
+              "example": "subject",
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "success",
+            "required": false,
+            "in": "query",
+            "description": "true = solo éxitos HTTP 2xx/3xx",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "httpMethod",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "GET",
+                "POST",
+                "PATCH",
+                "PUT",
+                "DELETE"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "Inicio del rango (ISO 8601, inclusive)",
+            "schema": {
+              "example": "2026-01-01T00:00:00.000Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "Fin del rango (ISO 8601, inclusive)",
+            "schema": {
+              "example": "2026-12-31T23:59:59.999Z",
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Texto libre en ruta, correo, IP, cliente o id de recurso (coincidencia parcial)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authOnly",
+            "required": false,
+            "in": "query",
+            "description": "Si true, solo eventos de autenticación (AUTH_*)",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "maxRows",
+            "required": false,
+            "in": "query",
+            "description": "Máximo de eventos detallados incluidos en el PDF",
+            "schema": {
+              "minimum": 1,
+              "maximum": 2000,
+              "default": 500,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Archivo PDF",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Solo administrador"
+          }
+        },
+        "tags": [
+          "audit"
+        ]
+      }
+    },
     "/audit/entity/{resource}/{entityId}": {
       "get": {
         "operationId": "AuditController_findByEntity",

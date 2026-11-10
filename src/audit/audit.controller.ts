@@ -1,9 +1,17 @@
-import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  StreamableFile,
+} from '@nestjs/common';
 import {
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOperation,
   ApiParam,
+  ApiProduces,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -17,6 +25,7 @@ import {
   AuditStatsDto,
   EntityAuditHistoryDto,
   GetAuditLogsDto,
+  GetAuditReportDto,
   GetAuditStatsDto,
   ResponseAuditLogDto,
 } from './dto';
@@ -65,6 +74,34 @@ export class AuditController {
   @ApiForbiddenResponse({ description: 'Solo administrador' })
   findStats(@Query(strictValidation) query: GetAuditStatsDto) {
     return this.auditService.findStats(query);
+  }
+
+  @Get('report/pdf')
+  @ApiOperation({
+    summary: 'Descargar reporte de auditoría en PDF',
+    description:
+      'Aplica los mismos filtros que el listado; incluye KPIs y hasta maxRows eventos.',
+  })
+  @ApiProduces('application/pdf')
+  @ApiResponse({
+    status: 200,
+    description: 'Archivo PDF',
+    content: {
+      'application/pdf': {
+        schema: { type: 'string', format: 'binary' },
+      },
+    },
+  })
+  @ApiForbiddenResponse({ description: 'Solo administrador' })
+  async downloadPdfReport(
+    @Query(strictValidation) query: GetAuditReportDto,
+  ): Promise<StreamableFile> {
+    const buffer = await this.auditService.buildPdfReport(query);
+    const stamp = new Date().toISOString().slice(0, 10);
+    return new StreamableFile(buffer, {
+      type: 'application/pdf',
+      disposition: `attachment; filename="auditoria_${stamp}.pdf"`,
+    });
   }
 
   @Get('entity/:resource/:entityId')

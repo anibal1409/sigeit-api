@@ -17,6 +17,8 @@ import {
   ResponseAuditLogDto,
 } from './dto';
 import { AuditAction } from './enum';
+import { buildAuditPdfReport } from './audit-pdf.report';
+import { GetAuditReportDto } from './dto/get-audit-report.dto';
 import { applyAuditLogFilters } from './utils/audit-log-query.util';
 
 export interface CreateAuditEntryParams {
@@ -112,6 +114,26 @@ export class AuditService {
       byResource,
       byDay,
     };
+  }
+
+  /** Filas para reporte PDF (más recientes primero, con tope). */
+  async findRowsForReport(
+    filters: AuditLogFiltersDto,
+    maxRows: number,
+  ): Promise<ResponseAuditLogDto[]> {
+    const rows = await this.filteredQuery(filters)
+      .orderBy('log.createdAt', 'DESC')
+      .take(maxRows)
+      .getMany();
+    return rows.map((row) => this.toResponseDto(row));
+  }
+
+  /** PDF con resumen estadístico y detalle de eventos según filtros. */
+  async buildPdfReport(query: GetAuditReportDto): Promise<Buffer> {
+    const { maxRows = 500, ...filters } = query;
+    const stats = await this.findStats(filters);
+    const rows = await this.findRowsForReport(filters, maxRows);
+    return buildAuditPdfReport(filters, stats, rows, maxRows);
   }
 
   /** Historial donde el recurso e id coinciden (p. ej. period + 5). */
